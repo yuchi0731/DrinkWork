@@ -67,17 +67,185 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClientSide\Contact.aspx" />
+    <Content Include="ClientSide\Default.aspx" />
+    <Content Include="ClientSide\DrinkDetail.aspx" />
+    <Content Include="ClientSide\Introduction.aspx" />
+    <Content Include="ClientSide\Login.aspx" />
+    <Content Include="ClientSide\StaffIntroduction.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="ServerSide\SystemAdmin\HistoricalOrders.aspx" />
+    <Content Include="ServerSide\SystemAdmin\OderMid.aspx" />
+    <Content Include="ServerSide\SystemAdmin\OrderConfirm.aspx" />
+    <Content Include="ServerSide\SystemAdmin\OrderDetail.aspx" />
+    <Content Include="ServerSide\SystemAdmin\OrderModify.aspx" />
+    <Content Include="ServerSide\SystemAdmin\OrderStart.aspx" />
+    <Content Include="ServerSide\SystemAdmin\SendOrder.aspx" />
+    <Content Include="ServerSide\SystemAdmin\UserPage.aspx" />
+    <Content Include="ServerSide\UserControl\ucPager.ascx" />
+    <Content Include="ServerSide\UserManagement\CreateNewUser.aspx" />
+    <Content Include="ServerSide\UserManagement\DeleteHistoricalOrders.aspx" />
+    <Content Include="ServerSide\UserManagement\DeleteUser.aspx" />
+    <Content Include="ServerSide\UserManagement\ModifyUserInfo.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientSide\ClientSide.Master.cs">
+      <DependentUpon>ClientSide.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientSide\ClientSide.Master.designer.cs">
+      <DependentUpon>ClientSide.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ClientSide\Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientSide\Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientSide\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientSide\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientSide\DrinkDetail.aspx.cs">
+      <DependentUpon>DrinkDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientSide\DrinkDetail.aspx.designer.cs">
+      <DependentUpon>DrinkDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientSide\Introduction.aspx.cs">
+      <DependentUpon>Introduction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientSide\Introduction.aspx.designer.cs">
+      <DependentUpon>Introduction.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientSide\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientSide\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientSide\StaffIntroduction.aspx.cs">
+      <DependentUpon>StaffIntroduction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientSide\StaffIntroduction.aspx.designer.cs">
+      <DependentUpon>StaffIntroduction.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerSide\ServerSide.Master.cs">
+      <DependentUpon>ServerSide.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\ServerSide.Master.designer.cs">
+      <DependentUpon>ServerSide.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\HistoricalOrders.aspx.cs">
+      <DependentUpon>HistoricalOrders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\HistoricalOrders.aspx.designer.cs">
+      <DependentUpon>HistoricalOrders.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\OderMid.aspx.cs">
+      <DependentUpon>OderMid.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\OderMid.aspx.designer.cs">
+      <DependentUpon>OderMid.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\OrderConfirm.aspx.cs">
+      <DependentUpon>OrderConfirm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\OrderConfirm.aspx.designer.cs">
+      <DependentUpon>OrderConfirm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\OrderDetail.aspx.cs">
+      <DependentUpon>OrderDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\OrderDetail.aspx.designer.cs">
+      <DependentUpon>OrderDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\OrderModify.aspx.cs">
+      <DependentUpon>OrderModify.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\OrderModify.aspx.designer.cs">
+      <DependentUpon>OrderModify.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\OrderStart.aspx.cs">
+      <DependentUpon>OrderStart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\OrderStart.aspx.designer.cs">
+      <DependentUpon>OrderStart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\SendOrder.aspx.cs">
+      <DependentUpon>SendOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\SendOrder.aspx.designer.cs">
+      <DependentUpon>SendOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\UserPage.aspx.cs">
+      <DependentUpon>UserPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\UserPage.aspx.designer.cs">
+      <DependentUpon>UserPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\UserControl\ucPager.ascx.cs">
+      <DependentUpon>ucPager.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\UserControl\ucPager.ascx.designer.cs">
+      <DependentUpon>ucPager.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\UserManagement\CreateNewUser.aspx.cs">
+      <DependentUpon>CreateNewUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\UserManagement\CreateNewUser.aspx.designer.cs">
+      <DependentUpon>CreateNewUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\UserManagement\DeleteHistoricalOrders.aspx.cs">
+      <DependentUpon>DeleteHistoricalOrders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\UserManagement\DeleteHistoricalOrders.aspx.designer.cs">
+      <DependentUpon>DeleteHistoricalOrders.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\UserManagement\DeleteUser.aspx.cs">
+      <DependentUpon>DeleteUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\UserManagement\DeleteUser.aspx.designer.cs">
+      <DependentUpon>DeleteUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\UserManagement\ModifyUserInfo.aspx.cs">
+      <DependentUpon>ModifyUserInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\UserManagement\ModifyUserInfo.aspx.designer.cs">
+      <DependentUpon>ModifyUserInfo.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClientSide\ClientSide.Master" />
     <None Include="packages.config" />
+    <Content Include="ServerSide\ServerSide.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -87,7 +255,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ClientSide\ImagesClient\" />
     <Folder Include="Models\" />
+    <Folder Include="ServerSide\ImagesServer\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

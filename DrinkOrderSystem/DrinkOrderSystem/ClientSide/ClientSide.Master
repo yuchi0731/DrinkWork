@@ -1,0 +1,43 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ClientSide.master.cs" Inherits="DrinkOrderSystem.ClientSide.ClientSide" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        放張公司LOGO
+                    </td>
+                    <td>
+                        <h1>員工團購飲料系統</h1>
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        表單超連結
+                        <a href="Default.aspx">系統首頁</a><br />
+                        <a href="Login.aspx">登入系統</a><br />
+                        <a href="Introduction.aspx">系統介紹</a><br />
+                        <a href="StaffIntroduction.aspx">系統管理員介紹</a><br />
+                        <a href="Contact.aspx">聯絡管理者</a>
+                    </td>
+                     <td>
+                         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+                    </td>
+                </tr>
+            </table>
+            
+        </div>
+    </form>
+</body>
+</html>

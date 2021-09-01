@@ -6,12 +6,25 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
-<body>
+<body>   
     <form id="form1" runat="server">
-        <div>
+        <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+
+            </div>
+         <div class="col-md-4 col-sm-6">
+
+            </div>
+          <div class="col-md-4 col-sm-6">
+
+            </div>
             <table>
                 <tr>
                     <td>
@@ -36,8 +49,9 @@
                     </td>
                 </tr>
             </table>
-            
+            </div>
         </div>
+        
     </form>
 </body>
 </html>

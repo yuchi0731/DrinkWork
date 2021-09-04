@@ -4,23 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DOS_Auth
+namespace DOS_Models
 {
-    public class OrderDetailModel
+    public class OrderListModels
     {
+        public int OrderID { get; set; }
         public string OrderNumber { get; set; }
         public string Account { get; set; }
         public string OrderTime { get; set; }
         public string OrderEndTime { get; set; }
         public string RequiredTime { get; set; }
-        public string ProductName { get; set; }
-        public string Quantity { get; set; }
-        public string UnitPrice { get; set; }
-        public string Suger { get; set; }
-        public string Ice { get; set; }
-        public string toppings { get; set; }
         public string SupplierName { get; set; }
-        public string OtherRequest { get; set; }
+        public string TotalPrice { get; set; }
 
     }
 }

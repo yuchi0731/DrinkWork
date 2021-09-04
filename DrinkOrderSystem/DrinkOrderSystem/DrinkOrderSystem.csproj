@@ -129,11 +129,12 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ServerSide\ImagesServer\3456700.png" />
     <Content Include="ServerSide\ImagesServer\drink_icon.png" />
     <Content Include="ServerSide\SystemAdmin\NowOrdering.aspx" />
     <Content Include="ServerSide\SystemAdmin\OderMid.aspx" />
     <Content Include="ServerSide\SystemAdmin\OrderConfirm.aspx" />
-    <Content Include="ServerSide\SystemAdmin\OrderDetail.aspx" />
+    <Content Include="ServerSide\SystemAdmin\OrderDetailInfo.aspx" />
     <Content Include="ServerSide\SystemAdmin\OrderModify.aspx" />
     <Content Include="ServerSide\SystemAdmin\OrderRecords.aspx" />
     <Content Include="ServerSide\SystemAdmin\OrderStart.aspx" />
@@ -229,12 +230,12 @@
     <Compile Include="ServerSide\SystemAdmin\OrderConfirm.aspx.designer.cs">
       <DependentUpon>OrderConfirm.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ServerSide\SystemAdmin\OrderDetail.aspx.cs">
-      <DependentUpon>OrderDetail.aspx</DependentUpon>
+    <Compile Include="ServerSide\SystemAdmin\OrderDetailInfo.aspx.cs">
+      <DependentUpon>OrderDetailInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ServerSide\SystemAdmin\OrderDetail.aspx.designer.cs">
-      <DependentUpon>OrderDetail.aspx</DependentUpon>
+    <Compile Include="ServerSide\SystemAdmin\OrderDetailInfo.aspx.designer.cs">
+      <DependentUpon>OrderDetailInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="ServerSide\SystemAdmin\OrderModify.aspx.cs">
       <DependentUpon>OrderModify.aspx</DependentUpon>
@@ -382,6 +383,10 @@
     <ProjectReference Include="..\DOS_DBSoure\DOS_DBSoure.csproj">
       <Project>{c83d443f-2986-4490-bc9a-3e7c8216cb1f}</Project>
       <Name>DOS_DBSoure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DOS_Models\DOS_Models.csproj">
+      <Project>{fb0d1951-f84a-45e2-9e6f-c3960383b71d}</Project>
+      <Name>DOS_Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\DOS_ORM\DOS_ORM.csproj">
       <Project>{113ee810-4878-4a4e-9f9d-1977f6761d26}</Project>

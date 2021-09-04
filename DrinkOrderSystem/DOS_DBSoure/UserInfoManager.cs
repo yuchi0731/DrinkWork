@@ -466,7 +466,7 @@ namespace DOS_DBSoure
         /// <param name="responseSuppliers"></param>
         /// <param name="photo"></param>
         /// <param name="EditDate"></param>
-        public static void CreateNewUserInfolinq(string account, int employeeID, string departmentID, string department, string firstName, string lastName, string contact, string email, string ext, string phone, int jobGrade, string description, string responseSuppliers, byte[] photo,DateTime Createdate, DateTime LastDate)
+        public static void CreateNewUserInfolinq(string account, int employeeID, string departmentID, string department, string firstName, string lastName, string contact, string email, string ext, string phone, int jobGrade, string description, string responseSuppliers, string photo,DateTime Createdate, DateTime LastDate)
         {
             using (DKContextModel context = new DKContextModel())
             {
@@ -549,7 +549,7 @@ namespace DOS_DBSoure
         /// <summary>
         /// 修改使用者資料LINQ
         /// </summary>
-        public static void UpdateUserInfolinq(string account, int employeeID, string departmentID, string department, string firstName, string lastName, string contact, string email, string ext, string phone, int jobGrade, string description, string responseSuppliers, byte[] photo, DateTime EditDate)
+        public static void UpdateUserInfolinq(string account, int employeeID, string departmentID, string department, string firstName, string lastName, string contact, string email, string ext, string phone, int jobGrade, string description, string responseSuppliers, string photo, DateTime EditDate)
         {
             using (DKContextModel context = new DKContextModel())
             {

@@ -8,8 +8,8 @@
     <title></title>
     
     <link href="/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <%--<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" />--%>
-
+    <%--<link href="../../bootstrap/css/bootstrap.css" rel="stylesheet" />--%>
+    <%--..為上層目錄--%>
     <script src="/bootstrap/js/bootstrap.js"></script>
     <%--<script src="../../bootstrap/js/bootstrap.js"></script>--%>
     <style>
@@ -51,7 +51,7 @@
              <!-- 漢堡選單 -->
             <nav class="navbar navbar-expand-md navbar-light bg-light">
                 <a class="navbar navbar-brand">
-                    <img src="ImagesServer/drink_icon.png" alt="" width="50" height="50" />
+                    <asp:Image ID="Image1" runat="server" ImageUrl="~/ServerSide/ImagesServer/drink_icon.png"  Width="50" Height="50"/>
                     公司名稱
                 </a>
 

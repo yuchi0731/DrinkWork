@@ -43,19 +43,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthManager.cs" />
-    <Compile Include="OrderDetailModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserInfoModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DOS_DBSoure\DOS_DBSoure.csproj">
-      <Project>{C83D443F-2986-4490-BC9A-3E7C8216CB1F}</Project>
+      <Project>{c83d443f-2986-4490-bc9a-3e7c8216cb1f}</Project>
       <Name>DOS_DBSoure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DOS_Models\DOS_Models.csproj">
+      <Project>{fb0d1951-f84a-45e2-9e6f-c3960383b71d}</Project>
+      <Name>DOS_Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\DOS_ORM\DOS_ORM.csproj">
       <Project>{113EE810-4878-4A4E-9F9D-1977F6761D26}</Project>
       <Name>DOS_ORM</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,14 +9,14 @@ using System.Web.UI.WebControls;
 
 namespace DrinkOrderSystem.ServerSide.SystemAdmin
 {
-    public partial class OrderDetail : System.Web.UI.Page
+    public partial class OrderDetailInfo : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             var a = "M001";
             
             //read all drink data
-            var dt = DrinkListManager.GetOrderDetailList(a);
+            var dt = DrinkListManager.GetOrderDetailListSQL(a);
 
             int drinkcount = dt.Rows.Count;
 

@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DOS_Auth
+namespace DOS_Models
 {
-    public class UserInfoModel
+    public class UserInfoModels
     {
-        //和DB裡的欄位一致
         public string Account { get; set; }
 
         public string EmployeeID { get; set; }

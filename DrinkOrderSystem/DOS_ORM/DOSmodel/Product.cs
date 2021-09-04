@@ -31,6 +31,11 @@ namespace DOS_ORM.DOSmodel
         [StringLength(50)]
         public string CategoryName { get; set; }
 
+        [StringLength(50)]
+        public string Toppings { get; set; }
+
+        public decimal? ToppingsUnitPrice { get; set; }
+
         [StringLength(100)]
         public string Photo { get; set; }
     }

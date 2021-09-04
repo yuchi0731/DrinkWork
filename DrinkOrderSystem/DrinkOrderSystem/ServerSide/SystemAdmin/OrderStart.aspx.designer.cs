@@ -15,49 +15,40 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
     {
 
         /// <summary>
-        /// Button1 控制項。
+        /// Imgbtn50Lan 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.ImageButton Imgbtn50Lan;
 
         /// <summary>
-        /// Button2 控制項。
+        /// ImgbtnWhiteAlley 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.ImageButton ImgbtnWhiteAlley;
 
         /// <summary>
-        /// lbtotaldrinkcount 控制項。
+        /// ImgbtnMilkshop 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbtotaldrinkcount;
+        protected global::System.Web.UI.WebControls.ImageButton ImgbtnMilkshop;
 
         /// <summary>
-        /// Label1 控制項。
+        /// gvChooseDrink 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-
-        /// <summary>
-        /// gvdrinklist 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvdrinklist;
+        protected global::System.Web.UI.WebControls.GridView gvChooseDrink;
 
         /// <summary>
         /// ucPager 控制項。
@@ -69,21 +60,30 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         protected global::DrinkOrderSystem.ServerSide.UserControl.ucPager ucPager;
 
         /// <summary>
-        /// txtAll 控制項。
+        /// txtChooseDrinkList 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAll;
+        protected global::System.Web.UI.WebControls.TextBox txtChooseDrinkList;
 
         /// <summary>
-        /// plcNoData 控制項。
+        /// btnDelete 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder plcNoData;
+        protected global::System.Web.UI.WebControls.Button btnDelete;
+
+        /// <summary>
+        /// btnSent 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSent;
     }
 }

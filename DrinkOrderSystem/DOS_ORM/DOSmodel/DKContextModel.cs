@@ -8,16 +8,14 @@ namespace DOS_ORM.DOSmodel
     public partial class DKContextModel : DbContext
     {
         public DKContextModel()
-            : base("name=DKContextModel")
+            : base("name=DKContextModel1")
         {
         }
 
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Ice> Ice { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<OrderList> OrderLists { get; set; }
         public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<Suger> Sugers { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Topping> Toppings { get; set; }
         public virtual DbSet<UserAccount> UserAccounts { get; set; }
@@ -34,6 +32,10 @@ namespace DOS_ORM.DOSmodel
                 .Property(e => e.UnitPrice)
                 .HasPrecision(18, 0);
 
+            modelBuilder.Entity<OrderDetail>()
+                .Property(e => e.SubtotalAmount)
+                .HasPrecision(18, 0);
+
             modelBuilder.Entity<OrderList>()
                 .Property(e => e.Account)
                 .IsUnicode(false);
@@ -44,6 +46,10 @@ namespace DOS_ORM.DOSmodel
 
             modelBuilder.Entity<Product>()
                 .Property(e => e.UnitPrice)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<Product>()
+                .Property(e => e.ToppingsUnitPrice)
                 .HasPrecision(18, 0);
 
             modelBuilder.Entity<UserAccount>()

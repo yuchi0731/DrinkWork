@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServerSide/ServerSide.Master" AutoEventWireup="true" CodeBehind="OrderDetail.aspx.cs" Inherits="DrinkOrderSystem.ServerSide.SystemAdmin.OrderDetail" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServerSide/ServerSide.Master" AutoEventWireup="true" CodeBehind="OrderDetailInfo.aspx.cs" Inherits="DrinkOrderSystem.ServerSide.SystemAdmin.OrderDetailInfo" %>
 
 <%@ Register Src="~/ServerSide/UserControl/ucPager.ascx" TagPrefix="uc1" TagName="ucPager" %>
 

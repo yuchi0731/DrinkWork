@@ -1,4 +1,5 @@
 ﻿using DOS_DBSoure;
+using DOS_Models;
 using DOS_ORM.DOSmodel;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace DOS_Auth
         /// 取得目前使用者資料
         /// </summary>
         /// <returns></returns>
-        public static UserInfoModel GetCurrentUser()
+        public static UserInfoModels GetCurrentUser()
         {
             string account = HttpContext.Current.Session["UserLoginInfo"] as string;
 
@@ -36,7 +37,7 @@ namespace DOS_Auth
             }
 
             //因為dr設為取得使用者帳號的方法，所以可以取得對應的欄位
-            UserInfoModel model = new UserInfoModel();
+            UserInfoModels model = new UserInfoModels();
             model.Account = dr["Account"].ToString();
             model.EmployeeID= dr["EmployeeID"].ToString();
             model.DepartmentID = dr["DepartmentID"].ToString();
@@ -60,58 +61,6 @@ namespace DOS_Auth
             return model;
 
         }
-
-
-
-        /// <summary>
-        /// 取得目前訂單資料
-        /// </summary>
-        /// <returns></returns>
-        public static OrderDetailModel GetCurrentOrderDetail()
-        {
-            string orderlist = HttpContext.Current.Session["OrderDetail"] as string;
-
-            if (orderlist == null)
-                return null;
-
-            DataRow dr = DrinkListManager.GetOrderInfo(orderlist);
-            //要改orderlist
-
-            if (dr == null) //一旦發現是空的就要清除資料
-            {
-                HttpContext.Current.Session["OrderDetail"] = null;
-                return null;
-            }
-
-            //因為dr設為取得使用者帳號的方法，所以可以取得對應的欄位
-            OrderDetailModel ordermodel = new OrderDetailModel();
-            ordermodel.OrderNumber = dr["OrderNumber"].ToString();
-            ordermodel.Account = dr["Account"].ToString();
-            ordermodel.OrderTime = dr["OrderTime"].ToString();
-            ordermodel.OrderEndTime = dr["OrderEndTime"].ToString();
-            ordermodel.RequiredTime = dr["RequiredTime"].ToString();
-            ordermodel.ProductName = dr["ProductName"].ToString();
-            ordermodel.Quantity = dr["Quantity"].ToString();
-            ordermodel.UnitPrice = dr["RequiredTime"].ToString();
-            ordermodel.Suger = dr["Suger"].ToString();
-            ordermodel.Ice = dr["Ice"].ToString();
-            ordermodel.toppings = dr["toppings"].ToString(); ordermodel.SupplierName = dr["SupplierName"].ToString();
-            ordermodel.OtherRequest = dr["OtherRequest"].ToString(); 
-
-
-
-
-            return ordermodel;
-
-        }
-
-
-
-
-
-
-
-
 
 
 

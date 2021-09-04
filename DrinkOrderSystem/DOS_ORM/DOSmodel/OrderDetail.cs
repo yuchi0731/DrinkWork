@@ -33,6 +33,8 @@ namespace DOS_ORM.DOSmodel
 
         public decimal UnitPrice { get; set; }
 
+        public decimal SubtotalAmount { get; set; }
+
         [StringLength(50)]
         public string Suger { get; set; }
 
@@ -40,7 +42,7 @@ namespace DOS_ORM.DOSmodel
         public string Ice { get; set; }
 
         [StringLength(100)]
-        public string toppings { get; set; }
+        public string Toppings { get; set; }
 
         [Required]
         [StringLength(100)]

@@ -53,11 +53,9 @@
     <Compile Include="Class1.cs" />
     <Compile Include="DOSmodel\Category.cs" />
     <Compile Include="DOSmodel\DKContextModel.cs" />
-    <Compile Include="DOSmodel\Ice.cs" />
     <Compile Include="DOSmodel\OrderDetail.cs" />
     <Compile Include="DOSmodel\OrderList.cs" />
     <Compile Include="DOSmodel\Product.cs" />
-    <Compile Include="DOSmodel\Suger.cs" />
     <Compile Include="DOSmodel\Supplier.cs" />
     <Compile Include="DOSmodel\Topping.cs" />
     <Compile Include="DOSmodel\UserAccount.cs" />

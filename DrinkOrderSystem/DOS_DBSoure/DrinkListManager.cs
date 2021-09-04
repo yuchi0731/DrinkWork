@@ -1,4 +1,5 @@
-﻿using DOS_ORM.DOSmodel;
+﻿using DOS_Models;
+using DOS_ORM.DOSmodel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace DOS_DBSoure
 {
@@ -68,7 +70,47 @@ namespace DOS_DBSoure
 
 
 
+        /// <summary>
+        /// 取得目前訂單資料
+        /// </summary>
+        /// <returns></returns>
+        public static OrderDetailModels GetCurrentOrderDetail()
+        {
+            string orderlist = HttpContext.Current.Session["OrderDetail"] as string;
 
+            if (orderlist == null)
+                return null;
+
+            DataRow dr = GetOrderInfo(orderlist);
+            //要改orderlist
+
+            if (dr == null) //一旦發現是空的就要清除資料
+            {
+                HttpContext.Current.Session["OrderDetail"] = null;
+                return null;
+            }
+
+            //因為dr設為取得使用者帳號的方法，所以可以取得對應的欄位
+            OrderDetailModels ordermodel = new OrderDetailModels();
+            ordermodel.OrderNumber = dr["OrderNumber"].ToString();
+            ordermodel.Account = dr["Account"].ToString();
+            ordermodel.OrderTime = dr["OrderTime"].ToString();
+            ordermodel.OrderEndTime = dr["OrderEndTime"].ToString();
+            ordermodel.RequiredTime = dr["RequiredTime"].ToString();
+            ordermodel.ProductName = dr["ProductName"].ToString();
+            ordermodel.Quantity = dr["Quantity"].ToString();
+            ordermodel.UnitPrice = dr["RequiredTime"].ToString();
+            ordermodel.Suger = dr["Suger"].ToString();
+            ordermodel.Ice = dr["Ice"].ToString();
+            ordermodel.toppings = dr["toppings"].ToString(); ordermodel.SupplierName = dr["SupplierName"].ToString();
+            ordermodel.OtherRequest = dr["OtherRequest"].ToString();
+
+
+
+
+            return ordermodel;
+
+        }
 
 
 
@@ -164,27 +206,36 @@ namespace DOS_DBSoure
                 return null;
             }
 
-            //using (SqlConnection connection = new SqlConnection(connectionString))
-            //{
-            //    using (SqlCommand command = new SqlCommand(daCommandString, connection))
-            //    {
-            //        try
-            //        {
-            //            connection.Open();
-            //            SqlDataReader reader = command.ExecuteReader();
+        }
 
-            //            DataTable dt = new DataTable();
-            //            dt.Load(reader);
-            //            reader.Close();
-            //            return dt;
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            Console.WriteLine(ex.ToString());
-            //            return null;
-            //        }
-            //    }
-            //}
+
+        /// <summary>
+        /// 取得單筆訂單List
+        /// </summary>
+        /// <returns></returns>
+        public static DataRow GetAllOrderList(int orderID)
+        {
+
+            string connectionString = DBHelper.GetConnectionString();
+
+            string dbCommandString =
+                 @"SELECT OrderNumber, OrderID, Account, OrderTime, OrderEndTime, RequiredTime, SupplierName, TotalPrice
+                   FROM [OrderList]
+                   WHERE [OrderID]
+                    ";
+
+            List<SqlParameter> list = new List<SqlParameter>();
+            list.Add(new SqlParameter("@OrderID", orderID));
+
+            try
+            {
+                return DBHelper.ReadDataRow(connectionString, dbCommandString, list);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
 
         }
 
@@ -221,7 +272,64 @@ namespace DOS_DBSoure
             }
         }
 
-        
+
+
+
+
+        /// <summary>
+        /// 查詢訂單//強型別清單
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public static List<OrderList> GetOrderList(string supplierName)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                        (from item in context.OrderLists
+                         where item.SupplierName == supplierName
+                         select item);
+
+                    var list = query.ToList();
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+
+        /// <summary>
+        /// 查詢訂單明細//強型別清單
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public static List<OrderDetail> GetOrderDetailList(string supplierName)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                        (from item in context.OrderDetails
+                         where item.SupplierName == supplierName
+                         select item);
+
+                    var list = query.ToList();
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
 
 
 
@@ -232,7 +340,7 @@ namespace DOS_DBSoure
         /// </summary>
         /// <param name="SupplierName"></param>
         /// <returns></returns>
-        public static DataTable GetOrderDetailList(string orderNumber)
+        public static DataTable GetOrderDetailListSQL(string orderNumber)
         {
             string connStr = DBHelper.GetConnectionString();
             string dbcommand =

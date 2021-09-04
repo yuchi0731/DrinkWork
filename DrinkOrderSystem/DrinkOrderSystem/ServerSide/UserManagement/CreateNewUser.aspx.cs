@@ -54,7 +54,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 desc = null;
 
 
-            byte[] photo = null;
+            string photo = null;
 
 
 

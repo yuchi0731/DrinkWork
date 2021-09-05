@@ -13,42 +13,93 @@ namespace DOS_DBSoure
 {
     public class DrinkListManager
     {
-        public static void GetDrinkInfo()
+        /// <summary>
+        /// 取得目前訂單資料
+        /// </summary>
+        /// <returns></returns>
+        public static OrderDetailModels GetCurrentOrderDetail()
         {
-            using (DKContextModel context = new DKContextModel())
+            string orderlist = HttpContext.Current.Session["OrderNumber"] as string;
+
+            if (orderlist == null)
+                return null;
+
+            DataRow dr = GetOrderDetailInfo(orderlist);
+            //要改orderlist
+
+            if (dr == null) //一旦發現是空的就要清除資料
             {
-                var prod = context.Products.First();//連動到第一筆資料
-                Console.WriteLine(prod.ProductID);//寫出第一筆資料的ProductName
-
-                //與Products連動，並Select選擇ProductID和ProductName欄位
-                var productNameAndID =
-                    context.Products.Select(obj => obj.ProductID + ":" + obj.ProductName);
-
-
-                foreach (var item in productNameAndID)//取得每一筆ProductIDProductName
-                {
-                    Console.WriteLine(item);
-                }
-
-                //如果今天寫的是webform
-                //this.GridView1.DataSource = context.Products.ToList();
-                //this.GridView1.DataBinf();
+                HttpContext.Current.Session["OrderDetail"] = null;
+                return null;
             }
+
+            //因為dr設為取得使用者帳號的方法，所以可以取得對應的欄位
+            OrderDetailModels ordermodel = new OrderDetailModels();
+            ordermodel.OrderDetailsID = dr["OrderDetailsID"].ToString();
+            ordermodel.OrderNumber = dr["OrderNumber"].ToString();
+            ordermodel.Account = dr["Account"].ToString();
+            ordermodel.OrderTime = dr["OrderTime"].ToString();
+            ordermodel.OrderEndTime = dr["OrderEndTime"].ToString();
+            ordermodel.RequiredTime = dr["RequiredTime"].ToString();
+            ordermodel.ProductName = dr["ProductName"].ToString();
+            ordermodel.UnitPrice = dr["RequiredTime"].ToString();
+            ordermodel.Toppings = dr["Toppings"].ToString();
+            ordermodel.ToppingsUnitPrice = dr["ToppingsUnitPrice"].ToString();
+            ordermodel.Suger = dr["Suger"].ToString();
+            ordermodel.Ice = dr["Ice"].ToString();
+            ordermodel.SupplierName = dr["SupplierName"].ToString();
+            ordermodel.Quantity = dr["Quantity"].ToString();
+            ordermodel.SubtotalAmount = dr["SubtotalAmount"].ToString();
+            ordermodel.OtherRequest = dr["OtherRequest"].ToString();
+
+            return ordermodel;
         }
 
 
+
         /// <summary>
-        /// 取得訂單資訊
+        /// 取得單筆訂單一列/SQL
+        /// </summary>
+        /// <returns></returns>
+        public static DataRow GetOrderInfo(int orderID)
+        {
+
+            string connectionString = DBHelper.GetConnectionString();
+
+            string dbCommandString =
+                 @"SELECT 
+                     OrderID, OrderNumber, Account, OrderTime, OrderEndTime, RequiredTime, SupplierName, TotalPrice
+                   FROM [OrderList]
+                   WHERE [OrderID]
+                    ";
+
+            List<SqlParameter> list = new List<SqlParameter>();
+            list.Add(new SqlParameter("@OrderID", orderID));
+
+            try
+            {
+                return DBHelper.ReadDataRow(connectionString, dbCommandString, list);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+
+        }
+
+        /// <summary>
+        /// 取得單筆訂單一列資訊SQL
         /// </summary>
         /// <param name="account"></param>
         /// <returns></returns>
-        public static DataRow GetOrderInfo(string orderNumber)
+        public static DataRow GetOrderDetailInfo(string orderNumber)
         {
             string connectionString = DBHelper.GetConnectionString();
 
             string dbCommandString =
                 $@"SELECT
-                    OrderNumber, Account, OrderTime, OrderEndTime, RequiredTime, ProductName, Quantity, UnitPrice, Suger, Ice, toppings, SupplierName, OtherRequest
+                     OrderDetailsID, OrderNumber, Account, OrderTime, OrderEndTime, RequiredTime, ProductName, Quantity, UnitPrice, SubtotalAmount, Suger, Ice, Toppings, SupplierName, OtherRequest
                 FROM [OrderDetails]
                 WHERE OrderNumber = @orderNumber
                  ";
@@ -68,76 +119,23 @@ namespace DOS_DBSoure
 
         }
 
-
-
         /// <summary>
-        /// 取得目前訂單資料
+        /// 取得某筆訂單所有跟團者明細資料SQL
         /// </summary>
+        /// <param name="SupplierName"></param>
         /// <returns></returns>
-        public static OrderDetailModels GetCurrentOrderDetail()
-        {
-            string orderlist = HttpContext.Current.Session["OrderDetail"] as string;
-
-            if (orderlist == null)
-                return null;
-
-            DataRow dr = GetOrderInfo(orderlist);
-            //要改orderlist
-
-            if (dr == null) //一旦發現是空的就要清除資料
-            {
-                HttpContext.Current.Session["OrderDetail"] = null;
-                return null;
-            }
-
-            //因為dr設為取得使用者帳號的方法，所以可以取得對應的欄位
-            OrderDetailModels ordermodel = new OrderDetailModels();
-            ordermodel.OrderNumber = dr["OrderNumber"].ToString();
-            ordermodel.Account = dr["Account"].ToString();
-            ordermodel.OrderTime = dr["OrderTime"].ToString();
-            ordermodel.OrderEndTime = dr["OrderEndTime"].ToString();
-            ordermodel.RequiredTime = dr["RequiredTime"].ToString();
-            ordermodel.ProductName = dr["ProductName"].ToString();
-            ordermodel.Quantity = dr["Quantity"].ToString();
-            ordermodel.UnitPrice = dr["RequiredTime"].ToString();
-            ordermodel.Suger = dr["Suger"].ToString();
-            ordermodel.Ice = dr["Ice"].ToString();
-            ordermodel.toppings = dr["toppings"].ToString(); ordermodel.SupplierName = dr["SupplierName"].ToString();
-            ordermodel.OtherRequest = dr["OtherRequest"].ToString();
-
-
-
-
-            return ordermodel;
-
-        }
-
-
-
-
-        /// <summary>
-        /// 取得使用者目前的收支資料
-        /// </summary>
-        /// <param name="userID"></param>
-        /// <returns></returns>
-        public static DataTable GetAccountingList(string userID)
+        public static DataTable GetOrderDetailListSQL(string orderNumber)
         {
             string connStr = DBHelper.GetConnectionString();
             string dbcommand =
                 $@"SELECT
-                    ID,
-                    UserID,
-                    Caption,
-                    Amount,
-                    ActType,
-                    CreateDate,
-                    Body
-                FROM [AccountingNote]
-                WHERE UserID = @userID
+                     OrderDetailsID, OrderNumber, Account, OrderTime, OrderEndTime, RequiredTime, ProductName, Quantity, UnitPrice, SubtotalAmount, Suger, Ice, Toppings, SupplierName, OtherRequest
+                FROM [OrderDetails]
+                WHERE OrderNumber = @orderNumber
                  ";
 
             List<SqlParameter> list = new List<SqlParameter>();
-            list.Add(new SqlParameter("@userID", userID));
+            list.Add(new SqlParameter("@OrderNumber", orderNumber));
 
             try
             {
@@ -150,9 +148,37 @@ namespace DOS_DBSoure
             }
         }
 
+        /// <summary>
+        /// 取得個人訂單歷史紀錄SQL
+        /// </summary>
+        /// <param name="SupplierName"></param>
+        /// <returns></returns>
+        public static DataTable GetOrderUserDetailList(string account)
+        {
+            string connStr = DBHelper.GetConnectionString();
+            string dbcommand =
+                $@"SELECT
+                     OrderDetailsID, OrderNumber, Account, OrderTime, OrderEndTime, RequiredTime, ProductName, Quantity, UnitPrice, SubtotalAmount, Suger, Ice, Toppings, SupplierName, OtherRequest
+                FROM [OrderDetails]
+                WHERE Account = @account
+                 ";
+
+            List<SqlParameter> list = new List<SqlParameter>();
+            list.Add(new SqlParameter("@Account", account));
+
+            try
+            {
+                return DBHelper.ReadDataTable(connStr, dbcommand, list);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
 
         /// <summary>
-        /// 取得店家飲料品項資料
+        /// 利用店名，取得店家飲料品項SQL
         /// </summary>
         /// <param name="supplierName"></param>
         /// <returns></returns>
@@ -162,7 +188,8 @@ namespace DOS_DBSoure
             string connectionString = DBHelper.GetConnectionString();
 
             string dbCommandString =
-                 $@"SELECT ProductName, UnitPrice, Discount, CategoryName, SupplierName
+                 $@"SELECT 
+                    ProductID, ProductName, SupplierName, UnitPrice
                    FROM [Products]
                    WHERE SupplierName = @supplierName";
 
@@ -182,9 +209,8 @@ namespace DOS_DBSoure
 
         }
 
-
         /// <summary>
-        /// 取得所有訂單歷史紀錄
+        /// 取得所有訂單歷史紀錄SQL
         /// </summary>
         /// <returns></returns>
         public static DataTable GetAllOrderList()
@@ -210,40 +236,7 @@ namespace DOS_DBSoure
 
 
         /// <summary>
-        /// 取得單筆訂單List
-        /// </summary>
-        /// <returns></returns>
-        public static DataRow GetAllOrderList(int orderID)
-        {
-
-            string connectionString = DBHelper.GetConnectionString();
-
-            string dbCommandString =
-                 @"SELECT OrderNumber, OrderID, Account, OrderTime, OrderEndTime, RequiredTime, SupplierName, TotalPrice
-                   FROM [OrderList]
-                   WHERE [OrderID]
-                    ";
-
-            List<SqlParameter> list = new List<SqlParameter>();
-            list.Add(new SqlParameter("@OrderID", orderID));
-
-            try
-            {
-                return DBHelper.ReadDataRow(connectionString, dbCommandString, list);
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog(ex);
-                return null;
-            }
-
-        }
-
-
-
-
-        /// <summary>
-        /// 取得選取飲料店飲品資料
+        /// 取得選取飲料店飲品資料SQL
         /// </summary>
         /// <param name="SupplierName"></param>
         /// <returns></returns>
@@ -276,8 +269,16 @@ namespace DOS_DBSoure
 
 
 
+
+
+
+
+
+
+
+
         /// <summary>
-        /// 查詢訂單//強型別清單
+        /// 查詢訂單//強型別清單LINQ
         /// </summary>
         /// <param name="userID"></param>
         /// <returns></returns>
@@ -303,9 +304,8 @@ namespace DOS_DBSoure
             }
         }
 
-
         /// <summary>
-        /// 查詢訂單明細//強型別清單
+        /// 查詢訂單明細//強型別清單LINQ
         /// </summary>
         /// <param name="userID"></param>
         /// <returns></returns>
@@ -331,144 +331,35 @@ namespace DOS_DBSoure
             }
         }
 
-
-
-
-
         /// <summary>
-        /// 取得某筆訂單資料
+        /// 取得店家名稱LINQ
         /// </summary>
-        /// <param name="SupplierName"></param>
         /// <returns></returns>
-        public static DataTable GetOrderDetailListSQL(string orderNumber)
+        public static string GetSupplierName(string product)
         {
-            string connStr = DBHelper.GetConnectionString();
-            string dbcommand =
-                $@"SELECT
-                    OrderNumber, Account, OrderTime, OrderEndTime, RequiredTime, ProductName, Quantity, UnitPrice, Suger, Ice, toppings, SupplierName, OtherRequest
-                FROM [OrderDetails]
-                WHERE OrderNumber = @orderNumber
-                 ";
-
-            List<SqlParameter> list = new List<SqlParameter>();
-            list.Add(new SqlParameter("@OrderNumber", orderNumber));
 
             try
             {
-                return DBHelper.ReadDataTable(connStr, dbcommand, list);
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog(ex);
-                return null;
-            }
-        }
-
-
-
-        /// <summary>
-        /// 取得個人訂單歷史紀錄
-        /// </summary>
-        /// <param name="SupplierName"></param>
-        /// <returns></returns>
-        public static DataTable GetOrderUserDetailList(string account)
-        {
-            string connStr = DBHelper.GetConnectionString();
-            string dbcommand =
-                $@"SELECT
-                    OrderNumber, Account, OrderTime, OrderEndTime, RequiredTime, ProductName, Quantity, UnitPrice, Suger, Ice, toppings, SupplierName, OtherRequest
-                FROM [OrderDetails]
-                WHERE Account = @account
-                 ";
-
-            List<SqlParameter> list = new List<SqlParameter>();
-            list.Add(new SqlParameter("@Account", account));
-
-            try
-            {
-                return DBHelper.ReadDataTable(connStr, dbcommand, list);
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog(ex);
-                return null;
-            }
-        }
-
-
-
-
-
-
-
-        public static string GetSupplierName()
-        {
-
-
-            using (DKContextModel context = new DKContextModel())
-            {
-                var prod = context.Suppliers.First();//連動到第一筆資料
-                Console.WriteLine(prod.SupplierName);//寫出第一筆資料的ProductName
-
-                //與Products連動，並Select選擇ProductID和ProductName欄位
-                var SupplierName =
-                    context.Products.Select(obj => obj.SupplierName);
-
-
-                foreach (var item in SupplierName)//取得每一筆SupplierID
+                using (DKContextModel context = new DKContextModel())
                 {
-                    return item;
-                }
 
-                //如果今天寫的是webform
-                //this.GridView1.DataSource = context.Products.ToList();
-                //this.GridView1.DataBinf();
+                    //與Products連動，並Select選擇ProductID和ProductName欄位
+                    var SupplierName =
+                        context.Products
+                        .Where(obj => obj.ProductName == product)
+                        .Select(obj => obj.SupplierName).FirstOrDefault();
+
+                    return SupplierName;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
             }
 
-            return null;
         }
-
-        //public static DataTable GetAllDrinkInfo(Guid supplierID)
-        //{
-
-        //    string connectionString = DBHelper.GetConnectionString();
-
-        //    string daCommandString =
-        //         @"SELECT ProductName, UnitPrice, Discount, CategoryName, SupplierID
-        //           FROM [Products]
-        //           WHERE SupplierID = @supplierID";
-
-
-        //    List<SqlParameter> list = new List<SqlParameter>();
-        //    list.Add(new SqlParameter("@supplierID", supplierID));
-
-        //    using (SqlConnection connection = new SqlConnection(connectionString))
-        //    {
-        //        using (SqlCommand command = new SqlCommand(daCommandString, connection))
-        //        {
-
-
-        //            try
-        //            {
-        //                connection.Open();
-        //                SqlDataReader reader = command.ExecuteReader();
-
-        //                DataTable dt = new DataTable();
-        //                dt.Load(reader);
-        //                reader.Close();
-        //                return dt;
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                Console.WriteLine(ex.ToString());
-        //                return null;
-        //            }
-        //        }
-        //    }
-
-        //}
-
-
 
 
 

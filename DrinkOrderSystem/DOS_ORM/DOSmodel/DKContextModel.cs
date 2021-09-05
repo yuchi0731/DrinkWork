@@ -8,7 +8,7 @@ namespace DOS_ORM.DOSmodel
     public partial class DKContextModel : DbContext
     {
         public DKContextModel()
-            : base("name=DKContextModel1")
+            : base("name=DKContextModel")
         {
         }
 
@@ -33,6 +33,10 @@ namespace DOS_ORM.DOSmodel
                 .HasPrecision(18, 0);
 
             modelBuilder.Entity<OrderDetail>()
+                .Property(e => e.ToppingsUnitPrice)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<OrderDetail>()
                 .Property(e => e.SubtotalAmount)
                 .HasPrecision(18, 0);
 
@@ -48,8 +52,8 @@ namespace DOS_ORM.DOSmodel
                 .Property(e => e.UnitPrice)
                 .HasPrecision(18, 0);
 
-            modelBuilder.Entity<Product>()
-                .Property(e => e.ToppingsUnitPrice)
+            modelBuilder.Entity<Topping>()
+                .Property(e => e.UnitPrice)
                 .HasPrecision(18, 0);
 
             modelBuilder.Entity<UserAccount>()

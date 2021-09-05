@@ -168,5 +168,17 @@ namespace DOS_Auth
 
         }
 
+
+
+        public static bool AuthTextLength (string txt)
+        {
+            if (txt.Length > 0)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
     }
 }

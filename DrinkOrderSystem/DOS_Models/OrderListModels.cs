@@ -16,6 +16,6 @@ namespace DOS_Models
         public string RequiredTime { get; set; }
         public string SupplierName { get; set; }
         public string TotalPrice { get; set; }
-
+        public string TotalCups { get; set; }
     }
 }

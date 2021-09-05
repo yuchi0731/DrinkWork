@@ -1,7 +1,9 @@
-﻿using DOS_ORM.DOSmodel;
+﻿using DOS_Models;
+using DOS_ORM.DOSmodel;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -53,24 +55,28 @@ namespace DOS_DBSoure
         /// </summary>
         /// <param name="supplierName"></param>
         /// <returns></returns>
-        public static DataTable GetAllDrinkInfo()
+        public static DataTable GetAllUserList()
         {
 
             string connectionString = DBHelper.GetConnectionString();
 
             string dbCommandString =
                  $@"SELECT 
+                            Account, 
                             EmployeeID, 
-                            DepartmentID, 
-                            Department, 
-                            LastName, 
+                            DepartmentID,
+                            Department,
                             FirstName,
+                            LastName,                           
                             Contact,
                             Email,
                             ext,
                             Phone,
                             JobGrade,
-                            CreateDate
+                            Description,
+                            ResponseSuppliers,
+                            CreateDate,
+                            LastModified
                    FROM [UsersInfo]
                    ";
 
@@ -418,6 +424,72 @@ namespace DOS_DBSoure
 
 
 
+
+
+
+
+        /// <summary>
+        /// 寫出所有使用者資料LINQ
+        /// </summary>
+        public static List<UserInfo> GetAllUserListLINQ()
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                        (from user in context.UserInfoes
+                         select user);
+
+                    var list = query.ToList();
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        
+        }
+
+
+
+
+        /// <summary>
+        /// 利用員工ID查詢資料LINQ
+        /// </summary>
+        public static List<UserInfo> GetUserInfoEmployeeID(int employeeID)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+
+                    var query =
+                                (from selectuser in context.UserInfoes
+                                 where selectuser.EmployeeID == employeeID
+                                 select selectuser);
+
+                    var list = query.ToList();
+                    return list;
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+
+        }
+
+
+
+
+
+
         /// <summary>
         /// 新增使用者帳號密碼LINQ
         /// </summary>
@@ -466,7 +538,7 @@ namespace DOS_DBSoure
         /// <param name="responseSuppliers"></param>
         /// <param name="photo"></param>
         /// <param name="EditDate"></param>
-        public static void CreateNewUserInfolinq(string account, int employeeID, string departmentID, string department, string firstName, string lastName, string contact, string email, string ext, string phone, int jobGrade, string description, string responseSuppliers, string photo,DateTime Createdate, DateTime LastDate)
+        public static void CreateNewUserInfolinq(string account, int employeeID, string departmentID, string department, string firstName, string lastName, string contact, string email, string ext, string phone, int jobGrade, string description, string responseSuppliers, string photo)
         {
             using (DKContextModel context = new DKContextModel())
             {
@@ -476,8 +548,8 @@ namespace DOS_DBSoure
                     //變更
                     newuserInfo.Account = account;
                     newuserInfo.EmployeeID = employeeID;
-                    newuserInfo.Department = departmentID;
-                    newuserInfo.FirstName = department;
+                    newuserInfo.DepartmentID = departmentID;
+                    newuserInfo.Department = department;
                     newuserInfo.FirstName = firstName;
                     newuserInfo.LastName = lastName;
                     newuserInfo.Contact = contact;
@@ -488,13 +560,14 @@ namespace DOS_DBSoure
                     newuserInfo.Description = description;
                     newuserInfo.ResponseSuppliers = responseSuppliers;
                     newuserInfo.Photo = photo;
-                    newuserInfo.CreateDate = Createdate;
-                    newuserInfo.LastModified = LastDate;
+                    newuserInfo.CreateDate = DateTime.Now;
+                    newuserInfo.LastModified = DateTime.Now;
 
                     context.UserInfoes.Add(newuserInfo);
                     context.SaveChanges();
 
                 }
+
                 catch (Exception ex)
                 {
                     Logger.WriteLog(ex);
@@ -619,23 +692,10 @@ namespace DOS_DBSoure
 
 
 
-        /// <summary>
-        /// 查詢使用者userID
-        /// </summary>
-        public static Guid GetUserID(string account)
-        {
-            using (DKContextModel context = new DKContextModel())
-            {
-                var userAccount = 
-                    context.UserAccounts
-                    .Select(obj => obj.UserID);
 
-                var id = userAccount.FirstOrDefault();
-                    return id;
 
-            }
 
-        }
+
 
 
 

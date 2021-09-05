@@ -14,15 +14,11 @@ namespace DOS_ORM.DOSmodel
         [StringLength(50)]
         public string ProductName { get; set; }
 
-        public Guid SupplierID { get; set; }
-
         [Required]
         [StringLength(100)]
         public string SupplierName { get; set; }
 
         public decimal UnitPrice { get; set; }
-
-        public int UnitsOnOrder { get; set; }
 
         public int? UnitsMaxOrder { get; set; }
 
@@ -31,12 +27,7 @@ namespace DOS_ORM.DOSmodel
         [StringLength(50)]
         public string CategoryName { get; set; }
 
-        [StringLength(50)]
-        public string Toppings { get; set; }
-
-        public decimal? ToppingsUnitPrice { get; set; }
-
         [StringLength(100)]
-        public string Photo { get; set; }
+        public string Picture { get; set; }
     }
 }

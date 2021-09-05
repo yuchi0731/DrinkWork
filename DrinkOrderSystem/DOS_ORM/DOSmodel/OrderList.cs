@@ -20,15 +20,18 @@ namespace DOS_ORM.DOSmodel
         [StringLength(50)]
         public string Account { get; set; }
 
-        public DateTime? OrderTime { get; set; }
+        public DateTime OrderTime { get; set; }
 
-        public DateTime? OrderEndTime { get; set; }
+        public DateTime OrderEndTime { get; set; }
 
-        public DateTime? RequiredTime { get; set; }
+        public DateTime RequiredTime { get; set; }
 
+        [Required]
         [StringLength(100)]
         public string SupplierName { get; set; }
 
-        public decimal? TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
+
+        public int TotalCups { get; set; }
     }
 }

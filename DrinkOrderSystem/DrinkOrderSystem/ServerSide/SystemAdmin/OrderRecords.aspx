@@ -19,7 +19,7 @@
             <asp:BoundField DataField="TotalPrice" HeaderText="總金額" />
             <asp:TemplateField HeaderText="訂單細項">
                                      <ItemTemplate>
-                                    <a href="/ServerSide/SystemAdmin/OrderDetail.aspx?ID=<%# Eval("OrderNumber") %>">Check</a>
+                                    <a href="/ServerSide/SystemAdmin/OrderDetailInfo.aspx?ID=<%# Eval("OrderNumber") %>">Check</a>
                                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>

@@ -16,7 +16,7 @@ namespace DOS_ORM.DOSmodel
 
         public string Description { get; set; }
 
-        [Column(TypeName = "image")]
-        public byte[] Picture { get; set; }
+        [StringLength(100)]
+        public string Picture { get; set; }
     }
 }

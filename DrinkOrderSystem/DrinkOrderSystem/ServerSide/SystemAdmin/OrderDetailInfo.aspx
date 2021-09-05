@@ -7,6 +7,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
+    <table>
+        <tr>
+            <th>篩選使用者</th>
+            <td>
+                <asp:TextBox ID="txtSelectUser" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+    </table>
     <asp:GridView ID="gvDetail" runat="server" AutoGenerateColumns="False">
          <Columns>
 
@@ -27,7 +35,7 @@
 
         </Columns>
     </asp:GridView>
-    <uc1:ucpager runat="server" id="ucPager" PageSize="10"  Url="/ServerSide/SystemAdmin/OrderDetail.aspx" />
+    <uc1:ucpager runat="server" id="ucPager" PageSize="10"  Url="/ServerSide/SystemAdmin/OrderDetailInfo.aspx" />
                 <asp:PlaceHolder ID="plcNoData" runat="server" Visible="false">
                         <p style="color:red">
                             No data in this Shop.

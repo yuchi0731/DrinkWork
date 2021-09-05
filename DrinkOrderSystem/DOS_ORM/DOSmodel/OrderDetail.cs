@@ -29,24 +29,28 @@ namespace DOS_ORM.DOSmodel
         [StringLength(50)]
         public string ProductName { get; set; }
 
-        public int Quantity { get; set; }
-
         public decimal UnitPrice { get; set; }
-
-        public decimal SubtotalAmount { get; set; }
-
-        [StringLength(50)]
-        public string Suger { get; set; }
-
-        [StringLength(50)]
-        public string Ice { get; set; }
 
         [StringLength(100)]
         public string Toppings { get; set; }
 
+        public decimal? ToppingsUnitPrice { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string Suger { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string Ice { get; set; }
+
         [Required]
         [StringLength(100)]
         public string SupplierName { get; set; }
+
+        public int Quantity { get; set; }
+
+        public decimal SubtotalAmount { get; set; }
 
         public string OtherRequest { get; set; }
     }

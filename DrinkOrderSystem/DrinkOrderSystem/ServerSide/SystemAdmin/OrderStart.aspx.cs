@@ -114,8 +114,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
                  List<OrderDetail> sourcedetaillist = DrinkListManager.GetOrderDetailList(supplierName);
 
-                //取得單價
-
+                //利用商品名連動到商品資料表
                 var drinkdetaillist = sourcedetaillist.Where(obj => obj.ProductName == argu).FirstOrDefault();
                 if(drinkdetaillist != null)
                 {
@@ -136,7 +135,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     UnitPrice = drinkdetaillist.UnitPrice.ToString(),
                     Suger = DDLSugar.SelectedItem.ToString(),
                     Ice = DDLIce.SelectedItem.ToString(),
-                    toppings = DDLToppings.SelectedItem.ToString(),
+                    Toppings = DDLToppings.SelectedItem.ToString(),
                     SupplierName = supplierName,
                     OtherRequest = null
                 };

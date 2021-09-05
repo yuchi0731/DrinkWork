@@ -9,30 +9,15 @@ namespace DOS_ORM.DOSmodel
     public partial class Topping
     {
         [Key]
-        public Guid ToppingsID { get; set; }
+        public int ToppingsID { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string ToppingsName { get; set; }
+
+        public decimal UnitPrice { get; set; }
 
         [StringLength(100)]
-        public string bubble { get; set; }
-
-        [StringLength(100)]
-        public string grassjelly { get; set; }
-
-        [StringLength(100)]
-        public string coffeejelly { get; set; }
-
-        [StringLength(100)]
-        public string coconutjelly { get; set; }
-
-        [StringLength(100)]
-        public string pudding { get; set; }
-
-        [StringLength(100)]
-        public string aloe { get; set; }
-
-        [StringLength(100)]
-        public string taroballs { get; set; }
-
-        [StringLength(100)]
-        public string konjacjelly { get; set; }
+        public string Picture { get; set; }
     }
 }

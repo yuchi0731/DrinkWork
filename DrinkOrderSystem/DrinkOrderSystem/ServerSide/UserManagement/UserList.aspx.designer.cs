@@ -15,6 +15,15 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
     {
 
         /// <summary>
+        /// pnlbase 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlbase;
+
+        /// <summary>
         /// gvUserlist 控制項。
         /// </summary>
         /// <remarks>
@@ -33,31 +42,58 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
         protected global::DrinkOrderSystem.ServerSide.UserControl.ucPager ucPager;
 
         /// <summary>
-        /// ltlMsg 控制項。
+        /// lblselect 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltlMsg;
+        protected global::System.Web.UI.WebControls.Label lblselect;
 
         /// <summary>
-        /// txtKeyword 控制項。
+        /// ddsearch 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtKeyword;
+        protected global::System.Web.UI.WebControls.DropDownList ddsearch;
 
         /// <summary>
-        /// btnKeyword 控制項。
+        /// ltlsearch 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnKeyword;
+        protected global::System.Web.UI.WebControls.Literal ltlsearch;
+
+        /// <summary>
+        /// txtSearch 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSearch;
+
+        /// <summary>
+        /// btnSearch 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearch;
+
+        /// <summary>
+        /// btnSearchClear 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearchClear;
 
         /// <summary>
         /// plcNoData 控制項。
@@ -67,5 +103,14 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder plcNoData;
+
+        /// <summary>
+        /// lbMsg 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbMsg;
     }
 }

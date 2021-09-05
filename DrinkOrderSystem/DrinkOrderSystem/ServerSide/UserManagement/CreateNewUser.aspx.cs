@@ -36,9 +36,10 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
             string txtext = this.txtCreateext.Text;
             string txtphone = this.txtCreatePhone.Text;
             int jobgrade = this.dpCreateJobGrade.SelectedIndex;
+            
 
             string txtReS = this.txtCreateRepS.Text;
-            if (txtReS != "")
+            if (txtReS.Length > 0)
             {
                 txtReS = this.txtCreateRepS.Text;
             }
@@ -46,7 +47,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 txtReS = null;
 
             string desc = this.txtCreatedesc.Text;
-            if (desc != "")
+            if (desc.Length > 0)
             {
                 desc = this.txtCreateRepS.Text;
             }
@@ -54,7 +55,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 desc = null;
 
 
-            string photo = null;
+            string photo = "";
 
 
 
@@ -90,9 +91,9 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                         //UserInfoManager.CreateNewUser(txtAccount, txtPWD);
                         //UserInfoManager.CreateUserDetail(txtAccount, Convert.ToInt32(txtEID), txtDID, txtD, txtFName, txtLName, txtcontact, txtEmail, txtext, txtphone, jobgrade, desc, txtReS, photo);
 
-                        DateTime CreateDate = DateTime.Now;
+                        
                         UserInfoManager.CreateUserlinq(txtAccount, txtPWD);
-                        UserInfoManager.CreateNewUserInfolinq(txtAccount, Convert.ToInt32(txtEID), txtDID, txtD, txtFName, txtLName, txtcontact, txtEmail, txtext, txtphone, jobgrade, desc, txtReS, photo, CreateDate, CreateDate);
+                        UserInfoManager.CreateNewUserInfolinq(txtAccount, Convert.ToInt32(txtEID), txtDID, txtD, txtFName, txtLName, txtcontact, txtEmail, txtext, txtphone, jobgrade, desc, txtReS, photo);
                         MessageBox.Show("～建立成功～", "成功!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Response.Redirect("/ServerSide/UserManagement/UserList.aspx");
 

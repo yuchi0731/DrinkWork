@@ -141,6 +141,7 @@
     <Content Include="ServerSide\SystemAdmin\SendOrder.aspx" />
     <Content Include="ServerSide\SystemAdmin\UserPage.aspx" />
     <Content Include="ServerSide\SystemAdmin\UserRecords.aspx" />
+    <Content Include="ServerSide\SystemAdmin\WithGroup.aspx" />
     <Content Include="ServerSide\UserControl\ucPager.ascx" />
     <Content Include="ServerSide\UserManagement\CreateNewUser.aspx" />
     <Content Include="ServerSide\UserManagement\DeleteOrderRecord.aspx" />
@@ -278,6 +279,13 @@
     </Compile>
     <Compile Include="ServerSide\SystemAdmin\UserRecords.aspx.designer.cs">
       <DependentUpon>UserRecords.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\WithGroup.aspx.cs">
+      <DependentUpon>WithGroup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\WithGroup.aspx.designer.cs">
+      <DependentUpon>WithGroup.aspx</DependentUpon>
     </Compile>
     <Compile Include="ServerSide\UserControl\ucPager.ascx.cs">
       <DependentUpon>ucPager.ascx</DependentUpon>

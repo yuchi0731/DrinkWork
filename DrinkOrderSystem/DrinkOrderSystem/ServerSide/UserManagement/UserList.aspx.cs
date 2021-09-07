@@ -412,6 +412,9 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 return false;
         }
 
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

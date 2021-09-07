@@ -109,8 +109,10 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 string argu = (e.CommandArgument) as string;
 
                 var supplierName = this.Session["DrinkShop"].ToString();
-                var orderNumber = "M01";
-                var account = "OwO";
+                var orderNumber = new Random().ToString(); //產生訂單編號亂數
+
+                var currentUser = AuthManager.GetCurrentUser();
+                
 
                  List<OrderDetail> sourcedetaillist = DrinkListManager.GetOrderDetailList(supplierName);
 
@@ -126,7 +128,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 {
                     OrderNumber = orderNumber,
                     //Account = DOS_Auth.AuthManager.GetCurrentUser().Account,
-                    Account = account,
+                    Account = currentUser.Account,
                     OrderTime = DateTime.Now.ToString(),
                     OrderEndTime = DateTime.Now.ToString(),
                     RequiredTime = DateTime.Now.ToString(),

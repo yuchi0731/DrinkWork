@@ -3,6 +3,7 @@
 <%@ Register Src="~/ServerSide/UserControl/ucPager.ascx" TagPrefix="uc1" TagName="ucPager" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>所有使用者資料</h1>
@@ -37,15 +38,25 @@
                     <asp:Image ID="imgUserPhoto" runat="server" Visible="false" Width="80" Height="50" />
                 </ItemTemplate>
             </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="修改">
+                        <asp:TemplateField HeaderText="修改資料">
                 <ItemTemplate>
-                      <a href="/ServerSide/UserManagement/ModifyUserInfo.aspx?ID=<%# Eval("EmployeeID") %>">Edit</a>
+                      <a href="/ServerSide/UserManagement/ModifyUserInfo.aspx?ID=<%# Eval("EmployeeID") %>">修改</a>
+                </ItemTemplate>
+            </asp:TemplateField>
+                      <asp:TemplateField HeaderText="刪除使用者">
+                <ItemTemplate>
+                    <asp:Button ID="btnDelete" runat="server" Text="刪除" OnClick="btnDelete_Click" />
                 </ItemTemplate>
             </asp:TemplateField>
 
         </Columns>
 </asp:GridView>
+
+
+
+
+
+
 
     <uc1:ucpager runat="server" id="ucPager" PageSize="10"  Url="/ServerSide/UserManagement/UserList.aspx"/>
     <br />

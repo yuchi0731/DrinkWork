@@ -80,7 +80,7 @@
             </tr>
              <tr>
                 <th><asp:Literal ID="ltlext" runat="server">分機號碼</asp:Literal></th>
-                <td><asp:TextBox ID="txtCreateext" runat="server" ToolTip="請輸入4位分機號碼"></asp:TextBox></td>
+                <td><asp:TextBox ID="txtCreatext" runat="server" ToolTip="請輸入4位分機號碼"></asp:TextBox></td>
             </tr>
              <tr>
                 <th><asp:Literal ID="ltlPhone" runat="server">聯絡電話</asp:Literal></th>
@@ -114,7 +114,7 @@
     </div>
 
     <asp:Button ID="btnCreate" runat="server" Text="建立" OnClick="btnCreate_Click" />
-    <input type="reset" value="清除重填"><br />
+    <asp:Button ID="btnReset" runat="server" Text="清除內容"  OnClick="btnReset_Click"/>
     <asp:Label ID="lblMsg" runat="server"></asp:Label><br />
     <asp:Label ID="lblMsg2" runat="server"></asp:Label>
 

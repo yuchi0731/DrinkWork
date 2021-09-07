@@ -33,7 +33,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
             string txtFName = this.txtCreateFName.Text;
             string txtcontact = this.dpCreateContact.SelectedItem.ToString();
             string txtEmail = this.txtCreateEmail.Text;
-            string txtext = this.txtCreateext.Text;
+            string txtext = this.txtCreatext.Text;
             string txtphone = this.txtCreatePhone.Text;
             int jobgrade = this.dpCreateJobGrade.SelectedIndex;
             
@@ -65,7 +65,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
             int rpwdL = this.txtCreateRePWD.Text.Length;
 
             //取得輸入帳號，檢查帳號是否已存在 
-            var drexist = UserInfoManager.GetUserInfoByAccount(txtAccount);
+            var drexist = UserInfoManager.GetUserAccount(txtAccount);
             if (drexist == null)
             {
 
@@ -87,16 +87,11 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
                     else
                     {
-                    
-                        //UserInfoManager.CreateNewUser(txtAccount, txtPWD);
-                        //UserInfoManager.CreateUserDetail(txtAccount, Convert.ToInt32(txtEID), txtDID, txtD, txtFName, txtLName, txtcontact, txtEmail, txtext, txtphone, jobgrade, desc, txtReS, photo);
-
-                        
+                                          
                         UserInfoManager.CreateUserlinq(txtAccount, txtPWD);
                         UserInfoManager.CreateNewUserInfolinq(txtAccount, Convert.ToInt32(txtEID), txtDID, txtD, txtFName, txtLName, txtcontact, txtEmail, txtext, txtphone, jobgrade, desc, txtReS, photo);
                         MessageBox.Show("～建立成功～", "成功!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Response.Redirect("/ServerSide/UserManagement/UserList.aspx");
-
                     }
                 }
             }
@@ -106,25 +101,29 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
                 MessageBox.Show($"此帳號已存在，請重新輸入", "警告!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.txtCreateAccount.Text = null;
-                this.txtCreatePWD.Text = null;
-                this.txtCreateRePWD.Text = null;
-                this.txtCreateEID.Text = null;
-                this.txtCreateDID.Text = null;
-                this.txtCreateD.Text = null;
-                this.txtCreateLName.Text = null;
-                this.txtCreateFName.Text = null;
-                this.dpCreateContact.SelectedIndex = 0;
-                this.txtCreateEmail.Text = null;
-                this.txtCreateext.Text = null;
-                this.txtCreatePhone.Text = null;
-                this.txtCreateRepS.Text = null;
-                this.dpCreateJobGrade.SelectedIndex = 0;
-                this.txtCreatedesc.Text = null;
+
             }
 
 
         }
 
-
+        protected void btnReset_Click(object sender, EventArgs e)
+        {
+            this.txtCreateAccount.Text = null;
+            this.txtCreatePWD.Text = null;
+            this.txtCreateRePWD.Text = null;
+            this.txtCreateEID.Text = null;
+            this.txtCreateDID.Text = null;
+            this.txtCreateD.Text = null;
+            this.txtCreateLName.Text = null;
+            this.txtCreateFName.Text = null;
+            this.dpCreateContact.SelectedIndex = 0;
+            this.txtCreateEmail.Text = null;
+            this.txtCreatext.Text = null;
+            this.txtCreatePhone.Text = null;
+            this.txtCreateRepS.Text = null;
+            this.dpCreateJobGrade.SelectedIndex = 0;
+            this.txtCreatedesc.Text = null;
+        }
     }
 }

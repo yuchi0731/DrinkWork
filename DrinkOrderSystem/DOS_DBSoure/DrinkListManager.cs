@@ -89,7 +89,7 @@ namespace DOS_DBSoure
         }
 
         /// <summary>
-        /// 取得單筆訂單一列資訊SQL
+        /// 取得指定訂單資訊SQL
         /// </summary>
         /// <param name="account"></param>
         /// <returns></returns>
@@ -365,6 +365,112 @@ namespace DOS_DBSoure
 
 
 
+
+
+
+
+        /// <summary>
+        /// 建立新飲料
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <param name="productName"></param>
+        /// <param name="supplierName"></param>
+        /// <param name="unitPrice"></param>
+        /// <param name="unitsMaxOrder"></param>
+        /// <param name="categoryName"></param>
+        /// <param name="picture"></param>
+        public static void CreateNewProduct(int productID, string productName, string supplierName, decimal unitPrice, int unitsMaxOrder, string categoryName, string picture)
+        {
+            try
+            {
+
+                using (DKContextModel context = new DKContextModel())
+                {
+
+                    Product newproduct = new Product();
+                    //加入
+                    newproduct.ProductID = productID;
+                    newproduct.ProductName = productName;
+                    newproduct.SupplierName = supplierName;
+                    newproduct.UnitPrice = unitPrice;
+                    newproduct.UnitsMaxOrder = unitsMaxOrder;
+                    newproduct.CategoryName = categoryName;
+                    newproduct.Picture = picture;
+
+                    context.Products.Add(newproduct);
+                    context.SaveChanges();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return;         
+            }
+        }
+
+        /// <summary>
+        /// 修改飲料資料
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <param name="productName"></param>
+        /// <param name="supplierName"></param>
+        /// <param name="unitPrice"></param>
+        /// <param name="unitsMaxOrder"></param>
+        /// <param name="categoryName"></param>
+        /// <param name="picture"></param>
+        public static void UpdateNewProduct(int productID, string productName, string supplierName, decimal unitPrice, int unitsMaxOrder, string categoryName, string picture)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var product =
+                                    context.Products
+                                    .Where(obj => obj.ProductName == productName).FirstOrDefault();
+
+
+                    //變更
+                    product.ProductID = productID;
+                    product.ProductName = productName;
+                    product.SupplierName = supplierName;
+                    product.UnitPrice = unitPrice;
+                    product.UnitsMaxOrder = unitsMaxOrder;
+                    product.CategoryName = categoryName;
+                    product.Picture = picture;
+
+                    context.SaveChanges();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return;          
+            }
+        }
+
+        /// <summary>
+        /// 刪除飲料資料
+        /// </summary>
+        public static void DeleteProductlinq(string productName)
+        {
+            using (DKContextModel context = new DKContextModel())
+            {
+                //查出分類&產品
+                var DeleteProduct =
+                    context.Products.Where(obj => obj.ProductName == productName
+                    ).FirstOrDefault();
+
+                //如果不為null執行刪除
+                if (DeleteProduct != null)
+                {
+                    context.Products.Remove(DeleteProduct);
+                }
+                
+                context.SaveChanges();
+            }
+        }
 
 
 

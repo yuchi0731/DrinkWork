@@ -63,6 +63,7 @@
     <Compile Include="Tool.cs" />
     <Compile Include="UserInfoManager.cs" />
     <Compile Include="UserInfoSearch.cs" />
+    <Compile Include="UserManagerSQL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

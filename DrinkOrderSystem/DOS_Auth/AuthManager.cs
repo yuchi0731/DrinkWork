@@ -13,8 +13,15 @@ namespace DOS_Auth
 {
     public class AuthManager
     {
-
-
+        /// <summary> 檢查目前是否登入 </summary>
+        /// <returns></returns>
+        public static bool IsLogined()
+        {
+            if (HttpContext.Current.Session["UserLoginInfo"] == null)
+                return false;
+            else
+                return true;
+        }
 
         /// <summary>
         /// 取得目前使用者資料
@@ -27,34 +34,33 @@ namespace DOS_Auth
             if (account == null)
                 return null;
 
-            DataRow dr = UserInfoManager.GetUserInfoByAccount(account);
+            UserInfo userlist = UserInfoManager.GetUserInfo(account);
 
-
-            if (dr == null) //一旦發現是空的就要清除資料
+            if(userlist == null)
             {
                 HttpContext.Current.Session["UserLoginInfo"] = null;
                 return null;
             }
 
+
             //因為dr設為取得使用者帳號的方法，所以可以取得對應的欄位
             UserInfoModels model = new UserInfoModels();
-            model.Account = dr["Account"].ToString();
-            model.EmployeeID= dr["EmployeeID"].ToString();
-            model.DepartmentID = dr["DepartmentID"].ToString();
-            model.Department = dr["Department"].ToString();
-            model.FirstName = dr["FirstName"].ToString();
-            model.CreateDate = dr["CreateDate"].ToString();
-            model.LastName = dr["LastName"].ToString();
-            model.Contact = dr["Contact"].ToString();
-            model.Email = dr["Email"].ToString();
-            model.ext = dr["ext"].ToString();
-            model.Phone = dr["Phone"].ToString();
-            model.JobGrade = dr["JobGrade"].ToString();
-            model.Description = dr["Description"].ToString();
-            model.ResponseSuppliers = dr["ResponseSuppliers"].ToString();
-            model.Photo = dr["Photo"].ToString();
-            model.CreateDate = dr["CreateDate"].ToString();
-            model.LastModified = dr["LastModified"].ToString();
+            model.Account = userlist.Account;
+            model.EmployeeID = userlist.EmployeeID;
+            model.DepartmentID = userlist.DepartmentID;
+            model.Department = userlist.Department;
+            model.FirstName = userlist.FirstName;
+            model.LastName = userlist.LastName;
+            model.Contact = userlist.Contact;
+            model.Email = userlist.Email;
+            model.ext = userlist.ext;
+            model.Phone = userlist.Phone;
+            model.JobGrade = userlist.JobGrade;
+            model.Description = userlist.Description;
+            model.ResponseSuppliers = userlist.ResponseSuppliers;
+            model.Photo = userlist.Photo;
+            model.CreateDate = userlist.CreateDate;
+            model.LastModified = userlist.LastModified;
 
 
 
@@ -62,10 +68,47 @@ namespace DOS_Auth
 
         }
 
+        /// <summary> 嘗試登入 </summary>
+        /// <param name="account"></param>
+        /// <param name="pwd"></param>
+        /// <param name="errorMsg"></param>
+        /// <returns></returns>
+        public static bool TryLogin(string account, string pwd, out string errorMsg)
+        {
+            // check empty
+            if (string.IsNullOrWhiteSpace(account) ||
+                string.IsNullOrWhiteSpace(pwd))
+            {
+                errorMsg = "帳號、密碼為必要輸入項目";
+                return false;
+            }
 
 
+            UserAccount userlist = UserInfoManager.GetUserAccount(account);
+
+            // check null
+            if (userlist == null)
+            {
+                errorMsg = $"帳號為＂{account}＂使用者不存在，請確認是否輸入錯誤";
+                return false;
+            }
 
 
+            // check account / pwd
+            if (string.Compare(userlist.Account, account, true) == 0 &&
+                string.Compare(userlist.Password, pwd, false) == 0)
+            {
+                HttpContext.Current.Session["UserLoginInfo"] = userlist.Account;
+
+                errorMsg = string.Empty;
+                return true;
+            }
+            else
+            {
+                errorMsg = "登入失敗，請確認帳號密碼是否正確";
+                return false;
+            }
+        }
 
         /// <summary>
         /// 登出
@@ -74,6 +117,10 @@ namespace DOS_Auth
         {
             HttpContext.Current.Session["UserLoginInfo"] = null; //清除登入資料，導向登入頁
         }
+
+
+
+
         /// <summary>
         /// 嘗試建立新使用者
         /// </summary>

@@ -11,33 +11,6 @@ namespace DOS_DBSoure
     {
 
 
-        /// <summary>
-        /// 查詢使用者userID
-        /// </summary>
-        public static Guid GetUserID(string account)
-        {
-            try
-            {
-                using (DKContextModel context = new DKContextModel())
-                {
-                    var userAccount =
-                        context.UserAccounts
-                        .Select(obj => obj.UserID);
-
-                    var id = userAccount.FirstOrDefault();
-                    return id;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog(ex);
-                return Guid.Empty;
-            }
-
-
-        }
-
 
 
 

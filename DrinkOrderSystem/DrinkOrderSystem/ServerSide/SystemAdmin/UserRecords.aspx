@@ -4,8 +4,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
-
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <h1>個人訂購紀錄</h1>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
 
      <asp:GridView ID="gvUserDetail" runat="server" AutoGenerateColumns="False">
          <Columns>
@@ -27,10 +29,17 @@
 
         </Columns>
     </asp:GridView>
-    <uc1:ucpager runat="server" id="ucPager"    PageSize="10"   Url="/ServerSide/SystemAdmin/UserRecords.aspx"/>
+    <uc1:ucpager runat="server" id="ucPager"    PageSize="10"   Url="/ServerSide/SystemAdmin/UserRecords.aspx"/><br />
+
+    <asp:DropDownList ID="ddselect" runat="server">
+        <asp:ListItem Value="RecentTime">時間由新至舊</asp:ListItem>
+        <asp:ListItem Value="OldestTime">時間由舊至新</asp:ListItem>
+        <asp:ListItem Value="productName">商品</asp:ListItem>
+     </asp:DropDownList>
+    <asp:Button ID="btnSelect" runat="server" Text="排序" OnClick="btnSelect_Click" />
                 <asp:PlaceHolder ID="plcNoData" runat="server" Visible="false">
                         <p style="color:red">
-                            No data in this Shop.
+                            目前沒有訂購紀錄
                         </p>
                     </asp:PlaceHolder>
 

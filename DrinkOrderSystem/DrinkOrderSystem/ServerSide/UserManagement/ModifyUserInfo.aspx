@@ -6,9 +6,8 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
         <div id="divall" class="container-fluid">
-
             <asp:Literal ID="ltlInfo" runat="server">請在需更改的欄位上輸入，輸入完畢再按下存檔</asp:Literal>
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnRowCommand="GridView1_RowCommand">
                 <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>                         
@@ -51,6 +50,7 @@
             <asp:ListItem>Email</asp:ListItem>
             <asp:ListItem Value="ext">分機</asp:ListItem>
             <asp:ListItem Value="phone">電話</asp:ListItem>
+                    <asp:ListItem Value="email">Email</asp:ListItem>
         </asp:DropDownList><br /></td>
             </tr>
             <tr>
@@ -84,7 +84,7 @@
 
             <tr>
                 <th>更改照片</th>               
-                <td><asp:FileUpload ID="FilePhoto" runat="server" />上傳</td>                      
+                <td><asp:FileUpload ID="filePhoto" runat="server" /></td>                      
             </tr>
 
         </table>
@@ -105,7 +105,7 @@
     </div>
 
     <asp:Button ID="btnUpdate" runat="server" Text="修改"  OnClick="btnUpdate_Click"/>
-    <asp:Button ID="btnReset" runat="server" Text="重置"  OnClick="btnReset_Click"/><bt />
-    <asp:Label ID="lblMsg" runat="server" ForeColor="Red"></asp:Label><br />
+    <asp:Button ID="btnReset" runat="server" Text="重置"  OnClick="btnReset_Click"/><br />
+    <asp:Label ID="lblMsg" runat="server" ForeColor="Red" Visible="false" ></asp:Label><br />
 
 </asp:Content>

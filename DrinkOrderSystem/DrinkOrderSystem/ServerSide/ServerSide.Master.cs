@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DOS_Auth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,17 @@ namespace DrinkOrderSystem.ServerSide
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (!AuthManager.IsLogined())
+            {
+                Response.Redirect("/ClientSide/Login.aspx");
+                return;
+            }
+
+            var currentuser = AuthManager.GetCurrentUser();
+            if (currentuser.JobGrade != 0)
+                ltlManger.Visible = true;
+          
 
         }
     }

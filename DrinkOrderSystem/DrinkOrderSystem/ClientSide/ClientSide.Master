@@ -36,12 +36,13 @@
                 </tr>
                  <tr>
                     <td>
-                        表單超連結
+                        
                         <a href="Default.aspx">系統首頁</a><br />
                         <a href="Login.aspx">登入系統</a><br />
                         <a href="Introduction.aspx">系統介紹</a><br />
                         <a href="StaffIntroduction.aspx">系統管理員介紹</a><br />
-                        <a href="Contact.aspx">聯絡管理者</a>
+                        <a href="DrinkDetail.aspx">目前合作飲品</a><br />
+                        <a href="Contact.aspx">意見回饋</a>
                     </td>
                      <td>
                          <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

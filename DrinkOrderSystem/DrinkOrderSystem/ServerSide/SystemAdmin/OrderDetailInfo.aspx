@@ -11,7 +11,7 @@
         <tr>
             <th>篩選使用者</th>
             <td>
-                <asp:TextBox ID="txtSelectUser" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtSelectUser" runat="server"></asp:TextBox><asp:Button ID="btnSelect" runat="server" Text="篩選" />
             </td>
         </tr>
     </table>
@@ -20,9 +20,9 @@
 
             <asp:BoundField DataField="OrderNumber" HeaderText="訂單名稱" />
             <asp:BoundField DataField="Account" HeaderText="訂購人" />
-            <asp:BoundField DataField="OrderTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="訂購時間" />
-            <asp:BoundField DataField="OrderEndTime" DataFormatString="{0:yyyy-MM-dd-hh:mm:ss}" HeaderText="截止時間" />
-            <asp:BoundField DataField="RequiredTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="需求時間" />
+            <asp:BoundField DataField="OrderTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" HeaderText="訂購時間" />
+            <asp:BoundField DataField="OrderEndTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" HeaderText="截止時間" />
+            <asp:BoundField DataField="RequiredTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" HeaderText="需求時間" />
             <asp:BoundField DataField="ProductName" HeaderText="商品名稱" />
 
              <asp:BoundField DataField="Quantity" HeaderText="數量" />

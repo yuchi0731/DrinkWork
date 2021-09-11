@@ -12,6 +12,7 @@ using DOS_Auth;
 using DOS_ORM.DOSmodel;
 using Label = System.Web.UI.WebControls.Label;
 using Image = System.Web.UI.WebControls.Image;
+using Button = System.Web.UI.WebControls.Button;
 
 namespace DrinkOrderSystem.ServerSide.UserManagement
 {
@@ -20,7 +21,12 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            //read Users data
+            if (!AuthManager.IsLogined())
+            {
+                Response.Redirect("/ClientSide/Login.aspx");
+                return;
+            }
+
             var list = UserInfoManager.GetAllUserListLINQ();
             
            
@@ -45,20 +51,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
         protected void btnCreate_Click(object sender, EventArgs e)
         {
-            DialogResult MsgBoxResult;
-            MsgBoxResult = MessageBox.Show("若要建立新的使用者，將登出現在使用者資料", "提示",
-                MessageBoxButtons.OKCancel,
-                MessageBoxIcon.Exclamation);
-
-            if (MsgBoxResult == DialogResult.OK)
-            {
                 Response.Redirect("/ServerSide/SystemAdmin/CreateNewUser.aspx");
-                AuthManager.Logout();
-            }
-            else
-            {
-                return;
-            }
         }
 
         private int GetCurrentPage()
@@ -82,7 +75,6 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
         {
             int startIndex = (this.GetCurrentPage() - 1) * 10;
             return list.Skip(startIndex).Take(10).ToList();
-
         }
 
         //gvUserlist事件>職等文字顯示
@@ -412,9 +404,27 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 return false;
         }
 
-        protected void btnDelete_Click(object sender, EventArgs e)
+
+        protected void gvUserlist_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            var item = e.CommandSource as Button;
+            var account = item.CommandName as string;
+
+            DialogResult MsgDelete;
+            MsgDelete = MessageBox.Show("若刪除使用者將無法復原，繼續請按確定", "刪除使用者資料？",
+            MessageBoxButtons.OKCancel,
+            MessageBoxIcon.Warning);
+
+
+            if (MsgDelete == DialogResult.OK)
+                UserInfoManager.DeleteUserlinq(account);
+
+            else
+                return;
 
         }
+
+
+
     }
 }

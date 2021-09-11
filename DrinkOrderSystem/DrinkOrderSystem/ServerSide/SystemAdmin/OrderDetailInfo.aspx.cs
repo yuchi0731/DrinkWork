@@ -1,4 +1,6 @@
-﻿using DOS_DBSoure;
+﻿using DOS_Auth;
+using DOS_DBSoure;
+using DOS_ORM.DOSmodel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,37 +15,30 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!AuthManager.IsLogined())
+            {
+                Response.Redirect("/ClientSide/Login.aspx");
+                return;
+            }
+
+
+
+
             var a = "M001";
             
             //read all drink data
-            var dt = DrinkListManager.GetOrderDetailListSQL(a);
+            var list = DrinkListManager.GetOrderDetailListbyorderNumber(a);
 
-            int drinkcount = dt.Rows.Count;
-
-            if (dt.Rows.Count > 0) //check is empty data (大於0就做資料繫結)
+            if (list.Count > 0) //check is empty data (大於0就做資料繫結)
             {
 
-                var dtpaged = this.GetPagedDataTable(dt);
+                var DetailList = this.GetPageDataTable(list);
 
-                this.ucPager.Totaluser = dt.Rows.Count;
+                this.ucPager.Totaluser = list.Count;
                 this.ucPager.BindUserList();
 
 
-                string result = string.Empty;
-                //取得UserInfo資料跑Rows和Columns資料
-                foreach (DataRow dr in dt.Rows)
-                {
-                    result = result + "<tr>";
-
-                    foreach (DataColumn dc in dt.Columns)
-                    {
-                        result = result + "<td>" + dr[dc] + "</td>";
-                    }
-                    result = result + "</tr>";
-                }
-
-
-                this.gvDetail.DataSource = dtpaged;
+                this.gvDetail.DataSource = DetailList;
                 this.gvDetail.DataBind();
 
             }
@@ -70,32 +65,11 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             return intPage;
         }
 
-        private DataTable GetPagedDataTable(DataTable dt)
+        private List<OrderDetail> GetPageDataTable(List<OrderDetail> list)
         {
-            DataTable dtPaged = dt.Clone();
-            int pageSize = this.ucPager.PageSize;
-
-
             int startIndex = (this.GetCurrentPage() - 1) * 10;
-            int endIndex = (this.GetCurrentPage()) * 10;
-
-            if (endIndex > dt.Rows.Count)
-                endIndex = dt.Rows.Count;
-
-            for (var i = startIndex; i < endIndex; i++)
-            {
-                DataRow dr = dt.Rows[i];
-                var drNew = dtPaged.NewRow();
-
-                foreach (DataColumn dc in dt.Columns)
-                {
-                    drNew[dc.ColumnName] = dr[dc];
-                }
-
-                dtPaged.Rows.Add(drNew);
-            }
-
-            return dtPaged;
+            return list.Skip(startIndex).Take(10).ToList();
         }
+
     }
 }

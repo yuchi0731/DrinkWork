@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="DBHelper.cs" />
     <Compile Include="DrinkListManager.cs" />
+    <Compile Include="DrinkListManagerSQL.cs" />
     <Compile Include="FileUploadManager.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -15,39 +15,46 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
     public partial class OrderStart : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {       
-       
+        {
+            if (!AuthManager.IsLogined())
+            {
+                Response.Redirect("/ClientSide/Login.aspx");
+                return;
+            }
         }
 
 
 
         protected void Imgbtn50Lan_Click(object sender, ImageClickEventArgs e)
         {
+            this.Session["DrinkShop"] = null;
             this.Session["DrinkShop"] = "50Lan";
 
             this.txtChooseDrinkList.Text = string.Empty;
             string SupplierName = "50Lan";
-            var dt = DrinkListManager.GetChooseDrinkList(SupplierName);
+            var list = DrinkListManager.GetProducts(SupplierName);
 
-            ShopBtn(dt);
+            GetShopData(list);
         }
 
         protected void ImgbtnWhiteAlley_Click(object sender, ImageClickEventArgs e)
         {
+            this.Session["DrinkShop"] = null;
             this.Session["DrinkShop"] = "WhiteAlley";
-            
+
             string SupplierName = "WhiteAlley";
-            var dt = DrinkListManager.GetChooseDrinkList(SupplierName);
-            ShopBtn(dt);
+            var list = DrinkListManager.GetProducts(SupplierName);
+            GetShopData(list);
         }
 
         protected void ImgbtnMilkshop_Click(object sender, ImageClickEventArgs e)
         {
+            this.Session["DrinkShop"] = null;
             this.Session["DrinkShop"] = "Milkshop";
 
             string SupplierName = "Milkshop";
-            var dt = DrinkListManager.GetChooseDrinkList(SupplierName);
-            ShopBtn(dt);
+            var list = DrinkListManager.GetProducts(SupplierName);
+            GetShopData(list);
         }
 
 
@@ -55,13 +62,13 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         /// 商家的共用建立List
         /// </summary>
         /// <param name="dt"></param>
-        private void ShopBtn(DataTable dt)
+        private void GetShopData(List<Product> list)
         {
-            if (dt.Rows.Count > 0) //check is empty data (大於0就做資料繫結)
+            if (list.Count > 0) //check is empty data (大於0就做資料繫結)
             {
-                var dtPaged = this.GetPagedDataTable(dt);
+                var dtPaged = this.GetPageDataTable(list);
 
-                this.gvChooseDrink.DataSource = dtPaged;
+                this.gvChooseDrink.DataSource = list;
                 this.gvChooseDrink.DataBind();
                 this.ucPager.Visible = true;
             }
@@ -92,6 +99,45 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             var DDLIce = container.FindControl("dlChooseIce") as DropDownList;
             var DDLToppings = container.FindControl("dlChooseToppings") as DropDownList;
 
+
+
+            if (DDLQuantity.SelectedIndex == 0 || DDLQuantity.SelectedIndex != 1 || DDLQuantity.SelectedIndex != 2 || DDLQuantity.SelectedIndex != 3 || DDLQuantity.SelectedIndex != 4 || DDLQuantity.SelectedIndex != 5)
+            {
+                this.txtChooseDrinkList.Visible = true;
+                DDLQuantity.SelectedIndex = 0;
+                this.txtChooseDrinkList.Text = "數量選擇格式錯誤，請重新選擇";
+                return;
+            }
+
+
+            if (DDLSugar.SelectedIndex == 0 || DDLSugar.SelectedIndex != 1 || DDLSugar.SelectedIndex != 2 || DDLSugar.SelectedIndex != 3 || DDLSugar.SelectedIndex != 4 || DDLSugar.SelectedIndex != 5)
+            {
+                this.txtChooseDrinkList.Visible = true;
+                DDLSugar.SelectedIndex = 0;
+                this.txtChooseDrinkList.Text = "糖量選擇格式錯誤，請重新選擇";
+                return;
+            }
+
+
+            if (DDLIce.SelectedIndex == 0 || DDLIce.SelectedIndex != 1 || DDLIce.SelectedIndex != 2 || DDLIce.SelectedIndex != 3 || DDLIce.SelectedIndex != 4)
+            {
+                this.txtChooseDrinkList.Visible = true;
+                DDLIce.SelectedIndex = 0;
+                this.txtChooseDrinkList.Text = "冰塊選擇格式錯誤，請重新選擇";
+                return;
+            }
+
+
+            if (DDLToppings.SelectedIndex == 0 || DDLToppings.SelectedIndex != 1 || DDLToppings.SelectedIndex != 2 || DDLToppings.SelectedIndex != 3 || DDLToppings.SelectedIndex != 4)
+            {
+                this.txtChooseDrinkList.Visible = true;
+                DDLToppings.SelectedIndex = 0;
+                this.txtChooseDrinkList.Text = "加料選擇格式錯誤，請重新選擇";
+                return;
+            }
+
+
+
             if (string.Compare("ChooseDrink", item.CommandName, true) == 0)
             {
                 this.txtChooseDrinkList.Visible = true;
@@ -112,29 +158,37 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 var orderNumber = new Random().ToString(); //產生訂單編號亂數
 
                 var currentUser = AuthManager.GetCurrentUser();
-                
 
-                 List<OrderDetail> sourcedetaillist = DrinkListManager.GetOrderDetailList(supplierName);
+
+                List<OrderDetail> sourcedetaillist = DrinkListManager.GetOrderDetailList(supplierName);
 
                 //利用商品名連動到商品資料表
                 var drinkdetaillist = sourcedetaillist.Where(obj => obj.ProductName == argu).FirstOrDefault();
-                if(drinkdetaillist != null)
+                if (drinkdetaillist != null)
                 {
                     if (this.Session["SelectedItems"] == null)
                         this.Session["SelectedItems"] = new List<OrderDetailModels>();
                 }
 
+                int quan;
+                if (!int.TryParse(DDLQuantity.Text, out quan))
+                {
+                    this.txtChooseDrinkList.Text = "格式錯誤，杯數須為整數，請確認後重新輸入";
+                    return;
+                }
+
                 var orderdetaillist = new OrderDetailModels()
                 {
+                    OrderDetailsID = Guid.NewGuid(),
                     OrderNumber = orderNumber,
                     //Account = DOS_Auth.AuthManager.GetCurrentUser().Account,
                     Account = currentUser.Account,
-                    OrderTime = DateTime.Now.ToString(),
-                    OrderEndTime = DateTime.Now.ToString(),
-                    RequiredTime = DateTime.Now.ToString(),
+                    OrderTime = DateTime.Now,
+                    OrderEndTime = DateTime.Now,
+                    RequiredTime = DateTime.Now,
                     ProductName = e.CommandArgument as string,
-                    Quantity = DDLQuantity.SelectedItem.Value,
-                    UnitPrice = drinkdetaillist.UnitPrice.ToString(),
+                    Quantity = quan,
+                    UnitPrice = drinkdetaillist.UnitPrice,
                     Suger = DDLSugar.SelectedItem.ToString(),
                     Ice = DDLIce.SelectedItem.ToString(),
                     Toppings = DDLToppings.SelectedItem.ToString(),
@@ -145,9 +199,9 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
                 ((List<OrderDetailModels>)this.Session["SelectedItems"]).Add(orderdetaillist);
 
-        }
+            }
 
-    }
+        }
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
@@ -180,31 +234,12 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         }
 
 
-        private DataTable GetPagedDataTable(DataTable dt)
+
+        private List<Product> GetPageDataTable(List<Product> list)
         {
-            DataTable dtPaged = dt.Clone();
-            //int pageSize = this.ucPager.PageSize;
-
-
             int startIndex = (this.GetCurrentPage() - 1) * 10;
-            int endIndex = (this.GetCurrentPage()) * 10;
+            return list.Skip(startIndex).Take(10).ToList();
 
-            if (endIndex > dt.Rows.Count)
-                endIndex = dt.Rows.Count;
-
-            for (var i = startIndex; i < endIndex; i++)
-            {
-                DataRow dr = dt.Rows[i];
-                var drNew = dtPaged.NewRow();
-
-                foreach (DataColumn dc in dt.Columns)
-                {
-                    drNew[dc.ColumnName] = dr[dc];
-                }
-
-                dtPaged.Rows.Add(drNew);
-            }
-            return dtPaged;
         }
 
     }

@@ -14,15 +14,6 @@ namespace DOS_DBSoure
     public class UserInfoManager
     {
 
-
-
-
-
-
-
-
-        //以下LINQ
-
         /// <summary>
         /// 寫出所有使用者資料LINQ
         /// </summary>
@@ -131,8 +122,6 @@ namespace DOS_DBSoure
             }
         }
 
-
-
         /// <summary>
         /// 利用員工ID查詢資料LINQ
         /// </summary>
@@ -161,8 +150,6 @@ namespace DOS_DBSoure
             }
 
         }
-
-
 
         /// <summary>
         /// 新增使用者帳號密碼LINQ
@@ -257,6 +244,8 @@ namespace DOS_DBSoure
         /// </summary>
         public static void UpdateUserAccountlinq(Guid id, string account)
         {
+            try
+            {
             using (DKContextModel context = new DKContextModel())
             {
                 //取得資料(Lambda)
@@ -269,6 +258,13 @@ namespace DOS_DBSoure
 
                 context.SaveChanges();
             }
+            }
+
+                        catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return;
+            }
         }
 
 
@@ -278,18 +274,27 @@ namespace DOS_DBSoure
         /// </summary>
         public static void UpdateUserPWDlinq(string account, string pwd)
         {
-            using (DKContextModel context = new DKContextModel())
+            try
             {
-                //取得資料(Lambda)
-                var useracc =
-                        context.UserAccounts
-                        .Where(obj => obj.Account == account).FirstOrDefault();
+                using (DKContextModel context = new DKContextModel())
+                {
+                    //取得資料(Lambda)
+                    var useracc =
+                            context.UserAccounts
+                            .Where(obj => obj.Account == account).FirstOrDefault();
 
-                //變更
-                useracc.Password = pwd;
+                    //變更
+                    useracc.Password = pwd;
 
-                context.SaveChanges();
+                    context.SaveChanges();
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return;
+            }
+
         }
 
 
@@ -298,33 +303,41 @@ namespace DOS_DBSoure
         /// </summary>
         public static void UpdateUserInfolinq(string account, int employeeID, string departmentID, string department, string firstName, string lastName, string contact, string email, string ext, string phone, int jobGrade, string description, string responseSuppliers, string photo, DateTime EditDate)
         {
-            using (DKContextModel context = new DKContextModel())
+            try
             {
-                //取得資料(Lambda)
-                var useracc =
-                        context.UserInfoes
-                        .Where(obj => obj.Account == account).FirstOrDefault();
+                using (DKContextModel context = new DKContextModel())
+                {
+                    //取得資料(Lambda)
+                    var useracc =
+                            context.UserInfoes
+                            .Where(obj => obj.Account == account).FirstOrDefault();
 
 
-                //變更
-                useracc.Account = account;
-                useracc.EmployeeID = employeeID;
-                useracc.Department = departmentID;
-                useracc.FirstName = department;
-                useracc.FirstName = firstName;
-                useracc.LastName = lastName;
-                useracc.Contact = contact;
-                useracc.Email = email;
-                useracc.ext = ext;
-                useracc.Phone = phone;
-                useracc.JobGrade = jobGrade;
-                useracc.Description = description;
-                useracc.ResponseSuppliers = responseSuppliers;
-                useracc.Photo = photo;
-                useracc.LastModified = EditDate;
+                    //變更
+                    useracc.Account = account;
+                    useracc.EmployeeID = employeeID;
+                    useracc.Department = departmentID;
+                    useracc.FirstName = department;
+                    useracc.FirstName = firstName;
+                    useracc.LastName = lastName;
+                    useracc.Contact = contact;
+                    useracc.Email = email;
+                    useracc.ext = ext;
+                    useracc.Phone = phone;
+                    useracc.JobGrade = jobGrade;
+                    useracc.Description = description;
+                    useracc.ResponseSuppliers = responseSuppliers;
+                    useracc.Photo = photo;
+                    useracc.LastModified = EditDate;
 
-                context.SaveChanges();
+                    context.SaveChanges();
 
+                }
+            }
+            catch(Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return;
             }
         }
 
@@ -335,7 +348,9 @@ namespace DOS_DBSoure
         /// </summary>
         public static void DeleteUserlinq(string account)
         {
-            using (DKContextModel context = new DKContextModel())
+            try
+            {
+          using (DKContextModel context = new DKContextModel())
             {
                 //查出userAccount資料
                 var DeleteuserAccount =
@@ -357,6 +372,13 @@ namespace DOS_DBSoure
                 }
                
                 context.SaveChanges();
+            }
+            }
+  
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return;
             }
         }
 

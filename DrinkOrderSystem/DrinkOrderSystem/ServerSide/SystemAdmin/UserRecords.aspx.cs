@@ -1,5 +1,6 @@
 ﻿using DOS_Auth;
 using DOS_DBSoure;
+using DOS_ORM.DOSmodel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,60 +15,28 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ////check logined
-            ////if (this.Session["UserLoginInfo"] == null)>>錯誤性太高封裝成方法
-            //if (!AuthManager.IsLogined())
-            //{
-            //    Response.Redirect("/Frontside/Login.aspx");
-            //    return;
-            //}
+            if (!AuthManager.IsLogined())
+            {
+                Response.Redirect("/ClientSide/Login.aspx");
+                return;
+            }
 
+            var currentAccount = AuthManager.GetCurrentUser();
+            var account = currentAccount.Account;
+          
+            var userDetailList = DrinkListManager.GetUserDetailList(account);
 
-            var currentUser = AuthManager.GetCurrentUser();
-
-
-            //if (currentUser == null) //如果帳號不存在，導向登入頁
-            //{
-            //    this.Session["UserLoginInfo"] = null;
-            //    Response.Redirect("/Frontside/Login.aspx");
-            //    return;
-            //}
-
-
-
-            var currentAccount = currentUser.Account;
-
-            //read all drink data
-            var dt = DrinkListManager.GetOrderUserDetailList(currentAccount);
-
-            int drinkcount = dt.Rows.Count;
-
-            if (dt.Rows.Count > 0) //check is empty data (大於0就做資料繫結)
+            if (userDetailList.Count > 0) //check is empty data (大於0就做資料繫結)
             {
 
-                var dtpaged = this.GetPagedDataTable(dt);
-
-                this.ucPager.Totaluser = dt.Rows.Count;
-                this.ucPager.BindUserList();
-
-
-                string result = string.Empty;
-                //取得UserInfo資料跑Rows和Columns資料
-                foreach (DataRow dr in dt.Rows)
-                {
-                    result = result + "<tr>";
-
-                    foreach (DataColumn dc in dt.Columns)
-                    {
-                        result = result + "<td>" + dr[dc] + "</td>";
-                    }
-                    result = result + "</tr>";
-                }
-
-
-                this.gvUserDetail.DataSource = dtpaged;
+                var DetailList = this.GetPageDataTable(userDetailList);
+                this.gvUserDetail.DataSource = DetailList;
                 this.gvUserDetail.DataBind();
 
+                this.ucPager.Totaluser = userDetailList.Count;
+                this.ucPager.Bind();
+
+     
             }
             else
             {
@@ -92,32 +61,85 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             return intPage;
         }
 
-        private DataTable GetPagedDataTable(DataTable dt)
+        private List<OrderDetail> GetPageDataTable(List<OrderDetail> list)
         {
-            DataTable dtPaged = dt.Clone();
-            int pageSize = this.ucPager.PageSize;
-
-
             int startIndex = (this.GetCurrentPage() - 1) * 10;
-            int endIndex = (this.GetCurrentPage()) * 10;
+            return list.Skip(startIndex).Take(10).ToList();
+        }
 
-            if (endIndex > dt.Rows.Count)
-                endIndex = dt.Rows.Count;
+        protected void btnSelect_Click(object sender, EventArgs e)
+        {
+            
+            var currentAccount = AuthManager.GetCurrentUser();
+            var account = currentAccount.Account;
+            
 
-            for (var i = startIndex; i < endIndex; i++)
+            var select = this.ddselect.Items.ToString();
+            if (select == "時間由新至舊")
             {
-                DataRow dr = dt.Rows[i];
-                var drNew = dtPaged.NewRow();
-
-                foreach (DataColumn dc in dt.Columns)
+                var userDetailList = DrinkListManager.GetUserDetailOrderByRtime(account);
+                if (userDetailList.Count > 0) //check is empty data (大於0就做資料繫結)
                 {
-                    drNew[dc.ColumnName] = dr[dc];
-                }
 
-                dtPaged.Rows.Add(drNew);
+                    var dtpaged = this.GetPageDataTable(userDetailList);
+                    this.gvUserDetail.DataSource = dtpaged;
+                    this.gvUserDetail.DataBind();
+
+                    this.ucPager.Totaluser = userDetailList.Count;
+                    this.ucPager.Bind();
+
+
+                }
+                else
+                {
+                    this.gvUserDetail.Visible = false;
+                    this.plcNoData.Visible = true;
+                }
             }
 
-            return dtPaged;
+            if (select == "時間由舊至新")
+            {
+                var userDetailList = DrinkListManager.GetUserDetailOrderByOtime(account);
+                if (userDetailList.Count > 0) //check is empty data (大於0就做資料繫結)
+                {
+
+                    var dtpaged = this.GetPageDataTable(userDetailList);
+                    this.gvUserDetail.DataSource = dtpaged;
+                    this.gvUserDetail.DataBind();
+
+                    this.ucPager.Totaluser = userDetailList.Count;
+                    this.ucPager.Bind();
+
+
+                }
+                else
+                {
+                    this.gvUserDetail.Visible = false;
+                    this.plcNoData.Visible = true;
+                }
+            }
+
+            if (select == "商品")
+            {
+                var userDetailList = DrinkListManager.GetUserDetailOrderByProduct(account);
+                if (userDetailList.Count > 0) //check is empty data (大於0就做資料繫結)
+                {
+
+                    var dtpaged = this.GetPageDataTable(userDetailList);
+                    this.gvUserDetail.DataSource = dtpaged;
+                    this.gvUserDetail.DataBind();
+
+                    this.ucPager.Totaluser = userDetailList.Count;
+                    this.ucPager.Bind();
+
+
+                }
+                else
+                {
+                    this.gvUserDetail.Visible = false;
+                    this.plcNoData.Visible = true;
+                }
+            }
         }
     }
 }

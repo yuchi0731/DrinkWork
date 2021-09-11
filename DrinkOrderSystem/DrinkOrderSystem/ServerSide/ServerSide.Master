@@ -51,7 +51,7 @@
 
 
 </head>
-<body style="background-color:slategrey">
+<body style="background-color:antiquewhite">
     <form id="form1" runat="server">
         <div id="divbase" class="container">
              <!-- 漢堡選單 -->
@@ -120,12 +120,14 @@
             
         </div>
                <div id="d4">
-                        <a href="UserPage.aspx">使用者介面</a><br />
-                        <a href="OrderStart.aspx">開團</a>
-                        <a href="UserRecords.aspx">個人訂購歷史</a><br />
-                        <a href="NowOrdering.aspx">目前可跟團清單</a><br />
-                        <a href="OrderRecords.aspx">歷史訂購紀錄</a><br />
-                        
+                        <a href="../SystemAdmin/UserPage.aspx">使用者介面</a><br />
+                        <a href="../SystemAdmin/OrderStart.aspx">開團</a><br />              
+                        <a href="../SystemAdmin/NowOrdering.aspx">目前可跟團清單</a><br />
+                        <a href="../SystemAdmin/UserRecords.aspx">個人訂購紀錄</a><br />
+                        <a href="../SystemAdmin/OrderRecords.aspx">歷史訂購紀錄</a><br />
+                   <asp:Literal ID="ltlManger" runat="server" Visible="false">
+                       <a href="../UserManagement/UserList.aspx">使用者清單</a><br />
+                   </asp:Literal>
                         </div>
             </div>
     </form>

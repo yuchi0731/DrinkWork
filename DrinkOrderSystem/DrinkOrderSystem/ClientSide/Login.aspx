@@ -2,4 +2,20 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:PlaceHolder ID="plcLogin" runat="server" Visible="false"></asp:PlaceHolder>
+    <table>
+        <tr>
+            <th>帳號</th>
+            <td><asp:TextBox runat="server" ID="txtAccount"></asp:TextBox></td>
+        </tr>
+                <tr>
+            <th>密碼</th>
+            <td><asp:TextBox runat="server" ID="txtPWD" TextMode="Password"></asp:TextBox></td>
+        </tr>
+    </table>
+    <asp:Button ID="btnLogin" runat="server" Text="登入" OnClick="btnLogin_Click" />
+    <asp:Button ID="btnforget" runat="server" Text="忘記密碼" OnClick="btnforget_Click" /><br />
+    <asp:Label ID="lbMsg" runat="server"  ForeColor="Red"></asp:Label>
+
 </asp:Content>
+

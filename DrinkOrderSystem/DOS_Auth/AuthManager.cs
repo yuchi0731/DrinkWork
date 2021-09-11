@@ -68,6 +68,10 @@ namespace DOS_Auth
 
         }
 
+
+
+
+
         /// <summary> 嘗試登入 </summary>
         /// <param name="account"></param>
         /// <param name="pwd"></param>
@@ -150,10 +154,6 @@ namespace DOS_Auth
                 return false;
             }
 
-            if (jobgrade < 0 || jobgrade > 2)
-            {
-                errorMsg = "使用者等級格式錯誤!請確認資料";
-            }
 
             if (string.IsNullOrWhiteSpace(account) || string.IsNullOrWhiteSpace(pwd) || string.IsNullOrWhiteSpace(Repwd)|| string.IsNullOrWhiteSpace(EID) || string.IsNullOrWhiteSpace(DID) || string.IsNullOrWhiteSpace(D) || string.IsNullOrWhiteSpace(FN) || string.IsNullOrWhiteSpace(LN) || string.IsNullOrWhiteSpace(contact) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(ext) || string.IsNullOrWhiteSpace(phone))
             {
@@ -175,19 +175,34 @@ namespace DOS_Auth
 
                 else
                 {
-                    errorMsg = string.Empty;
-                    errorMsg2 = "尚有未填選項!請確認資料";
+                    errorMsg = "尚有未填選項!請確認資料";
+                    errorMsg2 = string.Empty;
                     return false;
                 }
+            }
 
+
+            if(contact != "ext" || contact != "phone" || contact != "email")
+            {
+                errorMsg = "聯絡方式格式錯誤!請重新選取";
+                errorMsg2 = string.Empty;
+                return false;
+            }
+
+
+            if (jobgrade < 0 || jobgrade > 2)
+            {
+                errorMsg = "使用者等級格式錯誤!請重新選取";
+                errorMsg2 = string.Empty;
+                return false;
             }
 
 
 
             if (string.Compare(pwd, Repwd, false) != 0)
             {
-                errorMsg = string.Empty;
-                errorMsg2 = "密碼不一致，請確認密碼";
+                errorMsg = "密碼不一致，請確認密碼";
+                errorMsg2 = string.Empty;           
                 return false;
             }
 

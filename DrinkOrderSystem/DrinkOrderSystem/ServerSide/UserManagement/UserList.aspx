@@ -11,8 +11,10 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
     <asp:Panel ID="pnlbase" runat="server" style="background-color:ghostwhite" ScrollBars="Auto">
     <div>
-    <asp:GridView ID="gvUserlist" runat="server" AutoGenerateColumns="False" OnRowDataBound="gvUserlist_RowDataBound">
+        <asp:Button ID="btnCreate" runat="server" Text="新增使用者" OnClick="btnCreate_Click" />
+    <asp:GridView ID="gvUserlist" runat="server" AutoGenerateColumns="False" OnRowDataBound="gvUserlist_RowDataBound" OnRowCommand="gvUserlist_RowCommand">
         <Columns>
+            <asp:BoundField DataField="Account" HeaderText="帳號" />
             <asp:BoundField DataField="EmployeeID" HeaderText="員工編號" />
             <asp:BoundField DataField="DepartmentID" HeaderText="部門代號" />
             <asp:BoundField DataField="Department" HeaderText="部門" />
@@ -40,12 +42,17 @@
             </asp:TemplateField>
                         <asp:TemplateField HeaderText="修改資料">
                 <ItemTemplate>
-                      <a href="/ServerSide/UserManagement/ModifyUserInfo.aspx?ID=<%# Eval("EmployeeID") %>">修改</a>
+                      <a href="/ServerSide/UserManagement/ModifyUserInfo.aspx?ID=<%# Eval("Account") %>">修改</a>
                 </ItemTemplate>
             </asp:TemplateField>
+                      <asp:TemplateField HeaderText="變更密碼">
+                       <ItemTemplate>
+                      <a href="/ServerSide/UserManagement/ModifyPassword.aspx?ID=<%# Eval("Account") %>">修改</a>
+                </ItemTemplate>
+                      </asp:TemplateField>
                       <asp:TemplateField HeaderText="刪除使用者">
                 <ItemTemplate>
-                    <asp:Button ID="btnDelete" runat="server" Text="刪除" OnClick="btnDelete_Click" />
+                    <asp:Button ID="btnDelete" runat="server" Text="刪除" CommandArgument='<%#Eval("Account") %>'/>
                 </ItemTemplate>
             </asp:TemplateField>
 

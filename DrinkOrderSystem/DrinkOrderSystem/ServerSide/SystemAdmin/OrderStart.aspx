@@ -5,14 +5,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
-</asp:Content>
-
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>開團介面</h1>
-</asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
-   <style>
+    <style>
         #d1, #d2, #d3 {
             float: left;
             margin: 10px;
@@ -21,15 +14,22 @@
             clear: left;
         }
     </style>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <h1>開團介面</h1>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
+
     <h2>請選擇店家</h2>
         <div id="d1">
-            <asp:ImageButton ID="Imgbtn50Lan" runat="server" ImageUrl="~/ServerSide/ImagesServer/3456700.png" OnClick="Imgbtn50Lan_Click" Width="100px" />
+            <asp:ImageButton ID="Imgbtn50Lan" runat="server" ImageUrl="~/ServerSide/ImagesServer/50Lan.png"  OnClick="Imgbtn50Lan_Click" Width="100px" />
         </div>
         <div id="d2">
-            <asp:ImageButton ID="ImgbtnWhiteAlley" runat="server" ImageUrl="~/ServerSide/ImagesServer/3456700.png" OnClick="ImgbtnWhiteAlley_Click" Width="100"/>
+            <asp:ImageButton ID="ImgbtnWhiteAlley" runat="server" ImageUrl="~/ServerSide/ImagesServer/WhiteAlley.jpg"  OnClick="ImgbtnWhiteAlley_Click" Width="100"/>
         </div>
         <div id="d3">
-            <asp:ImageButton ID="ImgbtnMilkshop" runat="server" ImageUrl="~/ServerSide/ImagesServer/3456700.png" OnClick="ImgbtnMilkshop_Click" Width="100"/>
+            <asp:ImageButton ID="ImgbtnMilkshop" runat="server" ImageUrl="~/ServerSide/ImagesServer/Milkshop.png"  OnClick="ImgbtnMilkshop_Click" Width="100"/>
         </div>
 
     <div>
@@ -107,7 +107,8 @@
         <asp:TextBox ID="txtChooseDrinkList" runat="server" MaxLength="100" ReadOnly="True" Rows="10" Width="540px" Height="89px" TextMode="MultiLine" Visible="False"></asp:TextBox>
 
     </div>
+        <asp:Button ID="btnSent" runat="server" Text="確認送出" OnClick="btnSent_Click" Visible="False" />
+
     <asp:Button ID="btnDelete" runat="server" Text="清除選單" OnClick="btnDelete_Click" Visible="False" />
-    <asp:Button ID="btnSent" runat="server" Text="確認送出" OnClick="btnSent_Click" Visible="False" />
 
 </asp:Content>

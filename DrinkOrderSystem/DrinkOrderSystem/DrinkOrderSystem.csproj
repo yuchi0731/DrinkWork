@@ -103,6 +103,7 @@
     <Content Include="ClientSide\Contact.aspx" />
     <Content Include="ClientSide\Default.aspx" />
     <Content Include="ClientSide\DrinkDetail.aspx" />
+    <Content Include="ClientSide\ForgetPWD.aspx" />
     <Content Include="ClientSide\Introduction.aspx" />
     <Content Include="ClientSide\Login.aspx" />
     <Content Include="ClientSide\StaffIntroduction.aspx" />
@@ -129,8 +130,10 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ServerSide\ImagesServer\3456700.png" />
+    <Content Include="ServerSide\ImagesServer\WhiteAlley.jpg" />
     <Content Include="ServerSide\ImagesServer\drink_icon.png" />
+    <Content Include="ServerSide\ImagesServer\50Lan.png" />
+    <Content Include="ServerSide\ImagesServer\Milkshop.png" />
     <Content Include="ServerSide\SystemAdmin\NowOrdering.aspx" />
     <Content Include="ServerSide\SystemAdmin\OderMid.aspx" />
     <Content Include="ServerSide\SystemAdmin\OrderConfirm.aspx" />
@@ -141,10 +144,9 @@
     <Content Include="ServerSide\SystemAdmin\SendOrder.aspx" />
     <Content Include="ServerSide\SystemAdmin\UserPage.aspx" />
     <Content Include="ServerSide\SystemAdmin\UserRecords.aspx" />
-    <Content Include="ServerSide\SystemAdmin\WithGroup.aspx" />
     <Content Include="ServerSide\UserControl\ucPager.ascx" />
     <Content Include="ServerSide\UserManagement\CreateNewUser.aspx" />
-    <Content Include="ServerSide\UserManagement\DeleteOrderRecord.aspx" />
+    <Content Include="ServerSide\UserManagement\ModifyPassword.aspx" />
     <Content Include="ServerSide\UserManagement\ModifyUserInfo.aspx" />
     <Content Include="ServerSide\UserManagement\UserList.aspx" />
     <Content Include="Web.config" />
@@ -177,6 +179,13 @@
     </Compile>
     <Compile Include="ClientSide\DrinkDetail.aspx.designer.cs">
       <DependentUpon>DrinkDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientSide\ForgetPWD.aspx.cs">
+      <DependentUpon>ForgetPWD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientSide\ForgetPWD.aspx.designer.cs">
+      <DependentUpon>ForgetPWD.aspx</DependentUpon>
     </Compile>
     <Compile Include="ClientSide\Introduction.aspx.cs">
       <DependentUpon>Introduction.aspx</DependentUpon>
@@ -280,13 +289,6 @@
     <Compile Include="ServerSide\SystemAdmin\UserRecords.aspx.designer.cs">
       <DependentUpon>UserRecords.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ServerSide\SystemAdmin\WithGroup.aspx.cs">
-      <DependentUpon>WithGroup.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ServerSide\SystemAdmin\WithGroup.aspx.designer.cs">
-      <DependentUpon>WithGroup.aspx</DependentUpon>
-    </Compile>
     <Compile Include="ServerSide\UserControl\ucPager.ascx.cs">
       <DependentUpon>ucPager.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -301,12 +303,12 @@
     <Compile Include="ServerSide\UserManagement\CreateNewUser.aspx.designer.cs">
       <DependentUpon>CreateNewUser.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ServerSide\UserManagement\DeleteOrderRecord.aspx.cs">
-      <DependentUpon>DeleteOrderRecord.aspx</DependentUpon>
+    <Compile Include="ServerSide\UserManagement\ModifyPassword.aspx.cs">
+      <DependentUpon>ModifyPassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ServerSide\UserManagement\DeleteOrderRecord.aspx.designer.cs">
-      <DependentUpon>DeleteOrderRecord.aspx</DependentUpon>
+    <Compile Include="ServerSide\UserManagement\ModifyPassword.aspx.designer.cs">
+      <DependentUpon>ModifyPassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="ServerSide\UserManagement\ModifyUserInfo.aspx.cs">
       <DependentUpon>ModifyUserInfo.aspx</DependentUpon>

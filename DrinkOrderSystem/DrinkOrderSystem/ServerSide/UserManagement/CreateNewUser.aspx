@@ -72,6 +72,7 @@
             <asp:ListItem>Email</asp:ListItem>
             <asp:ListItem Value="ext">分機</asp:ListItem>
             <asp:ListItem Value="phone">電話</asp:ListItem>
+         <asp:ListItem Value="email">Email</asp:ListItem>
         </asp:DropDownList><br /></td>
             </tr>
             <tr>
@@ -115,8 +116,8 @@
 
     <asp:Button ID="btnCreate" runat="server" Text="建立" OnClick="btnCreate_Click" />
     <asp:Button ID="btnReset" runat="server" Text="清除內容"  OnClick="btnReset_Click"/>
-    <asp:Label ID="lblMsg" runat="server"></asp:Label><br />
-    <asp:Label ID="lblMsg2" runat="server"></asp:Label>
+    <asp:Label ID="lblMsg" runat="server" Visible="false"></asp:Label><br />
+    <asp:Label ID="lblMsg2" runat="server" Visible="false"></asp:Label>
 
 
 </asp:Content>

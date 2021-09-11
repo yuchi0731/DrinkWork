@@ -16,7 +16,11 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!AuthManager.IsLogined())
+            {
+                Response.Redirect("/ClientSide/Login.aspx");
+                return;
+            }
 
         }
 
@@ -36,6 +40,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
             string txtext = this.txtCreatext.Text;
             string txtphone = this.txtCreatePhone.Text;
             int jobgrade = this.dpCreateJobGrade.SelectedIndex;
+            
             
 
             string txtReS = this.txtCreateRepS.Text;
@@ -78,6 +83,8 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 {
                     if (!AuthManager.TryCreateUser(txtAccount, txtPWD, txtRePWD, txtEID, txtDID, txtD, txtFName, txtLName, txtcontact, txtEmail, txtext, txtphone, jobgrade, desc, txtReS, out msg, out msg2))
                     {
+                        this.lblMsg.Visible = true;
+                        this.lblMsg2.Visible = true;
                         this.lblMsg.Text = msg;
                         this.lblMsg2.Text = msg2;
                         this.lblMsg.ForeColor = Color.Red;

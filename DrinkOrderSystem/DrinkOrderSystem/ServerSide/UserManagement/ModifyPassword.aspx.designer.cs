@@ -7,65 +7,65 @@
 // </自動產生的>
 //------------------------------------------------------------------------------
 
-namespace DrinkOrderSystem.ServerSide
+namespace DrinkOrderSystem.ServerSide.UserManagement
 {
 
 
-    public partial class ServerSide
+    public partial class ModifyPassword
     {
 
         /// <summary>
-        /// head 控制項。
+        /// txtPWD 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.WebControls.TextBox txtPWD;
 
         /// <summary>
-        /// form1 控制項。
+        /// txtNewPWD 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.TextBox txtNewPWD;
 
         /// <summary>
-        /// Image1 控制項。
+        /// txtReNewPWD 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image1;
+        protected global::System.Web.UI.WebControls.TextBox txtReNewPWD;
 
         /// <summary>
-        /// ContentPlaceHolder1 控制項。
+        /// btnChange 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::System.Web.UI.WebControls.Button btnChange;
 
         /// <summary>
-        /// ContentPlaceHolder2 控制項。
+        /// btnCancel 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder2;
+        protected global::System.Web.UI.WebControls.Button btnCancel;
 
         /// <summary>
-        /// ltlManger 控制項。
+        /// lbMsg 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltlManger;
+        protected global::System.Web.UI.WebControls.Label lbMsg;
     }
 }

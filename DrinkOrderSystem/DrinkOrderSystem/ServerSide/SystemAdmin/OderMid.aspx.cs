@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using DOS_DBSoure;
 using DOS_Auth;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace DrinkOrderSystem.ServerSide.SystemAdmin
 {
@@ -16,20 +17,57 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!AuthManager.IsLogined())
+            if (!this.IsPostBack) //可能是按按鈕跳回本頁，所以要判斷Postback
             {
-                Response.Redirect("/ClientSide/Login.aspx");
-                return;
+
+                if (!AuthManager.IsLogined())
+                {
+                    Response.Redirect("/ClientSide/Login.aspx");
+                    return;
+                }
+
+
+                string orderNumber = this.Request.QueryString["OrderNumber"];
+                var orderDetail = DrinkListManager.GetOrderDetailListfromorderNumber(orderNumber);
+                this.ltOrderNumber.Text = orderDetail.OrderNumber;
+                this.lbSup.Text = orderDetail.SupplierName;
+
+
+                var supplier = orderDetail.SupplierName;
+                var list = DrinkListManager.GetProducts(supplier);
+                if (list.Count > 0) //check is empty data (大於0就做資料繫結)
+                {
+                    var pageList = this.GetPageDataTable(list);
+                    this.gvChooseDrink.DataSource = pageList;
+                    this.gvChooseDrink.DataBind();
+
+
+                    this.ucPager.TotalSize = list.Count;
+                    this.ucPager.Bind();
+                }
+
+                else
+                {
+
+                    this.gvChooseDrink.Visible = false;
+                    this.plcNoData.Visible = true;
+                    this.ltMsg.Visible = true;
+                    this.lbMsg.Text = "找不到此跟團資料";
+                }
             }
+
         }
 
-        protected void gvChooseDrink_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void gvDrink_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+
+
             string orderNumber = this.Request.QueryString["OrderNumber"];
             var orderDetail = DrinkListManager.GetOrderDetailListfromorderNumber(orderNumber);
             var supplier = orderDetail.SupplierName;
 
-            var item = e.CommandSource as Button;    //第二種 老師解的
+
+            var item = e.CommandSource as System.Web.UI.WebControls.Button;    //第二種 老師解的
 
             // 找到 button 的容器，它會是 GridViewRow
             var container = item.NamingContainer;
@@ -39,20 +77,42 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             var DDLIce = container.FindControl("dlChooseIce") as DropDownList;
             var DDLToppings = container.FindControl("dlChooseToppings") as DropDownList;
 
-            if (string.Compare("ChooseDrink", item.CommandName, true) == 0)
+            if (DDLQuantity.SelectedIndex == 0)
             {
-                this.txtChooseDrinkList.Visible = true;
+                this.txtChooseDrinkList.Text = "杯數選擇錯誤，請重新選擇";
+                return;
+            }
+            if (DDLSugar.SelectedIndex == 0)
+            {
+                this.txtChooseDrinkList.Text = "糖量選擇錯誤，請重新選擇";
+                return;
+            }
+            if (DDLIce.SelectedIndex == 0)
+            {
+                this.txtChooseDrinkList.Text = "冰塊選擇錯誤，請重新選擇";
+                return;
+            }
+            if (DDLToppings.SelectedIndex == 0)
+            {
+                this.txtChooseDrinkList.Text = "加料選擇錯誤，請重新選擇";
+                return;
+            }
 
 
-                this.txtChooseDrinkList.Text += $"{e.CommandArgument as string} {DDLQuantity.SelectedItem} {DDLSugar.SelectedItem} {DDLIce.SelectedItem} {DDLToppings.SelectedItem}\r\n";
+            if (string.Compare("btnChooseDrink", e.CommandName, true) == 0)
+            {
+                this.txtChooseDrinkList.Text = null;
+                this.ltMsg.Text = null;
+                this.ltMsg.Visible = false;
+
+
+
+                this.txtChooseDrinkList.Text += $"{e.CommandArgument as string} {DDLQuantity.SelectedItem}杯 {DDLSugar.SelectedItem} {DDLIce.SelectedItem} {DDLToppings.SelectedItem} {DrinkListManager.GetUnitPrice(e.CommandArgument as string)}元/杯 \r\n";
 
                 this.btnDelete.Visible = true;
                 this.btnSent.Visible = true;
 
-            }
 
-            if (e.CommandName == "ChooseDrink")
-            {
                 string argu = (e.CommandArgument) as string;
 
                 var currentUser = AuthManager.GetCurrentUser();
@@ -75,11 +135,30 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     return;
                 }
 
+                decimal Toprice = 0;
+                //加料金額
+                if (DDLToppings.SelectedIndex == 1)
+                {
+                    Toprice = 0;
+                }
+                if (DDLToppings.SelectedIndex == 2)
+                {
+                    Toprice = 10;
+                }
+                if (DDLToppings.SelectedIndex == 3)
+                {
+                    Toprice = 5;
+                }
+                if (DDLToppings.SelectedIndex == 4)
+                {
+                    Toprice = 10;
+                }
 
-                
+
+
                 var orderdetaillist = new OrderDetailModels()
                 {
-                    OrderDetailsID = orderDetail.OrderDetailsID,
+                    OrderDetailsID = Guid.NewGuid(),
                     OrderNumber = orderNumber,
                     Account = currentUser.Account,
                     OrderTime = orderDetail.OrderTime,
@@ -91,20 +170,105 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     Suger = DDLSugar.SelectedItem.ToString(),
                     Ice = DDLIce.SelectedItem.ToString(),
                     Toppings = DDLToppings.SelectedItem.ToString(),
+                    ToppingsUnitPrice = Toprice,                 
                     SupplierName = supplier,
                     OtherRequest = this.txtOther.Text
                 };
 
+                var sessionLList = this.Session["SelectedItems"] as List<OrderDetailModels>; //將Session轉成List，再做總和
+                sessionLList.Add(orderdetaillist);
 
-                DrinkListManager.AddGroup(orderdetaillist);
 
+                decimal totalAmount = 0;
+                foreach (var sub in sessionLList)
+                {
+                    totalAmount += sub.SubtotalAmount;
+                }
 
-
+                this.lbTotalAmount.Text = $"此筆訂單，共 {totalAmount.ToString()} 元";
 
 
             }
 
+        }
 
+
+
+
+        private int GetCurrentPage()
+        {
+            string pageText = Request.QueryString["Page"];
+
+            if (string.IsNullOrWhiteSpace(pageText))
+                return 1;
+
+            int intPage;
+            if (!int.TryParse(pageText, out intPage))
+                return 1;
+
+            if (intPage <= 0)
+                return 1;
+
+            return intPage;
+        }
+
+
+        /// <summary>
+        /// 建立本頁DataTable
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        private List<Product> GetPageDataTable(List<Product> list)
+        {
+            int startIndex = (this.GetCurrentPage() - 1) * 10;
+            return list.Skip(startIndex).Take(10).ToList();
+
+        }
+
+        protected void btnSent_Click(object sender, EventArgs e)
+        {
+
+            DialogResult MsgBoxResult;
+                MsgBoxResult = MessageBox.Show("確定送出訂單後，可在個人歷史訂購頁查看訂購資料", "送出",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Information);
+
+                if (MsgBoxResult == DialogResult.OK)
+                {
+
+                var writSession = this.Session["SelectedItems"] as List<OrderDetailModels>;
+
+                foreach (var sub in writSession)
+                {
+                    DrinkListManager.AddGroup(sub);
+                }
+
+
+
+                MessageBox.Show("訂購完成，導至訂單明細頁", "完成!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                this.Session["SelectedItems"] = null;
+                Response.Redirect("/ServerSide/SystemAdmin/OrderDetailInfo.aspx");
+                }
+                else
+                {
+                this.ltMsg.Visible = true;
+                this.ltMsg.Text = "已取消訂購";
+                    return;
+                }
+
+
+
+
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            this.Session["SelectedItems"] = null;
+            this.txtChooseDrinkList.Text = null;
+            this.ltMsg.Text = null;
+            this.ltMsg.Visible = false;
         }
     }
 }

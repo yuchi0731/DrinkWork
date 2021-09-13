@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace DOS_Models
 {
+
+
     public class OrderDetailModels
     {
         public Guid OrderDetailsID { get; set; }
@@ -22,7 +24,13 @@ namespace DOS_Models
         public string Ice { get; set; }
         public string SupplierName { get; set; }        
         public int Quantity { get; set; }
-        public string SubtotalAmount { get; set; }
+        public decimal SubtotalAmount
+        {
+            get
+            {
+                return this.Quantity * (this.UnitPrice + this.ToppingsUnitPrice);
+            }
+        }
         public string OtherRequest { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DOS_Auth;
+using DOS_DBSoure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,15 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 Response.Redirect("/ClientSide/Login.aspx");
                 return;
             }
+
+
+
+        }
+
+        protected void btnChangePWD_Click(object sender, EventArgs e)
+        {
+
+            Response.Redirect("/ServerSide/UserManagement/ModifyPassword.aspx");
         }
     }
 }

@@ -38,7 +38,7 @@
     <uc1:ucpager runat="server" id="ucPager" PageSize="10"  Url="/ServerSide/SystemAdmin/OrderDetailInfo.aspx" />
                 <asp:PlaceHolder ID="plcNoData" runat="server" Visible="false">
                         <p style="color:red">
-                            No data in this Shop.
+                            這筆訂單沒有資料
                         </p>
                     </asp:PlaceHolder>
 </asp:Content>

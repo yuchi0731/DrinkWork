@@ -9,6 +9,8 @@ using DOS_Auth;
 using System.Drawing;
 using System.Windows.Forms;
 using DOS_ORM;
+using DOS_ORM.DOSmodel;
+using System.IO;
 
 namespace DrinkOrderSystem.ServerSide.UserManagement
 {
@@ -26,11 +28,10 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
         protected void btnCreate_Click(object sender, EventArgs e)
         {
-            
+
             string txtAccount = this.txtCreateAccount.Text;
             string txtPWD = this.txtCreatePWD.Text;
             string txtRePWD = this.txtCreateRePWD.Text;
-            string txtEID = this.txtCreateEID.Text;
             string txtDID = this.txtCreateDID.Text;
             string txtD = this.txtCreateD.Text;
             string txtLName = this.txtCreateLName.Text;
@@ -40,8 +41,8 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
             string txtext = this.txtCreatext.Text;
             string txtphone = this.txtCreatePhone.Text;
             int jobgrade = this.dpCreateJobGrade.SelectedIndex;
-            
-            
+
+
 
             string txtReS = this.txtCreateRepS.Text;
             if (txtReS.Length > 0)
@@ -81,7 +82,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
                 if (pwdL > 8 && rpwdL < 16)
                 {
-                    if (!AuthManager.TryCreateUser(txtAccount, txtPWD, txtRePWD, txtEID, txtDID, txtD, txtFName, txtLName, txtcontact, txtEmail, txtext, txtphone, jobgrade, desc, txtReS, out msg, out msg2))
+                    if (!AuthManager.TryCreateUser(txtAccount, txtPWD, txtRePWD, txtDID, txtD, txtFName, txtLName, txtcontact, txtEmail, txtext, txtphone, jobgrade, desc, txtReS, out msg, out msg2))
                     {
                         this.lblMsg.Visible = true;
                         this.lblMsg2.Visible = true;
@@ -94,9 +95,41 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
                     else
                     {
-                                          
+
+                        UserInfo userInfo = new UserInfo()
+                        {
+                            Account = txtAccount,
+                            DepartmentID = txtDID,
+                            Department = txtD,
+                            FirstName = txtFName,
+                            LastName = txtLName,
+                            Contact = txtcontact,
+                            Email = txtEmail,
+                            ext = txtext,
+                            Phone = txtphone,
+                            JobGrade = jobgrade,
+                            Description = desc,
+                            ResponseSuppliers = txtReS,
+                            Photo = photo,
+
+                        };
+
+
+                        //假設有上傳檔案，就寫入檔名
+                        if (filePhoto.HasFile && FileUploadManager.VaildFileUpload(this.filePhoto, out List<string> tempList))
+                        {
+                            string saveFileName = FileUploadManager.GetNewFileName(this.filePhoto);
+                            string filePath = Path.Combine(this.GetSaveFolderPath(), saveFileName);
+                            this.filePhoto.SaveAs(filePath);
+
+                            userInfo.Photo = saveFileName;
+
+                        }
+
+
+
                         UserInfoManager.CreateUserlinq(txtAccount, txtPWD);
-                        UserInfoManager.CreateNewUserInfolinq(txtAccount, Convert.ToInt32(txtEID), txtDID, txtD, txtFName, txtLName, txtcontact, txtEmail, txtext, txtphone, jobgrade, desc, txtReS, photo);
+                        UserInfoManager.CreateNewUserInfo(userInfo);
                         MessageBox.Show("～建立成功～", "成功!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Response.Redirect("/ServerSide/UserManagement/UserList.aspx");
                     }
@@ -119,7 +152,6 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
             this.txtCreateAccount.Text = null;
             this.txtCreatePWD.Text = null;
             this.txtCreateRePWD.Text = null;
-            this.txtCreateEID.Text = null;
             this.txtCreateDID.Text = null;
             this.txtCreateD.Text = null;
             this.txtCreateLName.Text = null;
@@ -132,5 +164,11 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
             this.dpCreateJobGrade.SelectedIndex = 0;
             this.txtCreatedesc.Text = null;
         }
+
+        private string GetSaveFolderPath()
+        {
+            return Server.MapPath("~/ServerSide/ImagesServer");
+        }
+
     }
 }

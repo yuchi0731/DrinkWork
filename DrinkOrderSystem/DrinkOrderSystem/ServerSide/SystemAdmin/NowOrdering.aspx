@@ -1,4 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ServerSide/ServerSide.Master" AutoEventWireup="true" CodeBehind="NowOrdering.aspx.cs" Inherits="DrinkOrderSystem.ServerSide.SystemAdmin.NowOrdering" %>
+
+<%@ Register Src="~/ServerSide/UserControl/ucPager.ascx" TagPrefix="uc1" TagName="ucPager" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -7,7 +10,7 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
 
     <asp:Panel ID="pnlbase" runat="server" style="background-color:ghostwhite" ScrollBars="Auto">
-    <asp:GridView runat="server" ID="gvNoworderinglist"  AutoGenerateColumns="False" OnRowCommand="gvNoworderinglist_RowCommand">
+    <asp:GridView runat="server" ID="gvNoworderinglist"  AutoGenerateColumns="False">
         <Columns>
             <asp:BoundField HeaderText="訂單編號" DataField="OrderNumber" />
             <asp:BoundField HeaderText="團主" DataField="Account" />
@@ -16,18 +19,22 @@
             <asp:BoundField HeaderText="指定送達時間" DataField="RequiredTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" />
             <asp:TemplateField HeaderText="目前訂單明細">
                 <ItemTemplate>
-    <a href="/ServerSide/SystemAdmin/WithGroup.aspx?ID=<%# Eval("OrderNumber") %>">確認</a>
+    <a href="/ServerSide/SystemAdmin/OrderDetailInfo.aspx?OrderNumber=<%# Eval("OrderNumber") %>">確認</a>
                 </ItemTemplate>
             </asp:TemplateField>
             
             <asp:TemplateField HeaderText="跟團">
                 <ItemTemplate>
-                    <asp:Button ID="btnWithOrder" runat="server" Text="跟團" CommandArgument='<%#Eval("OrderNumber") %>' />
+                    <a href="/ServerSide/SystemAdmin/OderMid.aspx?OrderNumber=<%# Eval("OrderNumber") %>">跟團</a>
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
 
-        </asp:Panel>
+        <uc1:ucPager runat="server" ID="ucPager"  PageSize="10" Url="/ServerSide/SystemAdmin/NowOrdering.aspx"  />
 
+        </asp:Panel>
+                <asp:PlaceHolder ID="plcNoData" runat="server" Visible="false">
+            <asp:Label ID="lbMsg" runat="server" ForeColor="Red"></asp:Label>
+                    </asp:PlaceHolder>
 </asp:Content>

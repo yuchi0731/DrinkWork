@@ -24,6 +24,15 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         protected global::System.Web.UI.WebControls.Literal ltOrderNumber;
 
         /// <summary>
+        /// lbSup 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbSup;
+
+        /// <summary>
         /// gvChooseDrink 控制項。
         /// </summary>
         /// <remarks>
@@ -51,13 +60,31 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         protected global::System.Web.UI.WebControls.TextBox txtChooseDrinkList;
 
         /// <summary>
-        /// btnDelete 控制項。
+        /// lbOther 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDelete;
+        protected global::System.Web.UI.WebControls.Label lbOther;
+
+        /// <summary>
+        /// txtOther 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOther;
+
+        /// <summary>
+        /// lbTotalAmount 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbTotalAmount;
 
         /// <summary>
         /// btnSent 控制項。
@@ -69,12 +96,39 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         protected global::System.Web.UI.WebControls.Button btnSent;
 
         /// <summary>
-        /// txtOther 控制項。
+        /// btnDelete 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtOther;
+        protected global::System.Web.UI.WebControls.Button btnDelete;
+
+        /// <summary>
+        /// ltMsg 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltMsg;
+
+        /// <summary>
+        /// plcNoData 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder plcNoData;
+
+        /// <summary>
+        /// lbMsg 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbMsg;
     }
 }

@@ -6,6 +6,14 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
     <table>
         <tr>
+            <th>
+                待變更帳號
+            </th>
+             <td>
+                <asp:Literal ID="ltUserAccount" runat="server"></asp:Literal>
+            </td>
+        </tr>
+        <tr>
             <th>原密碼</th>
             <td>
                 <asp:TextBox ID="txtPWD" runat="server" TextMode="Password"></asp:TextBox>
@@ -29,6 +37,6 @@
     </table>
     <asp:Button ID="btnChange" runat="server" Text="確認變更" OnClick="btnChange_Click" />
     <asp:Button ID="btnCancel" runat="server" Text="取消變更"  OnClick="btnCancel_Click"/>
-    <asp:Label ID="lbMsg" runat="server" Visible="false" ForeColor="Red"></asp:Label>
+    <br /><asp:Label ID="lbMsg" runat="server" Visible="false" ForeColor="Red"></asp:Label>
 
 </asp:Content>

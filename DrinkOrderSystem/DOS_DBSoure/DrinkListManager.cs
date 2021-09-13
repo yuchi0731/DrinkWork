@@ -49,6 +49,64 @@ namespace DOS_DBSoure
 
 
         /// <summary>
+        /// 寫出所有現在跟團OrderList
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderList> GetOrderListNoOrdering()
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+
+                    var query =
+                         (from list in context.OrderLists
+                          where list.OrderEndTime > DateTime.Now
+                          select list);
+
+                    var orderList = query.ToList();
+                    return orderList;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+
+        /// <summary>
+        /// 寫出所有歷史OrderList
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderList> GetOrderListRecord()
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+
+                    var query =
+                         (from list in context.OrderLists
+                          where list.OrderEndTime <= DateTime.Now
+                          select list);
+
+                    var orderList = query.ToList();
+                    return orderList;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+
+        /// <summary>
         /// 寫出所有OrderDetail
         /// </summary>
         /// <param name="orderNumber"></param>
@@ -429,7 +487,29 @@ namespace DOS_DBSoure
         }
 
 
-
+        /// <summary>
+        /// 取得商品單價
+        /// </summary>
+        /// <param name="ProductName"></param>
+        /// <returns></returns>
+        public static decimal GetUnitPrice(string ProductName)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var price = context.Products
+                        .Select(obj => obj.UnitPrice);
+                    var UnitPrice = price.FirstOrDefault();
+                    return UnitPrice;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return decimal.Zero;
+            }
+        }
 
 
 
@@ -468,6 +548,8 @@ namespace DOS_DBSoure
                     neworderDetail.Suger = orderDetail.Suger;
                     neworderDetail.Ice = orderDetail.Ice;
                     neworderDetail.Toppings = orderDetail.Toppings;
+                    neworderDetail.ToppingsUnitPrice = orderDetail.ToppingsUnitPrice;
+                    neworderDetail.SubtotalAmount = orderDetail.SubtotalAmount;
                     neworderDetail.SupplierName = orderDetail.SupplierName;
                     neworderDetail.OtherRequest = orderDetail.OtherRequest;
 

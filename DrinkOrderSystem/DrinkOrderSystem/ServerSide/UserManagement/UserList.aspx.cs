@@ -20,38 +20,40 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (!AuthManager.IsLogined())
-            {
-                Response.Redirect("/ClientSide/Login.aspx");
-                return;
-            }
-
-            var list = UserInfoManager.GetAllUserListLINQ();
-            
-           
-            if (list.Count > 0) //check is empty data (大於0就做資料繫結)
+            if (!IsPostBack)
             {
 
-                var pageUserList = this.GetPageDataTable(list);
-                this.gvUserlist.DataSource = pageUserList;
-                this.gvUserlist.DataBind();
+                if (!AuthManager.IsLogined())
+                {
+                    Response.Redirect("/ClientSide/Login.aspx");
+                    return;
+                }
 
-                this.ucPager.TotalSize = list.Count;
-                this.ucPager.Bind();
+                var list = UserInfoManager.GetAllUserListLINQ();
 
 
-            }
-            else
-            {
-                this.gvUserlist.Visible = false;
-                this.plcNoData.Visible = true;
+                if (list.Count > 0) //check is empty data (大於0就做資料繫結)
+                {
+
+                    var pageUserList = this.GetPageDataTable(list);
+                    this.gvUserlist.DataSource = pageUserList;
+                    this.gvUserlist.DataBind();
+
+                    this.ucPager.TotalSize = list.Count;
+                    this.ucPager.Bind();
+
+
+                }
+                else
+                {
+                    this.gvUserlist.Visible = false;
+                    this.plcNoData.Visible = true;
+                }
             }
         }
-
         protected void btnCreate_Click(object sender, EventArgs e)
         {
-                Response.Redirect("/ServerSide/SystemAdmin/CreateNewUser.aspx");
+                Response.Redirect("/ServerSide/UserManagement/CreateNewUser.aspx");
         }
 
         private int GetCurrentPage()
@@ -135,11 +137,11 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
         protected void btnSearch_Click(object sender, EventArgs e)
         {
 
-            string selectSearch = this.ddsearch.SelectedItem.ToString();
+            string selectSearch = this.ddsearch.SelectedValue;
             string txtSearch = this.txtSearch.Text;
             List<string> msgList = new List<string>();
 
-            if (selectSearch == "帳號")
+            if (selectSearch == "account")
             {
                 var check = CheckVisible(txtSearch);
                 if(check == true)
@@ -174,7 +176,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 }
             }
 
-            if (selectSearch == "員工編號")
+            if (selectSearch == "eid")
             {
                 var check = CheckVisible(txtSearch);
                 if (check == true)
@@ -210,7 +212,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 }
             }
 
-            if (selectSearch == "姓氏")
+            if (selectSearch == "lastname")
             {
                 var check = CheckVisible(txtSearch);
                 if (check == true)
@@ -245,7 +247,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 }
             }
 
-            if (selectSearch == "名字")
+            if (selectSearch == "firstname")
             {
                 var check = CheckVisible(txtSearch);
                 if (check == true)
@@ -280,7 +282,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 }
             }
 
-            if (selectSearch == "部門代號")
+            if (selectSearch == "departmentID")
             {
                 var check = CheckVisible(txtSearch);
                 if (check == true)
@@ -407,24 +409,86 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
         protected void gvUserlist_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            var item = e.CommandSource as Button;
-            var account = item.CommandName as string;
 
-            DialogResult MsgDelete;
-            MsgDelete = MessageBox.Show("若刪除使用者將無法復原，繼續請按確定", "刪除使用者資料？",
-            MessageBoxButtons.OKCancel,
-            MessageBoxIcon.Warning);
+            //按下刪除鍵
+            var account = e.CommandArgument as string;
 
+            if (string.Compare("btndeleteUser", e.CommandName, true) == 0)
+            {
+                DialogResult MsgDelete;
+                MsgDelete = MessageBox.Show("若刪除使用者將無法復原，繼續請按確定", "刪除使用者資料？",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Warning);
 
-            if (MsgDelete == DialogResult.OK)
-                UserInfoManager.DeleteUserlinq(account);
+                if (MsgDelete == DialogResult.OK)
+                {
+                    UserInfoManager.DeleteUserlinq(account);
+                    Response.Redirect("/ServerSide/UserManagement/UserList.aspx");
+                }
+                    
 
-            else
-                return;
+                else
+                    return;
+            }
 
         }
 
+        protected void btnSortingN_Click(object sender, EventArgs e)
+        {
+            //近至遠
 
 
+            var list = UserInfoManager.GetAllUserListSortingN();
+
+
+            if (list.Count > 0) //check is empty data (大於0就做資料繫結)
+            {
+
+                var pageUserList = this.GetPageDataTable(list);
+                this.gvUserlist.DataSource = pageUserList;
+                this.gvUserlist.DataBind();
+
+                this.ucPager.TotalSize = list.Count;
+                this.ucPager.Bind();
+
+
+            }
+            else
+            {
+                this.gvUserlist.Visible = false;
+                this.plcNoData.Visible = true;
+            }
+
+
+        }
+
+        protected void btnSortingF_Click(object sender, EventArgs e)
+        {
+            //遠至近
+
+
+
+            var list = UserInfoManager.GetAllUserListSortingF();
+
+
+            if (list.Count > 0) //check is empty data (大於0就做資料繫結)
+            {
+
+                var pageUserList = this.GetPageDataTable(list);
+                this.gvUserlist.DataSource = pageUserList;
+                this.gvUserlist.DataBind();
+
+                this.ucPager.TotalSize = list.Count;
+                this.ucPager.Bind();
+
+
+            }
+            else
+            {
+                this.gvUserlist.Visible = false;
+                this.plcNoData.Visible = true;
+            }
+
+        }
     }
 }

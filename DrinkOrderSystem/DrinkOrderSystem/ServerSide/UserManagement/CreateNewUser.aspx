@@ -37,12 +37,6 @@
             </tr>
             <tr>
                 <th>
-                    <asp:Literal ID="ltlEID" runat="server">員工ID</asp:Literal></th>
-                <td>
-                    <asp:TextBox ID="txtCreateEID" runat="server" ToolTip="請輸入整數"></asp:TextBox></td>
-            </tr>
-            <tr>
-                <th>
                     <asp:Literal ID="ltlDID" runat="server">部門ID</asp:Literal></th>
                 <td>
                     <asp:TextBox ID="txtCreateDID" runat="server" ToolTip="請輸入整數"></asp:TextBox></td>
@@ -77,7 +71,7 @@
             </tr>
             <tr>
                 <th> <asp:Literal ID="ltlEmail" runat="server">Email</asp:Literal></th>
-                <td> <asp:TextBox ID="txtCreateEmail" runat="server"></asp:TextBox></td>
+                <td> <asp:TextBox ID="txtCreateEmail" runat="server" TextMode="Email"></asp:TextBox></td>
             </tr>
              <tr>
                 <th><asp:Literal ID="ltlext" runat="server">分機號碼</asp:Literal></th>
@@ -103,7 +97,14 @@
                 <th><asp:Literal ID="ltldec" runat="server">其他事項</asp:Literal></th>
                 <td><asp:TextBox ID="txtCreatedesc" runat="server" TextMode="MultiLine" Height="100px" Width="150px"></asp:TextBox></td>
             </tr>
-
+            <tr>
+                <th>
+                    上傳照片
+                </th>
+                <td>
+                    <asp:FileUpload ID="filePhoto" runat="server" />
+                </td>
+            </tr>
         </table>
 
         <br />
@@ -115,7 +116,7 @@
     </div>
 
     <asp:Button ID="btnCreate" runat="server" Text="建立" OnClick="btnCreate_Click" />
-    <asp:Button ID="btnReset" runat="server" Text="清除內容"  OnClick="btnReset_Click"/>
+    <asp:Button ID="btnReset" runat="server" Text="清除內容"  OnClick="btnReset_Click"/><br/>
     <asp:Label ID="lblMsg" runat="server" Visible="false"></asp:Label><br />
     <asp:Label ID="lblMsg2" runat="server" Visible="false"></asp:Label>
 

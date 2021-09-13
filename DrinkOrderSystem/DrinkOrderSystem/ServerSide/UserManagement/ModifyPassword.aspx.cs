@@ -19,89 +19,199 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 Response.Redirect("/ClientSide/Login.aspx");
                 return;
             }
+
+
+
+            var current = AuthManager.GetCurrentUser();
+            string hasaccount = this.Request.QueryString["Account"];
+
+            if (hasaccount != null)
+            {
+
+                if (current.JobGrade != 0)
+                {
+                    string account = this.Request.QueryString["Account"];
+                    var useraccount = UserInfoManager.GetUserAccount(account);
+
+                    this.ltUserAccount.Text = useraccount.Account as string;
+                }
+                else
+                {
+                    var userAccount = UserInfoManager.GetUserAccount(current.Account);
+                    var pwd = userAccount.Password;
+                    this.ltUserAccount.Text = userAccount.Account as string;
+                }
+            }
+
+
+
+            else
+            {
+                var userAccount = UserInfoManager.GetUserAccount(current.Account);
+                var pwd = userAccount.Password;
+                this.ltUserAccount.Text = userAccount.Account as string;
+            }
+
+
         }
 
         protected void btnChange_Click(object sender, EventArgs e)
         {
-            //取得從UserList選到的帳號
-            string account = this.Request.QueryString["Account"];
-            var useraccount = UserInfoManager.GetUserAccount(account);
-            var userInfo = UserInfoManager.GetUserInfo(account);
-            var pwd = useraccount.Password;
-
             var PWD = txtPWD.Text;
             var newPWD = txtNewPWD.Text;
             var RenewPWD = txtReNewPWD.Text;
             var newPWDL = newPWD.Length;
             var RenewPWDL = RenewPWD.Length;
-
-            if (string.Compare(pwd, PWD, false) == 0)
+            if (string.IsNullOrWhiteSpace(PWD) || string.IsNullOrWhiteSpace(newPWD) || string.IsNullOrWhiteSpace(RenewPWD))
             {
-                if (newPWDL < 8 || RenewPWDL > 16)//檢查密碼長度
+                this.lbMsg.Visible = true;
+                this.lbMsg.Text = "密碼選項為必填";
+                this.txtPWD = null;
+                this.txtNewPWD = null;
+                this.txtReNewPWD = null;
+            }
+
+            //檢查密碼長度
+            if (newPWDL < 8 || RenewPWDL > 16)
+            {
+                this.lbMsg.Visible = true;
+                this.lbMsg.Text = "密碼需介於8～16個字";
+                return;
+            }
+
+            var current = AuthManager.GetCurrentUser();
+            string hasaccount = this.Request.QueryString["Account"];
+
+            if (hasaccount != null)
+            {
+                //取得從UserList選到的帳號
+                string account = this.Request.QueryString["Account"];
+                var useraccount = UserInfoManager.GetUserAccount(account);
+                var pwd = useraccount.Password;
+
+                if (string.Compare(pwd, PWD, false) == 0)
                 {
-                    this.lbMsg.Visible = true;
-                    this.lbMsg.Text = "密碼需介於8～16個字";
-                    return;
-                }
-
-                if (string.Compare(newPWD, RenewPWD, false) == 0)
-                {
-                 
-                    //判斷是否為普通使用者
-                    if(userInfo.JobGrade != 0)
+                    if (string.Compare(newPWD, RenewPWD, false) == 0)
                     {
-                        DialogResult MsgBoxResult;
-                        MsgBoxResult = MessageBox.Show("即將變更密碼，繼續請按確定", "確認更改密碼？",
-                            MessageBoxButtons.OKCancel,
-                            MessageBoxIcon.Error);
 
-                        if (MsgBoxResult == DialogResult.OK)
-                                {
-                                    AuthManager.Logout();
-                                    UserInfoManager.UpdateUserPWDlinq(account, newPWD);
-                                    Response.Redirect("/ServerSide/UserManagement/UserList.aspx");
-                                }
-                                else
-                                {
-                                    return;
-                                }
-                    }
-
-                    else
-                    {
-                        DialogResult MsgBoxResult;
-                        MsgBoxResult = MessageBox.Show("即將變更密碼，變更後將登出，繼續請按確定", "確認更改密碼？",
-                            MessageBoxButtons.OKCancel,
-                            MessageBoxIcon.Error);
-
-                        if (MsgBoxResult == DialogResult.OK)
+                        //判斷當前使用者是否為普通使用者
+                        if (current.JobGrade != 0)
                         {
-                            AuthManager.Logout();
-                            UserInfoManager.UpdateUserPWDlinq(account, newPWD);
-                            Response.Redirect("/ClientSide/Login.aspx");
+                            DialogResult MsgBoxResult;
+                            MsgBoxResult = MessageBox.Show("即將變更密碼，繼續請按確定", "確認更改密碼？",
+                                MessageBoxButtons.OKCancel,
+                                MessageBoxIcon.Warning);
+
+                            if (MsgBoxResult == DialogResult.OK)
+                            {
+                                UserInfoManager.UpdateUserPWDlinq(account, newPWD);
+                                MessageBox.Show("變更成功，將導回使用者清單頁", "變更成功",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                                Response.Redirect("/ServerSide/UserManagement/UserList.aspx");
+                            }
+                            else
+                            {
+                                return;
+                            }
                         }
+
                         else
                         {
-                            return;
+                            DialogResult MsgBoxResult;
+                            MsgBoxResult = MessageBox.Show("即將變更密碼，變更後將登出，繼續請按確定", "確認更改密碼？",
+                                MessageBoxButtons.OKCancel,
+                                MessageBoxIcon.Warning);
+
+                            if (MsgBoxResult == DialogResult.OK)
+                            {
+                                UserInfoManager.UpdateUserPWDlinq(account, newPWD);
+                                MessageBox.Show("變更成功，請重新登入", "變更成功",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                                AuthManager.Logout();
+                                Response.Redirect("/ClientSide/Login.aspx");
+                            }
+                            else
+                            {
+                                return;
+                            }
                         }
+
+
                     }
-
-
+                    else
+                    {
+                        this.lbMsg.Visible = true;
+                        this.lbMsg.Text = "新密碼與確認密碼不符，請重新輸入";
+                        this.txtNewPWD = null;
+                        this.txtReNewPWD = null;
+                    }
                 }
                 else
                 {
-                    lbMsg.Visible = true;
-                    lbMsg.Text = "新密碼與確認密碼不符，請重新輸入";
-                    txtNewPWD = null;
-                    txtReNewPWD = null;
+                    this.lbMsg.Text = "密碼輸入錯誤，請確認密碼";
+                    this.txtPWD = null;
+                    this.txtNewPWD = null;
+                    this.txtReNewPWD = null;
                 }
             }
+
+
             else
             {
-                lbMsg.Visible = true;
-                lbMsg.Text = "原密碼與資料不符，請重新輸入";
-                txtPWD = null;
+                var userAccount = UserInfoManager.GetUserAccount(current.Account);
+
+                if (string.Compare(userAccount.Password, PWD, false) == 0)
+                {
+
+                    if (string.Compare(newPWD, RenewPWD, false) == 0)
+                    {
+                            DialogResult MsgBoxResult;
+                            MsgBoxResult = MessageBox.Show("即將變更密碼，變更後將登出，繼續請按確定", "確認更改密碼？",
+                                MessageBoxButtons.OKCancel,
+                                MessageBoxIcon.Warning);
+
+                            if (MsgBoxResult == DialogResult.OK)
+                            {
+                                AuthManager.Logout();
+                                UserInfoManager.UpdateUserPWDlinq(current.Account, newPWD);
+                                MessageBox.Show("變更成功，請重新登入", "變更成功",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                                AuthManager.Logout();
+                                Response.Redirect("/ClientSide/Login.aspx");
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        
+
+
+                    }
+                    else
+                    {
+                        lbMsg.Visible = true;
+                        lbMsg.Text = "新密碼與確認密碼不符，請重新輸入";
+                        txtNewPWD = null;
+                        txtReNewPWD = null;
+                    }
+                }
+                else
+                {
+                    this.lbMsg.Text = "密碼輸入錯誤，請確認密碼";
+                    this.txtPWD = null;
+                    this.txtNewPWD = null;
+                    this.txtReNewPWD = null;
+
+                }
             }
+
+
+
+
+
 
         }
 
@@ -117,8 +227,8 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 Response.Redirect("/ServerSide/UserManagement/UserList.aspx");
             }
             else
-            {              
-               return;
+            {
+                return;
             }
         }
     }

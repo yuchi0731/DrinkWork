@@ -23,7 +23,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             }
 
 
-            var list = DrinkListManager.GetOrderList();
+            var list = DrinkListManager.GetOrderListRecord();
 
             if (list.Count > 0) //check is empty data (大於0就做資料繫結)
             {

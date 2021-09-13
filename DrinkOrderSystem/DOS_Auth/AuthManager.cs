@@ -136,26 +136,12 @@ namespace DOS_Auth
         /// <param name="errorMsg"></param>
         /// <param name="errorMsg2"></param>
         /// <returns></returns>
-        public static bool TryCreateUser(string account, string pwd, string Repwd, string EID, string DID,string D, string FN, string LN,string contact, string email, string ext, string phone, int jobgrade, string desc,string Res, out string errorMsg, out string errorMsg2)
+        public static bool TryCreateUser(string account, string pwd, string Repwd, string DID,string D, string FN, string LN,string contact, string email, string ext, string phone, int jobgrade, string desc,string Res, out string errorMsg, out string errorMsg2)
         {
 
-            try
-            {
-                Convert.ToInt32(EID);
-                Convert.ToInt32(DID);
-                Convert.ToInt32(ext);
-               
-
-            }
-            catch (Exception ex)
-            {
-                errorMsg = "格式錯誤，請確認：";
-                errorMsg2 = "[員工ID] [部門ID] [分機號碼] [電話號碼]等項目必須為整數";
-                return false;
-            }
 
 
-            if (string.IsNullOrWhiteSpace(account) || string.IsNullOrWhiteSpace(pwd) || string.IsNullOrWhiteSpace(Repwd)|| string.IsNullOrWhiteSpace(EID) || string.IsNullOrWhiteSpace(DID) || string.IsNullOrWhiteSpace(D) || string.IsNullOrWhiteSpace(FN) || string.IsNullOrWhiteSpace(LN) || string.IsNullOrWhiteSpace(contact) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(ext) || string.IsNullOrWhiteSpace(phone))
+            if (string.IsNullOrWhiteSpace(account) || string.IsNullOrWhiteSpace(pwd) || string.IsNullOrWhiteSpace(Repwd)|| string.IsNullOrWhiteSpace(DID) || string.IsNullOrWhiteSpace(D) || string.IsNullOrWhiteSpace(FN) || string.IsNullOrWhiteSpace(LN) || string.IsNullOrWhiteSpace(contact) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(ext) || string.IsNullOrWhiteSpace(phone))
             {
                 //check empty
                 if (string.IsNullOrWhiteSpace(account))
@@ -182,7 +168,7 @@ namespace DOS_Auth
             }
 
 
-            if(contact != "ext" || contact != "phone" || contact != "email")
+            if(contact != "ext" && contact != "phone" && contact != "email")
             {
                 errorMsg = "聯絡方式格式錯誤!請重新選取";
                 errorMsg2 = string.Empty;

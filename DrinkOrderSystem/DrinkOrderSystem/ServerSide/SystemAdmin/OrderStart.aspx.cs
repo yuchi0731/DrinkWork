@@ -101,7 +101,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
 
 
-            if (DDLQuantity.SelectedIndex == 0 || DDLQuantity.SelectedIndex != 1 || DDLQuantity.SelectedIndex != 2 || DDLQuantity.SelectedIndex != 3 || DDLQuantity.SelectedIndex != 4 || DDLQuantity.SelectedIndex != 5)
+            if (DDLQuantity.SelectedIndex == 0)
             {
                 this.txtChooseDrinkList.Visible = true;
                 DDLQuantity.SelectedIndex = 0;
@@ -110,7 +110,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             }
 
 
-            if (DDLSugar.SelectedIndex == 0 || DDLSugar.SelectedIndex != 1 || DDLSugar.SelectedIndex != 2 || DDLSugar.SelectedIndex != 3 || DDLSugar.SelectedIndex != 4 || DDLSugar.SelectedIndex != 5)
+            if (DDLSugar.SelectedIndex == 0)
             {
                 this.txtChooseDrinkList.Visible = true;
                 DDLSugar.SelectedIndex = 0;
@@ -119,7 +119,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             }
 
 
-            if (DDLIce.SelectedIndex == 0 || DDLIce.SelectedIndex != 1 || DDLIce.SelectedIndex != 2 || DDLIce.SelectedIndex != 3 || DDLIce.SelectedIndex != 4)
+            if (DDLIce.SelectedIndex == 0)
             {
                 this.txtChooseDrinkList.Visible = true;
                 DDLIce.SelectedIndex = 0;
@@ -128,7 +128,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             }
 
 
-            if (DDLToppings.SelectedIndex == 0 || DDLToppings.SelectedIndex != 1 || DDLToppings.SelectedIndex != 2 || DDLToppings.SelectedIndex != 3 || DDLToppings.SelectedIndex != 4)
+            if (DDLToppings.SelectedIndex == 0)
             {
                 this.txtChooseDrinkList.Visible = true;
                 DDLToppings.SelectedIndex = 0;
@@ -143,7 +143,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 this.txtChooseDrinkList.Visible = true;
 
 
-                this.txtChooseDrinkList.Text += $"{e.CommandArgument as string} {DDLQuantity.SelectedItem} {DDLSugar.SelectedItem} {DDLIce.SelectedItem} {DDLToppings.SelectedItem}\r\n";
+                this.txtChooseDrinkList.Text += $"{e.CommandArgument as string} {DDLQuantity.SelectedItem}杯 {DDLSugar.SelectedItem} {DDLIce.SelectedItem} {DDLToppings.SelectedItem}\r\n";
 
                 this.btnDelete.Visible = true;
                 this.btnSent.Visible = true;

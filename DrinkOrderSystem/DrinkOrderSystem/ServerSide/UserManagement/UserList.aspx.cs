@@ -136,8 +136,8 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-
-            string selectSearch = this.ddsearch.SelectedValue;
+            this.plcNoData.Visible = false;
+            string selectSearch = this.ddsearch.SelectedValue.ToString();
             string txtSearch = this.txtSearch.Text;
             List<string> msgList = new List<string>();
 
@@ -183,6 +183,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 {
                     if (!this.CheckInput(out msgList))
                     {
+                        this.plcNoData.Visible = true;
                         this.lbMsg.Text = string.Join("<br/>", msgList);
                         return;
                     }
@@ -321,11 +322,10 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
         protected void btnSearchClear_Click(object sender, EventArgs e)
         {
-            this.ltlsearch.Visible = false;
             this.txtSearch.Visible = false;
             this.btnSearch.Visible = false;
             this.btnSearchClear.Visible = false;
-            this.Session.Clear();
+            this.plcNoData.Visible = false;
             Response.Redirect("/ServerSide/UserManagement/UserList.aspx");
         }
 
@@ -334,7 +334,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
 
             List<string> msgList = new List<string>();
-            var select = this.ddsearch.SelectedValue;
+            var select = this.ddsearch.SelectedValue.ToString();
             
 
             //如果輸入不等於預設值
@@ -343,13 +343,13 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 msgList.Add("目前只提供帳號、員工編號、姓氏、名字以及部門代號作為查詢條件");
             }
 
-            #region 以員工編號查詢
+            #region 以員工編號查詢檢查
             if (select == "eid")
             {
                 string txteid = this.txtSearch.Text;
 
 
-                if (string.IsNullOrWhiteSpace(txteid))
+                if (!string.IsNullOrWhiteSpace(txteid))
                 {
                     int inteid;
                     if (int.TryParse(txteid, out inteid))
@@ -393,8 +393,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
         private bool CheckVisible(string input)
         {
             if (input.Length > 0)
-            {
-                this.ltlsearch.Visible = true;
+            {               
                 this.txtSearch.Visible = true;
                 this.btnSearch.Visible = true;
                 this.btnSearchClear.Visible = true;
@@ -466,10 +465,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
         {
             //遠至近
 
-
-
             var list = UserInfoManager.GetAllUserListSortingF();
-
 
             if (list.Count > 0) //check is empty data (大於0就做資料繫結)
             {
@@ -480,7 +476,6 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
                 this.ucPager.TotalSize = list.Count;
                 this.ucPager.Bind();
-
 
             }
             else

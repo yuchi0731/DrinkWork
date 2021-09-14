@@ -15,11 +15,6 @@ namespace DOS_DBSoure
     {
 
 
-
-
-
-
-
         /// <summary>
         /// 寫出所有OrderList
         /// </summary>
@@ -48,63 +43,6 @@ namespace DOS_DBSoure
 
 
 
-        /// <summary>
-        /// 寫出所有現在跟團OrderList
-        /// </summary>
-        /// <param name="orderNumber"></param>
-        /// <returns></returns>
-        public static List<OrderList> GetOrderListNoOrdering()
-        {
-            try
-            {
-                using (DKContextModel context = new DKContextModel())
-                {
-
-                    var query =
-                         (from list in context.OrderLists
-                          where list.OrderEndTime > DateTime.Now
-                          select list);
-
-                    var orderList = query.ToList();
-                    return orderList;
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog(ex);
-                return null;
-            }
-        }
-
-
-        /// <summary>
-        /// 寫出所有歷史OrderList
-        /// </summary>
-        /// <param name="orderNumber"></param>
-        /// <returns></returns>
-        public static List<OrderList> GetOrderListRecord()
-        {
-            try
-            {
-                using (DKContextModel context = new DKContextModel())
-                {
-
-                    var query =
-                         (from list in context.OrderLists
-                          where list.OrderEndTime <= DateTime.Now
-                          select list);
-
-                    var orderList = query.ToList();
-                    return orderList;
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog(ex);
-                return null;
-            }
-        }
-
 
         /// <summary>
         /// 寫出所有OrderDetail
@@ -131,8 +69,6 @@ namespace DOS_DBSoure
                 return null;
             }
         }
-
-
 
         /// <summary>
         /// 寫出當前使用者所有OrderDetail
@@ -163,8 +99,305 @@ namespace DOS_DBSoure
 
 
 
+
+        #region OrderRecords
+
         /// <summary>
-        /// 寫出當前使用者所有OrderDetail;;OrderByRtime
+        /// 寫出所有歷史OrderList,篩選帳號
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderList> GetOrderListRecordByAccount(string account)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+
+                    var query =
+                         (from list in context.OrderLists
+                          where list.Account == account & list.OrderEndTime <= DateTime.Now
+                          select list);
+
+                    var orderList = query.ToList();
+                    return orderList;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 寫出所有歷史OrderList,篩選訂單編號
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderList> GetOrderListRecordByOrderNumber(string ordernumber)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+
+                    var query =
+                         (from list in context.OrderLists
+                          where list.OrderNumber == ordernumber & list.OrderEndTime <= DateTime.Now
+                          select list);
+
+                    var orderList = query.ToList();
+                    return orderList;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// OrderRecords:寫出所有歷史OrderList
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderList> GetOrderListRecord()
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+
+                    var query =
+                         (from list in context.OrderLists
+                          where list.OrderEndTime <= DateTime.Now
+                          select list);
+
+                    var orderList = query.ToList();
+                    return orderList;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// OrderRecords:依訂購時間，寫出所有OrderDetail;;OrderBy近至遠
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderList> GetOrderByRtime()
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                         (from list in context.OrderLists
+                          orderby list.OrderTime descending
+                          where list.OrderEndTime <= DateTime.Now
+                          select list);
+
+                    var order = query.ToList();
+                    return order;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+
+        /// <summary>
+        /// OrderRecords:依訂購時間，寫出所有OrderDetail;;OrderBy遠至近
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderList> GetOrderByOtime()
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                         (from list in context.OrderLists
+                          orderby list.OrderTime
+                          where list.OrderEndTime <= DateTime.Now
+                          select list);
+
+                    var order = query.ToList();
+                    return order;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        #endregion
+
+        #region NowOrdering
+
+
+
+        /// <summary>
+        /// NowOrdering:寫出所有歷史OrderList,篩選帳號
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderList> GetNowOrderingByAccount(string account)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+
+                    var query =
+                         (from list in context.OrderLists
+                          where list.Account == account & list.OrderEndTime > DateTime.Now
+                          select list);
+
+                    var orderList = query.ToList();
+                    return orderList;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// NowOrdering:寫出所有歷史OrderList,篩選訂單編號
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderList> GetNowOrderingByOrderNumber(string ordernumber)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+
+                    var query =
+                         (from list in context.OrderLists
+                          where list.OrderNumber == ordernumber & list.OrderEndTime > DateTime.Now
+                          select list);
+
+                    var orderList = query.ToList();
+                    return orderList;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// NowOrdering:寫出所有現在跟團OrderList
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderList> GetOrderListNoOrdering()
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+
+                    var query =
+                         (from list in context.OrderLists
+                          where list.OrderEndTime > DateTime.Now
+                          select list);
+
+                    var orderList = query.ToList();
+                    return orderList;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// NowOrdering:依訂購時間，寫出所有OrderDetail;;OrderBy近至遠
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderList> GetOrderByRtimeNowOrdering()
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                         (from list in context.OrderLists
+                          orderby list.OrderTime descending
+                          where list.OrderEndTime > DateTime.Now
+                          select list);
+
+                    var order = query.ToList();
+                    return order;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// NowOrdering:依訂購時間，寫出所有OrderDetail;;OrderBy遠至近
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderList> GetOrderByOtimeNowOrdering()
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                         (from list in context.OrderLists
+                          orderby list.OrderTime
+                          where list.OrderEndTime > DateTime.Now
+                          select list);
+
+                    var order = query.ToList();
+                    return order;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        #endregion
+
+
+        #region UserDetail OrderBy
+
+
+
+        /// <summary>
+        /// 依訂購時間，寫出當前使用者所有OrderDetail;;OrderBy近至遠
         /// </summary>
         /// <param name="orderNumber"></param>
         /// <returns></returns>
@@ -191,10 +424,8 @@ namespace DOS_DBSoure
             }
         }
 
-
-
         /// <summary>
-        /// 寫出當前使用者所有OrderDetail;;OrderByOtime
+        /// 依訂購時間，寫出當前使用者所有OrderDetail;;OrderBy遠至近
         /// </summary>
         /// <param name="orderNumber"></param>
         /// <returns></returns>
@@ -207,7 +438,7 @@ namespace DOS_DBSoure
                     var query =
                          (from list in context.OrderDetails
                           where list.Account == account
-                          orderby list.OrderTime
+                          orderby list.OrderTime 
                           select list);
 
                     var orderDetail = query.ToList();
@@ -220,9 +451,6 @@ namespace DOS_DBSoure
                 return null;
             }
         }
-
-
-
 
         /// <summary>
         /// 寫出當前使用者所有OrderDetail;;OrderByProduct
@@ -253,17 +481,36 @@ namespace DOS_DBSoure
         }
 
 
+        #endregion
 
 
+        /// <summary>
+        /// 取出自己最近一筆OrderNumber;;OrderBy
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static string GetUserLastOrderNumber(string account)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                         (from list in context.OrderLists
+                          where list.Account == account
+                          orderby list.OrderTime
+                          select list.OrderNumber);
 
-
-
-
-
-
-
-
-
+                    var orderDetail = query.FirstOrDefault();
+                    return orderDetail;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
 
 
         /// <summary>
@@ -293,6 +540,8 @@ namespace DOS_DBSoure
             }
         }
 
+
+
         /// <summary>
         /// 利用OrderNumber取的OrderDetail
         /// </summary>
@@ -319,6 +568,65 @@ namespace DOS_DBSoure
                 return null;
             }
         }
+
+
+
+        /// <summary>
+        /// 篩選OrderDetail By account
+        /// </summary>
+        /// <param name="OrderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderDetail> GetOrderDetailInfoByAccount(string account)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                         (from list in context.OrderDetails
+                          where list.Account == account
+                          select list);
+
+                    var orderDetail = query.ToList();
+                    return orderDetail;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+
+        /// <summary>
+        /// 篩選OrderDetail By productName
+        /// </summary>
+        /// <param name="OrderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderDetail> GetOrderDetailInfoByProductName(string productName)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                         (from list in context.OrderDetails
+                          where list.ProductName == productName
+                          select list);
+
+                    var orderDetail = query.ToList();
+                    return orderDetail;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+
 
         /// <summary>
         /// 利用OrderNumber取的OrderDetailList
@@ -513,10 +821,48 @@ namespace DOS_DBSoure
 
 
 
-        #region OrderDetailList
+        #region 開團跟團
 
         /// <summary>
-        /// 跟團建立新OrderDetail
+        /// 開團建立OrderList
+        /// </summary>
+        /// <param name="orderDetail"></param>
+        public static void StartGroup(OrderListModels orderlist)
+        {
+
+            try
+            {
+
+                using (DKContextModel context = new DKContextModel())
+                {
+
+                    OrderList neworderList = new OrderList();
+                    //加入
+                    neworderList.OrderID = orderlist.OrderID;
+                    neworderList.OrderNumber = orderlist.OrderNumber;
+                    neworderList.Account = orderlist.Account;
+                    neworderList.OrderTime = orderlist.OrderTime;
+                    neworderList.OrderEndTime = orderlist.OrderEndTime;
+                    neworderList.RequiredTime = orderlist.RequiredTime;
+                    neworderList.SupplierName = orderlist.SupplierName;
+                    neworderList.TotalPrice = orderlist.TotalPrice;
+                    neworderList.TotalCups = orderlist.TotalCups;
+
+
+                    context.OrderLists.Add(neworderList);
+                    context.SaveChanges();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 跟團建立新OrderDetail(包括開團者)
         /// </summary>
         /// <param name="productID"></param>
         /// <param name="productName"></param>
@@ -565,7 +911,159 @@ namespace DOS_DBSoure
             }
         }
 
+
+        /// <summary>
+        /// 算訂單總金額
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static decimal GetAllAmount(string orderNumber)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var List =
+                        context.OrderDetails
+                        .Where(obj => obj.OrderNumber == orderNumber);
+
+                    decimal totalAmount = 0;
+                    foreach (var subList in List)
+                    {
+                        totalAmount += subList.SubtotalAmount;
+                    }
+
+                    return totalAmount;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// 算訂單總杯數
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static int GetAllCup(string orderNumber)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var List =
+                        context.OrderDetails
+                        .Where(obj => obj.OrderNumber == orderNumber);
+
+                    int cups = 0;
+                    foreach (var subList in List)
+                    {
+                        cups += subList.Quantity;
+                    }
+
+                    return cups;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// 更新總金額及杯數
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <param name="totalAmount"></param>
+        /// <param name="cups"></param>
+        /// <returns></returns>
+        public static bool UpdateGroup(string orderNumber, decimal totalAmount, int cups)
+        {
+
+            try
+            {
+
+                using (DKContextModel context = new DKContextModel())
+                {
+
+                    var updatelist =
+                        context.OrderLists
+                        .Where(obj => obj.OrderNumber == orderNumber).FirstOrDefault();
+
+                    if (updatelist != null)
+                    {
+                        updatelist.TotalPrice = totalAmount;
+                        updatelist.TotalCups = cups;
+                    }
+
+
+
+
+
+                    context.SaveChanges();
+
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return false;
+            }
+        }
+
+
         #endregion
+
+
+
+
+        /// <summary>
+        /// 刪除訂單List,Detail
+        /// </summary>
+        public static void DeleteListDetail(string orderNumber)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    //查出List資料
+                    var DeleteList =
+                        context.OrderLists.Where(obj => obj.OrderNumber == orderNumber).FirstOrDefault();
+                    //查出Detail資料
+                    var DeleteDetail =
+                        context.OrderDetails.Where(obj => obj.OrderNumber == orderNumber).FirstOrDefault();
+
+                    //如果不為null執行刪除
+                    if (DeleteList != null)
+                    {
+                        context.OrderLists.Remove(DeleteList);
+                    }
+
+
+                    if (DeleteDetail != null)
+                    {
+                        context.OrderDetails.Remove(DeleteDetail);
+                    }
+
+                    context.SaveChanges();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return;
+            }
+        }
+
+
+
 
 
 
@@ -581,7 +1079,7 @@ namespace DOS_DBSoure
         /// <param name="unitsMaxOrder"></param>
         /// <param name="categoryName"></param>
         /// <param name="picture"></param>
-        public static void CreateNewProduct(int productID, string productName, string supplierName, decimal unitPrice, int unitsMaxOrder, string categoryName, string picture)
+        public static void CreateNewProduct(Product product)
         {
             try
             {
@@ -589,17 +1087,18 @@ namespace DOS_DBSoure
                 using (DKContextModel context = new DKContextModel())
                 {
 
-                    Product newproduct = new Product();
-                    //加入
-                    newproduct.ProductID = productID;
-                    newproduct.ProductName = productName;
-                    newproduct.SupplierName = supplierName;
-                    newproduct.UnitPrice = unitPrice;
-                    newproduct.UnitsMaxOrder = unitsMaxOrder;
-                    newproduct.CategoryName = categoryName;
-                    newproduct.Picture = picture;
+                    //Product newproduct = new Product();
+                    ////加入
+                    //newproduct.ProductID = product.ProductID;
+                    //newproduct.ProductName = product.ProductName;
+                    //newproduct.SupplierName = product.SupplierName;
+                    //newproduct.UnitPrice = product.UnitPrice;
+                    //newproduct.UnitsMaxOrder = product.UnitsMaxOrder;
+                    //newproduct.Discount = product.Discount;
+                    //newproduct.CategoryName = product.CategoryName;
+                    //newproduct.Picture = product.Picture;
 
-                    context.Products.Add(newproduct);
+                    context.Products.Add(product);
                     context.SaveChanges();
 
                 }
@@ -621,36 +1120,43 @@ namespace DOS_DBSoure
         /// <param name="unitsMaxOrder"></param>
         /// <param name="categoryName"></param>
         /// <param name="picture"></param>
-        public static void UpdateNewProduct(int productID, string productName, string supplierName, decimal unitPrice, int unitsMaxOrder, string categoryName, string picture)
+        public static bool UpdateProduct(Product product)
         {
             try
             {
                 using (DKContextModel context = new DKContextModel())
                 {
-                    var product =
-                                    context.Products
-                                    .Where(obj => obj.ProductName == productName).FirstOrDefault();
+                    var prod =
+                       context.Products
+                       .Where(obj => obj.ProductName == product.ProductName).FirstOrDefault();
 
 
-                    //變更
-                    product.ProductID = productID;
-                    product.ProductName = productName;
-                    product.SupplierName = supplierName;
-                    product.UnitPrice = unitPrice;
-                    product.UnitsMaxOrder = unitsMaxOrder;
-                    product.CategoryName = categoryName;
-                    product.Picture = picture;
+                    if (prod != null)
+                    {
+                        prod.ProductName = product.ProductName;
+                        prod.SupplierName = product.SupplierName;
+                        prod.UnitPrice = product.UnitPrice;
+                        prod.UnitsMaxOrder = product.UnitsMaxOrder;
+                        prod.Discount = product.Discount;
+                        prod.CategoryName = product.CategoryName;
+                        prod.Picture = product.Picture;
 
-                    context.SaveChanges();
+                        context.SaveChanges();
+                    }
 
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Logger.WriteLog(ex);
-                return;
+                return false;
             }
         }
+
+
+
 
         /// <summary>
         /// 刪除飲料資料

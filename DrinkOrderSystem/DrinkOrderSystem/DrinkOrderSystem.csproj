@@ -44,11 +44,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -104,6 +110,9 @@
     <Content Include="ClientSide\Default.aspx" />
     <Content Include="ClientSide\DrinkDetail.aspx" />
     <Content Include="ClientSide\ForgetPWD.aspx" />
+    <Content Include="ClientSide\ImagesClient\admin.png" />
+    <Content Include="ClientSide\ImagesClient\Logo.png" />
+    <Content Include="ClientSide\ImagesClient\user.png" />
     <Content Include="ClientSide\Introduction.aspx" />
     <Content Include="ClientSide\Login.aspx" />
     <Content Include="ClientSide\StaffIntroduction.aspx" />
@@ -130,13 +139,18 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ServerSide\ImagesServer\admin.png" />
+    <Content Include="ServerSide\ImagesServer\Logo.png" />
+    <Content Include="ServerSide\ImagesServer\user.png" />
     <Content Include="ServerSide\ImagesServer\WhiteAlley.jpg" />
     <Content Include="ServerSide\ImagesServer\drink_icon.png" />
-    <Content Include="ServerSide\ImagesServer\50Lan.png" />
+    <Content Include="ServerSide\ImagesServer\Fiftylan.png" />
     <Content Include="ServerSide\ImagesServer\Milkshop.png" />
+    <Content Include="ServerSide\ProductManagement\AddProduct.aspx" />
+    <Content Include="ServerSide\ProductManagement\ModifyProduct.aspx" />
+    <Content Include="ServerSide\ProductManagement\ProductList.aspx" />
     <Content Include="ServerSide\SystemAdmin\NowOrdering.aspx" />
     <Content Include="ServerSide\SystemAdmin\OderMid.aspx" />
-    <Content Include="ServerSide\SystemAdmin\OrderConfirm.aspx" />
     <Content Include="ServerSide\SystemAdmin\OrderDetailInfo.aspx" />
     <Content Include="ServerSide\SystemAdmin\OrderModify.aspx" />
     <Content Include="ServerSide\SystemAdmin\OrderRecords.aspx" />
@@ -212,6 +226,27 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerSide\ProductManagement\AddProduct.aspx.cs">
+      <DependentUpon>AddProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\ProductManagement\AddProduct.aspx.designer.cs">
+      <DependentUpon>AddProduct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\ProductManagement\ModifyProduct.aspx.cs">
+      <DependentUpon>ModifyProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\ProductManagement\ModifyProduct.aspx.designer.cs">
+      <DependentUpon>ModifyProduct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\ProductManagement\ProductList.aspx.cs">
+      <DependentUpon>ProductList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\ProductManagement\ProductList.aspx.designer.cs">
+      <DependentUpon>ProductList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ServerSide\ServerSide.Master.cs">
       <DependentUpon>ServerSide.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -232,13 +267,6 @@
     </Compile>
     <Compile Include="ServerSide\SystemAdmin\OderMid.aspx.designer.cs">
       <DependentUpon>OderMid.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ServerSide\SystemAdmin\OrderConfirm.aspx.cs">
-      <DependentUpon>OrderConfirm.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ServerSide\SystemAdmin\OrderConfirm.aspx.designer.cs">
-      <DependentUpon>OrderConfirm.aspx</DependentUpon>
     </Compile>
     <Compile Include="ServerSide\SystemAdmin\OrderDetailInfo.aspx.cs">
       <DependentUpon>OrderDetailInfo.aspx</DependentUpon>
@@ -382,7 +410,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ClientSide\ImagesClient\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

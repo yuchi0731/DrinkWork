@@ -12,7 +12,11 @@ namespace DrinkOrderSystem.ClientSide
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            //if (!AuthManager.IsLogined())
+            //{
+            //    Response.Redirect("/ClientSide/Login.aspx");
+            //    return;
+            //}
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)

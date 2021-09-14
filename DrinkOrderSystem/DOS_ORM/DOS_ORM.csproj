@@ -50,7 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="DOSmodel\Category.cs" />
     <Compile Include="DOSmodel\DKContextModel.cs" />
     <Compile Include="DOSmodel\OrderDetail.cs" />
@@ -60,7 +59,6 @@
     <Compile Include="DOSmodel\Topping.cs" />
     <Compile Include="DOSmodel\UserAccount.cs" />
     <Compile Include="DOSmodel\UserInfo.cs" />
-    <Compile Include="DOSmodel\UserOrderDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

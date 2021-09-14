@@ -10,12 +10,13 @@ namespace DOS_Models
     {
         public int OrderID { get; set; }
         public string OrderNumber { get; set; }
-        public string Account { get; set; }
-        public string OrderTime { get; set; }
-        public string OrderEndTime { get; set; }
-        public string RequiredTime { get; set; }
+        public string Account { get; set; } 
+        public DateTime OrderTime { get; set; }
+        public DateTime OrderEndTime { get; set; }
+        public DateTime RequiredTime { get; set; }
         public string SupplierName { get; set; }
-        public string TotalPrice { get; set; }
-        public string TotalCups { get; set; }
+        public decimal TotalPrice { get; set; }
+        public int TotalCups { get; set; }
+        public string Established { get; set; }
     }
 }

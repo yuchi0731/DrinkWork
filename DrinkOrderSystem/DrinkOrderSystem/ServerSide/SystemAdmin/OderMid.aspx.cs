@@ -17,8 +17,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack) //可能是按按鈕跳回本頁，所以要判斷Postback
-            {
+
 
                 if (!AuthManager.IsLogined())
                 {
@@ -54,7 +53,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     this.ltMsg.Visible = true;
                     this.lbMsg.Text = "找不到此跟團資料";
                 }
-            }
+            
 
         }
 
@@ -80,21 +79,25 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             if (DDLQuantity.SelectedIndex == 0)
             {
                 this.txtChooseDrinkList.Text = "杯數選擇錯誤，請重新選擇";
+                this.Session["SelectedItems"] = null;
                 return;
             }
             if (DDLSugar.SelectedIndex == 0)
             {
                 this.txtChooseDrinkList.Text = "糖量選擇錯誤，請重新選擇";
+                this.Session["SelectedItems"] = null;
                 return;
             }
             if (DDLIce.SelectedIndex == 0)
             {
                 this.txtChooseDrinkList.Text = "冰塊選擇錯誤，請重新選擇";
+                this.Session["SelectedItems"] = null;
                 return;
             }
             if (DDLToppings.SelectedIndex == 0)
             {
                 this.txtChooseDrinkList.Text = "加料選擇錯誤，請重新選擇";
+                this.Session["SelectedItems"] = null;
                 return;
             }
 
@@ -106,8 +109,29 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 this.ltMsg.Visible = false;
 
 
+                decimal Toprice = 0;
+                //加料金額
+                if (DDLToppings.SelectedIndex == 1)
+                {
+                    Toprice = 0;
+                }
+                if (DDLToppings.SelectedIndex == 2)
+                {
+                    Toprice = 10;
+                }
+                if (DDLToppings.SelectedIndex == 3)
+                {
+                    Toprice = 5;
+                }
+                if (DDLToppings.SelectedIndex == 4)
+                {
+                    Toprice = 10;
+                }
 
-                this.txtChooseDrinkList.Text += $"{e.CommandArgument as string} {DDLQuantity.SelectedItem}杯 {DDLSugar.SelectedItem} {DDLIce.SelectedItem} {DDLToppings.SelectedItem} {DrinkListManager.GetUnitPrice(e.CommandArgument as string)}元/杯 \r\n";
+
+
+                this.txtChooseDrinkList.Text +=
+                    $"【飲料】{e.CommandArgument as string}【單價】{DrinkListManager.GetUnitPrice(e.CommandArgument as string)}元/杯 【杯數】 {DDLQuantity.SelectedItem}杯 【甜度】{DDLSugar.SelectedItem}【冰量】{DDLIce.SelectedItem}【加料】{DDLToppings.SelectedItem}【加料金額】{Toprice} 元 \r\n";
 
                 this.btnDelete.Visible = true;
                 this.btnSent.Visible = true;
@@ -134,26 +158,6 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     this.txtChooseDrinkList.Text = "格式錯誤，杯數須為整數，請確認後重新輸入";
                     return;
                 }
-
-                decimal Toprice = 0;
-                //加料金額
-                if (DDLToppings.SelectedIndex == 1)
-                {
-                    Toprice = 0;
-                }
-                if (DDLToppings.SelectedIndex == 2)
-                {
-                    Toprice = 10;
-                }
-                if (DDLToppings.SelectedIndex == 3)
-                {
-                    Toprice = 5;
-                }
-                if (DDLToppings.SelectedIndex == 4)
-                {
-                    Toprice = 10;
-                }
-
 
 
                 var orderdetaillist = new OrderDetailModels()
@@ -186,7 +190,6 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 }
 
                 this.lbTotalAmount.Text = $"此筆訂單，共 {totalAmount.ToString()} 元";
-
 
             }
 
@@ -236,25 +239,33 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 if (MsgBoxResult == DialogResult.OK)
                 {
 
-                var writSession = this.Session["SelectedItems"] as List<OrderDetailModels>;
+                var writeSession = this.Session["SelectedItems"] as List<OrderDetailModels>;
 
-                foreach (var sub in writSession)
+                foreach (var sub in writeSession)
                 {
                     DrinkListManager.AddGroup(sub);
                 }
+
+
+                //更新OrderList總金額及杯數
+                string orderNumber = this.Request.QueryString["OrderNumber"];
+                decimal amount = DrinkListManager.GetAllAmount(orderNumber);
+                int cups = DrinkListManager.GetAllCup(orderNumber);
+
+                DrinkListManager.UpdateGroup(orderNumber, amount, cups);
 
 
 
                 MessageBox.Show("訂購完成，導至訂單明細頁", "完成!",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
-                this.Session["SelectedItems"] = null;
+
                 Response.Redirect("/ServerSide/SystemAdmin/OrderDetailInfo.aspx");
                 }
                 else
                 {
                 this.ltMsg.Visible = true;
-                this.ltMsg.Text = "已取消訂購";
+                this.ltMsg.Text = "已取消動作";
                     return;
                 }
 
@@ -265,10 +276,34 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            this.Session["SelectedItems"] = null;
-            this.txtChooseDrinkList.Text = null;
-            this.ltMsg.Text = null;
-            this.ltMsg.Visible = false;
+
+
+            DialogResult MsgBoxResult;
+            MsgBoxResult = MessageBox.Show("取消將不會儲存資料，請按確認繼續", "取消",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Warning);
+
+
+            if (MsgBoxResult == DialogResult.OK)
+            {
+
+                this.txtChooseDrinkList.Text = string.Empty;
+                Session.Remove("SelectedItems");
+                this.txtChooseDrinkList.Text = null;
+                this.ltMsg.Text = null;
+                this.ltMsg.Visible = false;
+
+                MsgBoxResult = MessageBox.Show("取消成功", "修改成功",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+
+            }
+            else
+            {
+                return;
+            }
+
+
         }
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DOS_ORM
+namespace DOS_DBSoure
 {
-    public class Class1
+    public class ProductManager
     {
     }
 }

@@ -4,56 +4,59 @@
 
 
 
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
-        #d1, #d2, #d3 {
-            float: left;
-            margin: 10px;
-        }
-        .gd {
-            clear: left;
-        }
-    </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>開團介面</h1>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
+    <style>
+        #d1, #d2, #d3 {
+            float: left;
+            margin: 10px;
+        }
 
-    <h2>請選擇店家</h2>
-        <div id="d1">
-            <asp:ImageButton ID="Imgbtn50Lan" runat="server" ImageUrl="~/ServerSide/ImagesServer/50Lan.png"  OnClick="Imgbtn50Lan_Click" Width="100px" />
-        </div>
-        <div id="d2">
-            <asp:ImageButton ID="ImgbtnWhiteAlley" runat="server" ImageUrl="~/ServerSide/ImagesServer/WhiteAlley.jpg"  OnClick="ImgbtnWhiteAlley_Click" Width="100"/>
-        </div>
-        <div id="d3">
-            <asp:ImageButton ID="ImgbtnMilkshop" runat="server" ImageUrl="~/ServerSide/ImagesServer/Milkshop.png"  OnClick="ImgbtnMilkshop_Click" Width="100"/>
-        </div>
+        .gd {
+            clear: left;
+        }
+    </style>
+    <h2 class="gd" id="gd1"><asp:Literal ID="ltChoosedShop" runat="server">請選擇店家</asp:Literal></h2><br />
+    <div id="d1">
 
-    <div>
-        <h2 class="gd">請選擇飲料品項</h2>
-        <asp:GridView ID="gvChooseDrink" runat="server" AutoGenerateColumns="False" Height="89px" Width="418px" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" CssClass="auto-style1"  OnRowCommand="gvChooseDrink_RowCommand">
+  <asp:ImageButton ID="ImgbtnFiftylan" runat="server"  ImageUrl="../ImagesServer/Fiftylan.png" OnClick="ImgbtnFiftylan_Click" Width="100" />
+
+    </div>
+    <div id="d2">
+        <asp:ImageButton ID="ImgbtnWhiteAlley" runat="server"  ImageUrl="../ImagesServer/WhiteAlley.jpg" OnClick="ImgbtnWhiteAlley_Click" Width="100" />
+    </div>
+    <div id="d3">
+        <asp:ImageButton ID="ImgbtnMilkshop" runat="server"  ImageUrl="../ImagesServer/Milkshop.png" OnClick="ImgbtnMilkshop_Click" Width="100" />
+    </div>
+
+    <div id="gdlist">
+        <h2 class="gd" id="gd2"><asp:Literal ID="ltDrinkTitle" runat="server" Visible="false" >請選擇飲料品項</asp:Literal></h2>
+        <asp:GridView ID="gvChooseDrink" runat="server" AutoGenerateColumns="False" Height="89px" Width="864px" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" CssClass="auto-style1" OnRowCommand="gvChooseDrink_RowCommand" ForeColor="Black" GridLines="Vertical">
+            <AlternatingRowStyle BackColor="White" />
             <Columns>
                 <asp:BoundField HeaderText="產品名稱" DataField="ProductName" />
                 <asp:BoundField HeaderText="價格" DataField="UnitPrice" />
                 <asp:TemplateField HeaderText="數量">
                     <ItemTemplate>
-                        <asp:DropDownList ID="dlQuantity" runat="server">
+                        <asp:DropDownList ID="dlQuantity" runat="server" AutoPostBack="True">
                             <asp:ListItem Value="0">請選擇杯數</asp:ListItem>
                             <asp:ListItem Value="1">1</asp:ListItem>
                             <asp:ListItem Value="2">2</asp:ListItem>
                             <asp:ListItem Value="3">3</asp:ListItem>
                             <asp:ListItem Value="4">4</asp:ListItem>
                             <asp:ListItem Value="5">5</asp:ListItem>
-
                         </asp:DropDownList>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="選擇糖量">
                     <ItemTemplate>
-                        <asp:DropDownList ID="dlChooseSugar" runat="server">
+                        <asp:DropDownList ID="dlChooseSugar" runat="server" AutoPostBack="True">
                             <asp:ListItem Value="0">請選擇糖量</asp:ListItem>
                             <asp:ListItem Value="1">無糖</asp:ListItem>
                             <asp:ListItem Value="2">微糖</asp:ListItem>
@@ -65,7 +68,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="選擇冰塊">
                     <ItemTemplate>
-                        <asp:DropDownList ID="dlChooseIce" runat="server">
+                        <asp:DropDownList ID="dlChooseIce" runat="server" AutoPostBack="True">
                             <asp:ListItem Value="0">請選擇冰塊</asp:ListItem>
                             <asp:ListItem Value="1">去冰</asp:ListItem>
                             <asp:ListItem Value="2">微冰</asp:ListItem>
@@ -76,39 +79,68 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="加料區">
                     <ItemTemplate>
-                        <asp:DropDownList ID="dlChooseToppings" runat="server">
+                        <asp:DropDownList ID="dlChooseToppings" runat="server" AutoPostBack="True">
                             <asp:ListItem Value="0">請選擇是否加料</asp:ListItem>
                             <asp:ListItem Value="1">不加料</asp:ListItem>
-                            <asp:ListItem Value="2">加珍珠</asp:ListItem>
-                            <asp:ListItem Value="3">加寒天</asp:ListItem>
-                            <asp:ListItem Value="4">加椰果</asp:ListItem>
+                            <asp:ListItem Value="2">珍珠</asp:ListItem>
+                            <asp:ListItem Value="3">寒天</asp:ListItem>
+                            <asp:ListItem Value="4">椰果</asp:ListItem>
                         </asp:DropDownList>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="點選">
                     <ItemTemplate>
-                        <asp:Button ID="btnChoose" runat="server" Text="選擇"  CommandArgument='<%#Eval("ProductName") %>'  CommandName="ChooseDrink"/>
+                        <asp:Button ID="btnChoose" runat="server" Text="選擇"  CommandArgument='<%#Eval("ProductName") %>' CommandName="ChooseDrink" />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
-            <FooterStyle BackColor="White" ForeColor="#000066" />
-            <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
-            <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
-            <RowStyle ForeColor="#000066" />
-            <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
-            <SortedAscendingCellStyle BackColor="#F1F1F1" />
-            <SortedAscendingHeaderStyle BackColor="#007DBB" />
-            <SortedDescendingCellStyle BackColor="#CAC9C9" />
-            <SortedDescendingHeaderStyle BackColor="#00547E" />
-        </asp:GridView >
-    <uc1:ucpager runat="server" id="ucPager" PageSize="10" Url="/ServerSide/SystemAdmin/OrderStart.aspx" Visible="False" />
+            <FooterStyle BackColor="#CCCC99" />
+            <HeaderStyle BackColor="#6B696B" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="#F7F7DE" ForeColor="Black" HorizontalAlign="Right" />
+            <RowStyle BackColor="#F7F7DE" />
+            <SelectedRowStyle BackColor="#CE5D5A" Font-Bold="True" ForeColor="White" />
+            <SortedAscendingCellStyle BackColor="#FBFBF2" />
+            <SortedAscendingHeaderStyle BackColor="#848384" />
+            <SortedDescendingCellStyle BackColor="#EAEAD3" />
+            <SortedDescendingHeaderStyle BackColor="#575357" />
+        </asp:GridView>
+        <uc1:ucPager runat="server" ID="ucPager" PageSize="10" Url="/ServerSide/SystemAdmin/OrderStart.aspx" Visible="false" />
     </div>
-    <div>
-        <asp:TextBox ID="txtChooseDrinkList" runat="server" MaxLength="100" ReadOnly="True" Rows="10" Width="540px" Height="89px" TextMode="MultiLine" Visible="False"></asp:TextBox>
+    
+    <br />
 
+    <div>
+        <asp:Label ID="lbErrorMsg" runat="server" Visible="false" ForeColor="Red"></asp:Label><br />
+        <asp:TextBox ID="txtChooseDrinkList" runat="server" MaxLength="100" ReadOnly="True" Rows="10" Width="749px" Height="136px" TextMode="MultiLine" Visible="False"></asp:TextBox><br />
+        <asp:Label ID="lbTotalAmount" runat="server" Visible="False"></asp:Label>
     </div>
+
+
+    <div>
+        <table>
+            <tr>
+                <th>開團截止時間
+                </th>
+                <td>
+                    <asp:TextBox ID="txtEndTime" runat="server" ReadOnly="false" TextMode="DateTimeLocal"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <th>指定送達公司時間
+                </th>
+                <td>
+                    <asp:TextBox ID="txtReqTime" runat="server" ReadOnly="false" TextMode="DateTimeLocal"></asp:TextBox>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div>
+
+        <asp:Button ID="btnDelete" runat="server" Text="清除選單" OnClick="btnDelete_Click" Visible="False" />
         <asp:Button ID="btnSent" runat="server" Text="確認送出" OnClick="btnSent_Click" Visible="False" />
 
-    <asp:Button ID="btnDelete" runat="server" Text="清除選單" OnClick="btnDelete_Click" Visible="False" />
-
+    </div>
+    <asp:Literal ID="ltMsg" runat="server" Visible="false"></asp:Literal>
 </asp:Content>

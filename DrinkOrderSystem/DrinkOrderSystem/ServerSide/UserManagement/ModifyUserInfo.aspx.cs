@@ -18,8 +18,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack) //可能是按按鈕跳回本頁，所以要判斷Postback
-            {
+
                 if (!AuthManager.IsLogined())
                 {
                     Response.Redirect("/ClientSide/Login.aspx");
@@ -59,7 +58,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                     this.plcNoData.Visible = true;
                 }
 
-            }
+            
         }
 
         private List<UserInfo> GetPageDataTable(List<UserInfo> list)
@@ -103,21 +102,49 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 var item = e.CommandSource as Button;
                 var container = item.NamingContainer;
 
-                var txtDID = (container.FindControl("txtDID") as TextBox).ToString();
-                var txtD = (container.FindControl("txtD") as TextBox).ToString();
-                var txtLName = (container.FindControl("txtLName") as TextBox).ToString();
-                var txtFName = (container.FindControl("txtFName") as TextBox).ToString();
+
+                TextBox DID = container.FindControl("txtDID") as TextBox;
+                string txtDID = DID.Text;
 
 
-                var dpContact = (container.FindControl("dpContact") as DropDownList).SelectedItem.ToString();
-                var txtEmail = (container.FindControl("txtEmail") as TextBox).ToString();
-                var txtext = (container.FindControl("txtext") as TextBox).ToString();
-                var txtPhone = (container.FindControl("txtPhone") as TextBox).ToString();
-                var txtRepS = (container.FindControl("txtRepS") as TextBox).ToString();
-                var dpJobGrade = (container.FindControl("dpJobGrade") as DropDownList).SelectedIndex;
-                var txtdesc = (container.FindControl("txtdesc") as TextBox).ToString();
-                var photo = (container.FindControl("filePhoto") as FileUpload);
+                TextBox D = container.FindControl("txtD") as TextBox;
+                string txtD = D.Text;
+
+
+                TextBox LName = container.FindControl("txtLName") as TextBox;
+                string txtLName = LName.Text;
+
+                TextBox FName = container.FindControl("txtFName") as TextBox;
+                string txtFName = FName.Text;
+
+                DropDownList dpcontact = container.FindControl("dpContact") as DropDownList;
+                string dpContact = dpcontact.SelectedItem.Text;
+
+                TextBox Email = container.FindControl("txtEmail") as TextBox;
+                string txtEmail = Email.Text;
+
+                TextBox ext = container.FindControl("txtext") as TextBox;
+                string txtext = ext.Text;
+
+                TextBox Phone = container.FindControl("txtPhone") as TextBox;
+                string txtPhone = Phone.Text;
+
+                TextBox RepS = container.FindControl("txtRepS") as TextBox;
+                string txtRepS = RepS.Text;
+
+                DropDownList dpjobGrade = container.FindControl("dpJobGrade") as DropDownList;
+                var dpJobGrade = dpjobGrade.SelectedIndex;
+
+                TextBox desc = container.FindControl("txtdesc") as TextBox;
+                string txtdesc = desc.Text;
+
+                FileUpload fphoto = container.FindControl("filePhoto") as FileUpload;
+                string photo = fphoto.ToString();
+
+
+                var hasphoto = (container.FindControl("filePhoto") as FileUpload);
                 var filePhoto = (container.FindControl("filePhoto") as FileUpload).ToString();
+
                 var lastModified = DateTime.Now;
 
 
@@ -129,9 +156,11 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 }
 
 
+
                 UserInfo userInfo = new UserInfo()
                 {
                     Account = userdata.Account,
+                    EmployeeID = userdata.EmployeeID,
                     DepartmentID = txtDID,
                     Department = txtD,
                     FirstName = txtFName,
@@ -143,18 +172,18 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                     JobGrade = dpJobGrade,
                     Description = txtdesc,
                     ResponseSuppliers = txtRepS,
-                    Photo = txtPhone,
+                    Photo = photo,
                     CreateDate = userdata.CreateDate
 
                 };
 
 
                 //假設有上傳檔案，就寫入檔名
-                if (filePhoto != null && FileUploadManager.VaildFileUpload(photo, out List<string> tempList))
+                if (photo != null && FileUploadManager.VaildFileUpload(fphoto, out List<string> tempList))
                 {
-                    string saveFileName = FileUploadManager.GetNewFileName(photo);
+                    string saveFileName = FileUploadManager.GetNewFileName(fphoto);
                     string filePath = Path.Combine(this.GetSaveFolderPath(), saveFileName);
-                    photo.SaveAs(filePath);
+                    fphoto.SaveAs(filePath);
 
                     userInfo.Photo = saveFileName;
 
@@ -162,20 +191,10 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
 
 
-
-
-
                 DialogResult MsgBoxResult;
                 MsgBoxResult = MessageBox.Show("即將變更資料，繼續請按確定", "確認變更",
                     MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Warning);
-
-
-
-
-
-
-
 
 
                 if (MsgBoxResult == DialogResult.OK)

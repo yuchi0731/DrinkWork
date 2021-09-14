@@ -13,21 +13,21 @@
             <th>帳號
             </th>
             <td>
-                <asp:Literal ID="Literal2" runat="server"></asp:Literal>
+                <asp:Literal ID="ltAccount" runat="server"></asp:Literal>
             </td>
         </tr>
         <tr>
-            <th>等級
+            <th>使用者等級
             </th>
             <td>
-                <asp:Literal ID="Literal1" runat="server"></asp:Literal>
+                <asp:Label ID="lbuserlevel" runat="server" Text="Label"></asp:Label>
             </td>
         </tr>
         <tr>
-            <th>最近使用之訂單
+            <th>最近使用之訂單編號
             </th>
             <td>
-                <asp:Literal ID="Literal3" runat="server"></asp:Literal>
+                <asp:Literal ID="ltOrderNumber" runat="server"></asp:Literal>
             </td>
         </tr>
     </table>

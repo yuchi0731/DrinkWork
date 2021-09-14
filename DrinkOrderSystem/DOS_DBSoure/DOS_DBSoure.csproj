@@ -60,6 +60,7 @@
     <Compile Include="DrinkListManagerSQL.cs" />
     <Compile Include="FileUploadManager.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="ProductManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tool.cs" />
     <Compile Include="UserInfoManager.cs" />

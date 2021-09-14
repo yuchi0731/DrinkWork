@@ -28,6 +28,8 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
         protected void btnCreate_Click(object sender, EventArgs e)
         {
+            this.lblMsg.Visible = false;
+            this.lblMsg2.Visible = false;
 
             string txtAccount = this.txtCreateAccount.Text;
             string txtPWD = this.txtCreatePWD.Text;
@@ -36,7 +38,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
             string txtD = this.txtCreateD.Text;
             string txtLName = this.txtCreateLName.Text;
             string txtFName = this.txtCreateFName.Text;
-            string txtcontact = this.dpCreateContact.SelectedItem.ToString();
+            string txtcontact = this.dpCreateContact.SelectedValue.ToString();
             string txtEmail = this.txtCreateEmail.Text;
             string txtext = this.txtCreatext.Text;
             string txtphone = this.txtCreatePhone.Text;
@@ -149,6 +151,16 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
         protected void btnReset_Click(object sender, EventArgs e)
         {
+
+
+            DialogResult MsgBoxResult;
+            MsgBoxResult = MessageBox.Show("尚有未儲存變更，繼續請按確認", "清除",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Information);
+
+            if (MsgBoxResult == DialogResult.OK)
+            {
+
             this.txtCreateAccount.Text = null;
             this.txtCreatePWD.Text = null;
             this.txtCreateRePWD.Text = null;
@@ -163,6 +175,15 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
             this.txtCreateRepS.Text = null;
             this.dpCreateJobGrade.SelectedIndex = 0;
             this.txtCreatedesc.Text = null;
+
+            }
+            else
+            {
+                this.lblMsg.Visible = true;
+                this.lblMsg.Text = "已取消動作";
+                return;
+            }
+
         }
 
         private string GetSaveFolderPath()

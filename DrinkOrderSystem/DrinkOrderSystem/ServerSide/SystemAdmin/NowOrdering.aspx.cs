@@ -14,39 +14,43 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!AuthManager.IsLogined())
-            {
-                Response.Redirect("/ClientSide/Login.aspx");
-                return;
-            }
 
-
-
-            var list = DrinkListManager.GetOrderListNoOrdering();
-
-            if (list.Count > 0) //check is empty data (大於0就做資料繫結)
+            if (!this.IsPostBack) //可能是按按鈕跳回本頁，所以要判斷Postback
             {
 
-                var orderlist = this.GetPageDataTable(list);
+                if (!AuthManager.IsLogined())
+                {
+                    Response.Redirect("/ClientSide/Login.aspx");
+                    return;
+                }
 
-                this.ucPager.Totaluser = list.Count;
-                this.ucPager.BindUserList();
 
 
-                this.gvNoworderinglist.DataSource = orderlist;
-                this.gvNoworderinglist.DataBind();
+                var list = DrinkListManager.GetOrderByRtimeNowOrdering();
 
+                if (list.Count > 0) //check is empty data (大於0就做資料繫結)
+                {
+
+                    var orderlist = this.GetPageDataTable(list);
+
+                    this.ucPager.Totaluser = list.Count;
+                    this.ucPager.BindUserList();
+
+
+                    this.gvNoworderinglist.DataSource = orderlist;
+                    this.gvNoworderinglist.DataBind();
+
+
+                }
+                else
+                {
+                    this.gvNoworderinglist.Visible = false;
+                    this.ucPager.Visible = false;
+                    this.plcNoData.Visible = true;
+                    this.lbMsg.Text = "目前沒有可跟團的清單";
+                }
 
             }
-            else
-            {
-                this.gvNoworderinglist.Visible = false;
-                this.ucPager.Visible = false;
-                this.plcNoData.Visible = true;
-                this.lbMsg.Text = "目前沒有可跟團的清單";
-            }
-
-
 
         }
 
@@ -74,7 +78,138 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             return intPage;
         }
 
+        protected void btnSelect_Click(object sender, EventArgs e)
+        {
 
+            var select = this.ddSelect.SelectedValue.ToString();
+            var selectInfo = this.txtSelect.Text;
+            if (select == "account")
+            {
+
+                var list = DrinkListManager.GetNowOrderingByAccount(selectInfo);
+
+                if (list.Count > 0) //check is empty data (大於0就做資料繫結)
+                {
+
+                    var orderlist = this.GetPageDataTable(list);
+
+                    this.ucPager.Totaluser = list.Count;
+                    this.ucPager.BindUserList();
+
+
+                    this.gvNoworderinglist.DataSource = orderlist;
+                    this.gvNoworderinglist.DataBind();
+
+                }
+                else
+                {
+                    this.lbMsg.Text = "找不到此篩選資料，請確認輸入是否正確";
+                    this.gvNoworderinglist.Visible = false;
+                    this.plcNoData.Visible = true;
+                }
+            }
+            if (select == "orderNumber")
+            {
+                var list = DrinkListManager.GetNowOrderingByOrderNumber(selectInfo);
+
+                if (list.Count > 0) //check is empty data (大於0就做資料繫結)
+                {
+
+                    var orderlist = this.GetPageDataTable(list);
+
+                    this.ucPager.Totaluser = list.Count;
+                    this.ucPager.BindUserList();
+
+
+                    this.gvNoworderinglist.DataSource = orderlist;
+                    this.gvNoworderinglist.DataBind();
+
+                }
+                else
+                {
+                    this.lbMsg.Text = "找不到此篩選資料，請確認輸入是否正確";
+                    this.gvNoworderinglist.Visible = false;
+                    this.plcNoData.Visible = true;
+                }
+            }
+
+
+        }
+
+        protected void btnSortingN_Click(object sender, EventArgs e)
+        {
+            var list = DrinkListManager.GetOrderByRtimeNowOrdering();
+
+            if (list.Count > 0)
+            {
+
+                var orderlist = this.GetPageDataTable(list);
+
+                this.ucPager.Totaluser = list.Count;
+                this.ucPager.BindUserList();
+
+
+                this.gvNoworderinglist.DataSource = orderlist;
+                this.gvNoworderinglist.DataBind();
+
+            }
+            else
+            {
+                this.gvNoworderinglist.Visible = false;
+                this.plcNoData.Visible = true;
+            }
+        }
+
+        protected void btnSortingF_Click(object sender, EventArgs e)
+        {
+            var list = DrinkListManager.GetOrderByOtimeNowOrdering();
+
+            if (list.Count > 0)
+            {
+
+                var orderlist = this.GetPageDataTable(list);
+
+                this.ucPager.Totaluser = list.Count;
+                this.ucPager.BindUserList();
+
+
+                this.gvNoworderinglist.DataSource = orderlist;
+                this.gvNoworderinglist.DataBind();
+
+            }
+            else
+            {
+                this.gvNoworderinglist.Visible = false;
+                this.plcNoData.Visible = true;
+            }
+        }
+
+        protected void btnClearSelect_Click(object sender, EventArgs e)
+        {
+            var list = DrinkListManager.GetOrderListNoOrdering();
+
+            if (list.Count > 0) //check is empty data (大於0就做資料繫結)
+            {
+
+                var orderlist = this.GetPageDataTable(list);
+
+                this.ucPager.Totaluser = list.Count;
+                this.ucPager.BindUserList();
+
+
+                this.gvNoworderinglist.DataSource = orderlist;
+                this.gvNoworderinglist.DataBind();
+
+
+            }
+            else
+            {
+                this.gvNoworderinglist.Visible = false;
+                this.ucPager.Visible = false;
+                this.plcNoData.Visible = true;
+                this.lbMsg.Text = "目前沒有可跟團的清單";
+            }
+        }
     }
-
 }
+

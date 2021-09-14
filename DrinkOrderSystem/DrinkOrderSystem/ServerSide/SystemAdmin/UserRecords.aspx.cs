@@ -15,34 +15,38 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!AuthManager.IsLogined())
-            {
-                Response.Redirect("/ClientSide/Login.aspx");
-                return;
-            }
 
-            var currentAccount = AuthManager.GetCurrentUser();
-            var account = currentAccount.Account;
-          
-            var userDetailList = DrinkListManager.GetUserDetailList(account);
 
-            if (userDetailList.Count > 0) //check is empty data (大於0就做資料繫結)
-            {
+                if (!AuthManager.IsLogined())
+                {
+                    Response.Redirect("/ClientSide/Login.aspx");
+                    return;
+                }
 
-                var DetailList = this.GetPageDataTable(userDetailList);
-                this.gvUserDetail.DataSource = DetailList;
-                this.gvUserDetail.DataBind();
+                var currentAccount = AuthManager.GetCurrentUser();
+                var account = currentAccount.Account;
 
-                this.ucPager.Totaluser = userDetailList.Count;
-                this.ucPager.Bind();
+                var userDetailList = DrinkListManager.GetUserDetailList(account);
 
-     
-            }
-            else
-            {
+                if (userDetailList.Count > 0) //check is empty data (大於0就做資料繫結)
+                {
+
+                    var DetailList = this.GetPageDataTable(userDetailList);
+                    this.gvUserDetail.DataSource = DetailList;
+                    this.gvUserDetail.DataBind();
+
+                    this.ucPager.Totaluser = userDetailList.Count;
+                    this.ucPager.Bind();
+
+
+                }
+                else
+                {
+                this.ltMsg.Text = "您目前無任何訂購資料";
                 this.gvUserDetail.Visible = false;
-                this.plcNoData.Visible = true;
-            }
+                    this.plcNoData.Visible = true;
+                }
+            
         }
         private int GetCurrentPage()
         {
@@ -74,8 +78,8 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             var account = currentAccount.Account;
             
 
-            var select = this.ddselect.Items.ToString();
-            if (select == "時間由新至舊")
+            var select = this.ddselect.SelectedValue.ToString();
+            if (select == "RecentTime")
             {
                 var userDetailList = DrinkListManager.GetUserDetailOrderByRtime(account);
                 if (userDetailList.Count > 0) //check is empty data (大於0就做資料繫結)
@@ -97,7 +101,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 }
             }
 
-            if (select == "時間由舊至新")
+            if (select == "OldestTime")
             {
                 var userDetailList = DrinkListManager.GetUserDetailOrderByOtime(account);
                 if (userDetailList.Count > 0) //check is empty data (大於0就做資料繫結)
@@ -119,7 +123,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 }
             }
 
-            if (select == "商品")
+            if (select == "ProductName")
             {
                 var userDetailList = DrinkListManager.GetUserDetailOrderByProduct(account);
                 if (userDetailList.Count > 0) //check is empty data (大於0就做資料繫結)

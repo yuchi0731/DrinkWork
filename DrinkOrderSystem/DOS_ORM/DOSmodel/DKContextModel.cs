@@ -20,7 +20,6 @@ namespace DOS_ORM.DOSmodel
         public virtual DbSet<Topping> Toppings { get; set; }
         public virtual DbSet<UserAccount> UserAccounts { get; set; }
         public virtual DbSet<UserInfo> UserInfoes { get; set; }
-        public virtual DbSet<UserOrderDetail> UserOrderDetails { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -67,18 +66,6 @@ namespace DOS_ORM.DOSmodel
             modelBuilder.Entity<UserInfo>()
                 .Property(e => e.Account)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<UserOrderDetail>()
-                .Property(e => e.Account)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<UserOrderDetail>()
-                .Property(e => e.RequiredTime)
-                .IsFixedLength();
-
-            modelBuilder.Entity<UserOrderDetail>()
-                .Property(e => e.UnitPrice)
-                .HasPrecision(18, 0);
         }
     }
 }

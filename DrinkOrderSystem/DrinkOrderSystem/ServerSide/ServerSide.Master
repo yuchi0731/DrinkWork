@@ -6,30 +6,33 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
-    
-    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <%--<link href="../../bootstrap/css/bootstrap.css" rel="stylesheet" />--%>
     <%--..為上層目錄--%>
-    <script src="/bootstrap/js/bootstrap.js"></script>
+    <script src="~/bootstrap/js/bootstrap.js"></script>
     <%--<script src="../../bootstrap/js/bootstrap.js"></script>--%>
     <style>
 
+
     </style>
+
 
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 
 
-
 </head>
 <body style="background-color:antiquewhite">
     <form id="form1" runat="server">
+
+        <asp:Button ID="btnLogut" runat="server" Text="登出" OnClick="btnLogut_Click" />
+
         <div id="divbase" class="container">
              <!-- 漢堡選單 -->
             <nav class="auto-style1">
                 <a class="navbar navbar-brand">
-                    <asp:Image ID="Image1" runat="server" ImageUrl="~/ServerSide/ImagesServer/drink_icon.png"  Width="50" Height="50"/>
-                    公司名稱
+                    <asp:Image ID="imgDrink" runat="server" ImageUrl="~/ServerSide/ImagesServer/drink_icon.png"  Width="50" Height="50"/>
+                    <h1>開心喝飲料公司</h1>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -72,7 +75,7 @@
             <table>
                 <tr>
                     <td>
-                        放張公司LOGO
+         <asp:Image ID="imgLogo" runat="server" ImageUrl="~/ServerSide/ImagesServer/Logo.png"  Width="150" Height="50" BorderWidth="1"  BorderColor="Black"/>
                     </td>
                     <td>
                           <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
@@ -80,16 +83,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td></td>
-                    
                     <td>
-                        <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
-            </asp:ContentPlaceHolder>
-                    </td>
-                </tr>
-            </table>
-            
-        </div>
                <div id="d4">
                         <a href="../SystemAdmin/UserPage.aspx">使用者介面</a><br />
                         <a href="../SystemAdmin/OrderStart.aspx">開團</a><br />              
@@ -100,6 +94,17 @@
                        <a href="../UserManagement/UserList.aspx">使用者清單</a><br />
                    </asp:Literal>
                         </div>
+                    </td>
+                    
+                    <td>
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+            </asp:ContentPlaceHolder>
+                    </td>
+                </tr>
+            </table>
+            
+        </div>
+
             </div>
     </form>
 </body>

@@ -28,7 +28,7 @@
             <table>
                 <tr>
                     <td>
-                        放張公司LOGO
+                        <asp:Image ID="imgLogo" runat="server" ImageUrl="~/ClientSide/ImagesClient/Logo.png"  Width="150" Height="50" BorderWidth="1"  BorderColor="Black"/>
                     </td>
                     <td>
                         <h1>員工團購飲料系統</h1>

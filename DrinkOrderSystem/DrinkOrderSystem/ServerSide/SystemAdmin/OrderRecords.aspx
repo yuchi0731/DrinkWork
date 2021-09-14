@@ -8,9 +8,31 @@
     <h1>歷史訂購紀錄</h1>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
-    <asp:GridView ID="gvdrinklist" runat="server" AutoGenerateColumns="False">
+
+        <table>
+        <tr>
+            <th>篩選方式</th>
+            <td>
+                <asp:DropDownList ID="ddSelect" runat="server">
+                    <asp:ListItem Value="non">未選擇</asp:ListItem>
+                    <asp:ListItem Value="account">訂購人</asp:ListItem>
+                    <asp:ListItem Value="orderNumber">訂單編號</asp:ListItem>
+                </asp:DropDownList>
+            </td>
+            <td>
+                <asp:TextBox ID="txtSelect" runat="server"></asp:TextBox>
+                <asp:Button ID="btnSelect" runat="server" Text="篩選" OnClick="btnSelect_Click" /><asp:Label ID="lbSelect" runat="server" ForeColor="Red"></asp:Label>
+        <asp:Button ID="btnSortingN" runat="server" Text="以修改時間近至遠排序" OnClick="btnSortingN_Click"/>
+        <asp:Button ID="btnSortingF" runat="server" Text="以修改時間遠至近排序" OnClick="btnSortingF_Click" />
+                <asp:Button ID="btnClearSelect" runat="server" Text="還原清單" OnClick="btnClearSelect_Click" />
+            </td>
+        </tr>
+    </table>
+
+
+    <asp:GridView ID="gvdrinklist" runat="server" AutoGenerateColumns="False" HorizontalAlign="Center" BackColor="White" BorderColor="#3399FF" BorderStyle="None" BorderWidth="1px" CssClass="accordion-button collapsed">
         <Columns>
-            <asp:BoundField DataField="OrderID" HeaderText="訂單號碼" />
+            <asp:BoundField DataField="OrderID" HeaderText="訂單編號" />
             <asp:BoundField DataField="OrderNumber" HeaderText="訂單名稱" />
             <asp:BoundField DataField="Account" HeaderText="訂購人" />
             <asp:BoundField DataField="OrderTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="訂購時間" />
@@ -18,11 +40,18 @@
             <asp:BoundField DataField="RequiredTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="需求時間" />
             <asp:BoundField DataField="SupplierName" HeaderText="廠商" />
             <asp:BoundField DataField="TotalPrice" HeaderText="總金額" />
-            <asp:TemplateField HeaderText="訂單細項">
+            <asp:TemplateField HeaderText="訂單細項" ItemStyle-HorizontalAlign="Center">
                                      <ItemTemplate>
-                                    <a href="/ServerSide/SystemAdmin/OrderDetailInfo.aspx?ID=<%# Eval("OrderNumber") %>">Check</a>
+                                    <a href="/ServerSide/SystemAdmin/OrderDetailInfo.aspx?OrderNumber=<%# Eval("OrderNumber") %>">明細</a>
                                 </ItemTemplate>
             </asp:TemplateField>
+
+          <asp:TemplateField HeaderText="結帳" ItemStyle-HorizontalAlign="Center">
+                                     <ItemTemplate>
+                                    <a href="/ServerSide/SystemAdmin/SendOrder.aspx?OrderNumber=<%# Eval("OrderNumber") %>">結帳</a>
+                                </ItemTemplate>
+            </asp:TemplateField>
+
         </Columns>
 
     </asp:GridView>
@@ -31,7 +60,7 @@
 
             <asp:PlaceHolder ID="plcNoData" runat="server" Visible="false">
                         <p style="color:red">
-                            No data in this Shop.
+                            <asp:Literal ID="ltMsg" runat="server"></asp:Literal>
                         </p>
                     </asp:PlaceHolder>
 

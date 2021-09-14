@@ -15,24 +15,6 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
     {
 
         /// <summary>
-        /// gvUserDetail 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvUserDetail;
-
-        /// <summary>
-        /// ucPager 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::DrinkOrderSystem.ServerSide.UserControl.ucPager ucPager;
-
-        /// <summary>
         /// ddselect 控制項。
         /// </summary>
         /// <remarks>
@@ -51,6 +33,24 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         protected global::System.Web.UI.WebControls.Button btnSelect;
 
         /// <summary>
+        /// gvUserDetail 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvUserDetail;
+
+        /// <summary>
+        /// ucPager 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::DrinkOrderSystem.ServerSide.UserControl.ucPager ucPager;
+
+        /// <summary>
         /// plcNoData 控制項。
         /// </summary>
         /// <remarks>
@@ -58,5 +58,14 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder plcNoData;
+
+        /// <summary>
+        /// ltMsg 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltMsg;
     }
 }

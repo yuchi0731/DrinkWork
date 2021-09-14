@@ -33,5 +33,8 @@ namespace DOS_ORM.DOSmodel
         public decimal TotalPrice { get; set; }
 
         public int TotalCups { get; set; }
+
+        [StringLength(50)]
+        public string Established { get; set; }
     }
 }

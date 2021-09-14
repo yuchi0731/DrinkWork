@@ -53,5 +53,8 @@ namespace DOS_ORM.DOSmodel
         public decimal SubtotalAmount { get; set; }
 
         public string OtherRequest { get; set; }
+
+        [StringLength(50)]
+        public string Established { get; set; }
     }
 }

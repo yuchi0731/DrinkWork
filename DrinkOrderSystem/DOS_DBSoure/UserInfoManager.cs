@@ -51,7 +51,7 @@ namespace DOS_DBSoure
                 {
                     var query =
                         (from user in context.UserInfoes
-                         orderby user.LastModified 
+                         orderby user.LastModified descending
                          select user);
 
                     var list = query.ToList();
@@ -77,7 +77,7 @@ namespace DOS_DBSoure
                 {
                     var query =
                         (from user in context.UserInfoes
-                         orderby user.LastModified descending
+                         orderby user.LastModified 
                          select user);
 
                     var list = query.ToList();
@@ -369,6 +369,7 @@ namespace DOS_DBSoure
                 {
             using (DKContextModel context = new DKContextModel())
             {
+
 
                     userInfo.CreateDate = DateTime.Now;
                     userInfo.LastModified = DateTime.Now;

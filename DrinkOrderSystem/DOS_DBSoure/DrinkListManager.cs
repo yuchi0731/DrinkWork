@@ -98,8 +98,6 @@ namespace DOS_DBSoure
         }
 
 
-
-
         #region OrderRecords
 
         /// <summary>
@@ -542,9 +540,6 @@ namespace DOS_DBSoure
                 return null;
             }
         }
-
-
-
 
 
 

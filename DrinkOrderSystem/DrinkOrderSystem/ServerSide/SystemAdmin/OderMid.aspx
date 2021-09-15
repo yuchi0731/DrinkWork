@@ -11,13 +11,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <h1>跟團介面</h1>
-     <h1>訂單編號：<asp:Literal ID="ltOrderNumber" runat="server"></asp:Literal></h1>
+     <h2>訂單編號：<asp:Literal ID="ltOrderNumber" runat="server"></asp:Literal></h2>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
 
         <h2 class="gd">請選擇飲料品項</h2>
-    <h2><asp:Label ID="lbSup" runat="server"></asp:Label></h2>
-       <asp:GridView ID="gvChooseDrink" runat="server" AutoGenerateColumns="False" Height="89px" Width="418px" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" CssClass="auto-style1"  OnRowCommand="gvDrink_RowCommand">
+    <h2><asp:Label ID="lbSup" runat="server" ForeColor="Blue"></asp:Label></h2>
+
+       <asp:GridView ID="gvChooseDrink" runat="server" AutoGenerateColumns="False" Height="89px" Width="694px" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" CssClass="auto-style1"  OnRowCommand="gvChooseDrink_RowCommand">
             <Columns>
                 <asp:BoundField HeaderText="產品名稱" DataField="ProductName" />
                 <asp:BoundField HeaderText="價格" DataField="UnitPrice" />
@@ -30,7 +31,6 @@
                             <asp:ListItem Value="3">3</asp:ListItem>
                             <asp:ListItem Value="4">4</asp:ListItem>
                             <asp:ListItem Value="5">5</asp:ListItem>
-
                         </asp:DropDownList>
                     </ItemTemplate>
                 </asp:TemplateField>
@@ -62,15 +62,15 @@
                         <asp:DropDownList ID="dlChooseToppings" runat="server">
                             <asp:ListItem Value="0">請選擇是否加料</asp:ListItem>
                             <asp:ListItem Value="1">不加料</asp:ListItem>
-                            <asp:ListItem Value="2">加珍珠</asp:ListItem>
-                            <asp:ListItem Value="3">加寒天</asp:ListItem>
-                            <asp:ListItem Value="4">加椰果</asp:ListItem>
+                            <asp:ListItem Value="2">珍珠</asp:ListItem>
+                            <asp:ListItem Value="3">寒天</asp:ListItem>
+                            <asp:ListItem Value="4">椰果</asp:ListItem>
                         </asp:DropDownList>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="點選">
                     <ItemTemplate>
-                        <asp:Button ID="btnChoose" runat="server" Text="選擇" CommandName="btnChooseDrink" CommandArgument='<%#Eval("ProductName") %>'/>
+                        <asp:Button ID="btnChoose" runat="server" Text="選擇"  CommandArgument='<%#Eval("ProductName") %>' CommandName="ChooseDrink" />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -85,27 +85,18 @@
             <SortedDescendingHeaderStyle BackColor="#00547E" />
         </asp:GridView >
 
-         
             <uc1:ucPager runat="server" ID="ucPager" PageSize="10" Url="/ServerSide/SystemAdmin/OderMid.aspx"/>
-           
-            
-  
-        <asp:TextBox ID="txtChooseDrinkList" runat="server" MaxLength="100" ReadOnly="True" Rows="10" Width="540px" Height="89px" TextMode="MultiLine"></asp:TextBox><br />
-    <asp:Label ID="lbOther" runat="server" Text="請輸入其他需求"></asp:Label><br />
-<asp:TextBox ID="txtOther" runat="server" TextMode="MultiLine"></asp:TextBox><br />
-    <br />
+        <br />             
+        <asp:Label ID="lbErrorMsg" runat="server" Visible="false" ForeColor="Red"></asp:Label><br />
+        <asp:TextBox ID="txtChooseDrinkList" runat="server" MaxLength="100" ReadOnly="True" Rows="10" Width="703px" Height="143px" TextMode="MultiLine"></asp:TextBox><br />
 
     <asp:Label ID="lbTotalAmount" runat="server" ></asp:Label><br />
     <asp:Button ID="btnSent" runat="server" Text="確認送出" OnClick="btnSent_Click" Visible="False" />
     <asp:Button ID="btnDelete" runat="server" Text="清除選單" OnClick="btnDelete_Click" Visible="False" /><br />
 
 
-    
 
-    <asp:Literal ID="ltMsg" runat="server"></asp:Literal>
+                <asp:Label ID="lbMsg" runat="server" ForeColor="Red" Visible="false"></asp:Label>
 
-            <asp:PlaceHolder ID="plcNoData" runat="server" Visible="false">
-                <asp:Label ID="lbMsg" runat="server" ForeColor="Red"></asp:Label>
-            </asp:PlaceHolder>
 
 </asp:Content>

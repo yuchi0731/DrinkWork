@@ -142,5 +142,6 @@
         
 
     </div>
-    <asp:Literal ID="ltMsg" runat="server" Visible="false"></asp:Literal>
+
+    <asp:Label ID="lbMsg" runat="server" ForeColor="Red" Visible="false"></asp:Label>
 </asp:Content>

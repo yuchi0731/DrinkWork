@@ -247,9 +247,6 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 //    $"【飲料】{e.CommandArgument as string}【單價】{DrinkListManager.GetUnitPrice(e.CommandArgument as string)}元/杯 【杯數】 {DDLQuantity.SelectedItem}杯 【甜度】{DDLSugar.SelectedItem}【冰量】{DDLIce.SelectedItem}【加料】{DDLToppings.SelectedItem}【加料單價】{Toprice} 元 \r\n";
 
 
-                var list = this.txtChooseDrinkList.Text;
-
-
                 List<Product> sourcedetaillist = DrinkListManager.GetProducts(supplierName);
 
                 var DrinkList = sourcedetaillist.Where(obj => obj.ProductName == argu).FirstOrDefault();
@@ -271,10 +268,15 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
                 if(endTime == null || reqTime == null)
                 {
-                    this.ltMsg.Text = "尚未選取截止/送達時間";
+                    this.lbMsg.Text = "尚未選取截止/送達時間";
                 }
 
-
+                int quan;
+                if (!int.TryParse(DDLQuantity.Text, out quan))
+                {
+                    this.lbErrorMsg.Text = "格式錯誤，杯數須為整數，請確認後重新輸入";
+                    return;
+                }
 
 
                 var orderdetaillist = new OrderDetailModels()
@@ -301,9 +303,9 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 sessionList.Add(orderdetaillist);
 
                 decimal totalAmount = 0;
-                foreach (var item2 in sessionList)
+                foreach (var sub in sessionList)
                 {
-                    totalAmount += item2.SubtotalAmount;
+                    totalAmount += sub.SubtotalAmount;
                 }
 
                 this.lbTotalAmount.Text = $"總金額共：【{totalAmount.ToString()}】 元";
@@ -313,7 +315,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 var orderlist = new OrderListModels()
                 {
                     OrderNumber = orderNumber,
-                    Account = AuthManager.GetCurrentUser().Account,
+                    Account = currentUser.Account,
                     SupplierName = supplierName,
                     TotalPrice = totalAmount,
                     TotalCups = Convert.ToInt32(DDLQuantity.SelectedItem.Value),
@@ -386,8 +388,8 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
             if (endTime == null || reqTime == null)
             {
-                this.ltMsg.Visible = true;
-                this.ltMsg.Text = "尚未選取截止/送達時間";
+                this.lbMsg.Visible = true;
+                this.lbMsg.Text = "尚未選取截止/送達時間";
             }
 
             DateTime Etime = Convert.ToDateTime(endTime);
@@ -398,8 +400,8 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
             if(Etime < tenmin || Rtime < onehour)
             {
-                this.ltMsg.Visible = true;
-                this.ltMsg.Text = "截止/送達時間，必須是現在時間十分鐘後，送達需為截止時間兩小時後，";
+                this.lbMsg.Visible = true;
+                this.lbMsg.Text = "截止/送達時間，必須是現在時間十分鐘後，送達需為截止時間兩小時後，";
                 return;
             }
 
@@ -449,8 +451,8 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             }
             else
             {
-                this.ltMsg.Visible = true;
-                this.ltMsg.Text = "已取消動作";
+                this.lbMsg.Visible = true;
+                this.lbMsg.Text = "已取消動作";
                 return;
             }
 

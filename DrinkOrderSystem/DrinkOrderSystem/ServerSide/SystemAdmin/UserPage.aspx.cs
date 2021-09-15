@@ -30,13 +30,13 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 if (hasCheckoutList != null)
                 {
                     DialogResult MsgBoxResult;
-                    MsgBoxResult = MessageBox.Show("尚有未結帳訂單", "提醒",
+                    MsgBoxResult = MessageBox.Show("~提醒您尚有未結帳訂單~", "提醒",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                 }
 
                 var goingtoendList = DrinkListManager.GetGTEOrderListInfo(current.Account);
-                if (goingtoendList.Established != "YES")
+                if (goingtoendList.Established != "YES" && goingtoendList.RequiredTime < DateTime.Now.AddMinutes(90))
                 {
                     DialogResult MsgBoxResult;
                     MsgBoxResult = MessageBox.Show($"訂單【{goingtoendList.OrderNumber}】即將過期，請盡速送出訂購單", "提醒",

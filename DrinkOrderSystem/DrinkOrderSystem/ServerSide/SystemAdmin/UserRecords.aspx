@@ -2,6 +2,8 @@
 
 <%@ Register Src="~/ServerSide/UserControl/ucPager.ascx" TagPrefix="uc1" TagName="ucPager" %>
 
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -38,7 +40,8 @@
 
         </Columns>
     </asp:GridView>
-    <uc1:ucpager runat="server" id="ucPager"  PageSize="10"   Url="/ServerSide/SystemAdmin/UserRecords.aspx"/><br />
+
+    <uc1:ucPager runat="server" ID="ucPager" PageSize="10" Url="ServerSide/SystemAdmin/UserRecords.aspx" /><br />
 
                 <asp:PlaceHolder ID="plcNoData" runat="server" Visible="false">
                         <p style="color:red">

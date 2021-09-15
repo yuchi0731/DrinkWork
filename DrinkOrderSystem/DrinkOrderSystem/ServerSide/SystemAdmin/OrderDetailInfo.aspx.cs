@@ -38,10 +38,6 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 }
 
 
-                if (this.Session["StartOrderNumber"].ToString() != null)
-                {
-                    orderNumber = this.Session["StartOrderNumber"].ToString();
-                }
 
                 this.lbNumber.Text = orderNumber;
                 //更新OrderList總金額及杯數

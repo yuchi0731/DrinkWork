@@ -239,8 +239,9 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     +Environment.NewLine
                     + "【加料】" + DDLToppings.SelectedItem
                     + "【加料單價】" + Toprice +"元"
-                    + "\r\n"
-                    + "-----------------------------------";
+                    + Environment.NewLine
+                    + "-----------------------------------"
+                    + "\r\n";
 
                 //this.txtChooseDrinkList.Text += 
                 //    $"【飲料】{e.CommandArgument as string}【單價】{DrinkListManager.GetUnitPrice(e.CommandArgument as string)}元/杯 【杯數】 {DDLQuantity.SelectedItem}杯 【甜度】{DDLSugar.SelectedItem}【冰量】{DDLIce.SelectedItem}【加料】{DDLToppings.SelectedItem}【加料單價】{Toprice} 元 \r\n";
@@ -437,12 +438,12 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 var orderListsession = this.Session["SelectedList"] as OrderListModels;
                 DrinkListManager.StartGroup(orderListsession);
 
-                MessageBox.Show($"訂購完成，訂單編號為【{orderList.OrderNumber}】，之後可由訂單明細查詢訂購項目", "完成!",
+                MessageBox.Show($"訂購完成，訂單編號為【{orderList.OrderNumber}】\r\n之後可由訂單明細查詢訂購項目", "完成!",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
 
-                //this.Session["StartOrderNumber"] = orderList.OrderNumber;
+
                 Response.Redirect("/ServerSide/SystemAdmin/NowOrdering.aspx");
 
             }

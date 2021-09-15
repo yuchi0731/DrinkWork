@@ -204,12 +204,41 @@ namespace DOS_DBSoure
 
 
 
+
+        /// <summary>
+        /// 利用商品ID取得商品資料
+        /// </summary>
+        /// <param name="productid"></param>
+        /// <returns></returns>
+        public static Product GetProductInfoByID(int productid)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                         (from prod in context.Products
+                          where prod.ProductID == productid
+                          select prod);
+
+                    var prodInfo = query.FirstOrDefault();
+                    return prodInfo;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+
         /// <summary>
         /// 修改商品資料
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        public static bool UpdateProducto(Product product)
+        public static bool UpdateProduct(Product product)
         {
             try
             {
@@ -218,7 +247,7 @@ namespace DOS_DBSoure
                     //取得資料(Lambda)
                     var productInfo =
                             context.Products
-                            .Where(obj => obj.ProductName == product.ProductName & obj.SupplierName == product.SupplierName).FirstOrDefault();
+                            .Where(obj => obj.ProductID == product.ProductID).FirstOrDefault();
 
 
                     if (productInfo != null)//如果DB有資料的話

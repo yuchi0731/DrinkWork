@@ -39,7 +39,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                    {this.Session["JStext"].ToString()}
                     ";
 
-            string txtPath = "D:\\Logs\\Log.log";
+            string txtPath = "D:\\DrinkOrder\\OrderList.txt";
             string folderPath = System.IO.Path.GetDirectoryName(txtPath);
 
             if (!System.IO.Directory.Exists(folderPath))

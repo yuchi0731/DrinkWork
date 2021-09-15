@@ -53,12 +53,12 @@ namespace DOS_DBSoure
                 msgList = new List<string>();
                 if (!VaildFileExt(fileUpload.FileName))
                 {
-                    msgList.Add("Only allow .bmp, .jpg, .png");
+                    msgList.Add("目前只接受 .bmp, .jpg, .png 等格式");
                 }
 
                 if (!VaildFileLength(fileUpload.FileBytes))
                 {
-                    msgList.Add("Only allow Length: " + mbs + "MB");
+                    msgList.Add("檔案大小限制為： " + mbs + "MB");
                 }
 
                 if (msgList.Any())

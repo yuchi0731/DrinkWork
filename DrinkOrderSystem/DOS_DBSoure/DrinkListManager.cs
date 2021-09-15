@@ -499,7 +499,7 @@ namespace DOS_DBSoure
                     var query =
                          (from list in context.OrderLists
                           where list.Account == account
-                          orderby list.RequiredTime < DateTime.Now.AddMinutes(90)
+                          orderby list.RequiredTime < DateTime.Now
                           select list);
 
                     var orderList = query.FirstOrDefault();
@@ -529,7 +529,7 @@ namespace DOS_DBSoure
                           where 
                               list.Account == account 
                               & list.Established == "NO" 
-                              & list.RequiredTime > DateTime.Now.AddMinutes(61)                         
+                              & list.RequiredTime > DateTime.Now                
                           select list);
 
                     var orderList = query.FirstOrDefault();
@@ -912,7 +912,7 @@ namespace DOS_DBSoure
                     neworderList.SupplierName = orderlist.SupplierName;
                     neworderList.TotalPrice = orderlist.TotalPrice;
                     neworderList.TotalCups = orderlist.TotalCups;
-
+                    neworderList.Established = orderlist.Established;
 
                     context.OrderLists.Add(neworderList);
                     context.SaveChanges();
@@ -963,6 +963,7 @@ namespace DOS_DBSoure
                     neworderDetail.SubtotalAmount = orderDetail.SubtotalAmount;
                     neworderDetail.SupplierName = orderDetail.SupplierName;
                     neworderDetail.OtherRequest = orderDetail.OtherRequest;
+                    neworderDetail.Established = orderDetail.Established;
 
                     context.OrderDetails.Add(neworderDetail);
                     context.SaveChanges();

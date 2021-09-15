@@ -22,8 +22,8 @@
             <td>
                 <asp:TextBox ID="txtSelect" runat="server" Visible="false"></asp:TextBox>
                 <asp:Button ID="btnSelect" runat="server" Text="篩選" OnClick="btnSelect_Click"  Visible="false"/><asp:Label ID="lbSelect" runat="server" ForeColor="Red"></asp:Label>
-        <asp:Button ID="btnSortingN" runat="server" Text="以修改時間近至遠排序" OnClick="btnSortingN_Click"/>
-        <asp:Button ID="btnSortingF" runat="server" Text="以修改時間遠至近排序" OnClick="btnSortingF_Click" />
+        <asp:Button ID="btnSortingN" runat="server" Text="以需求時間近至遠排序" OnClick="btnSortingN_Click"/>
+        <asp:Button ID="btnSortingF" runat="server" Text="以需求時間遠至近排序" OnClick="btnSortingF_Click" />
                 <asp:Button ID="btnClearSelect" runat="server" Text="還原清單" OnClick="btnClearSelect_Click" />
             </td>
         </tr>
@@ -40,6 +40,7 @@
             <asp:BoundField DataField="RequiredTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="需求時間" />
             <asp:BoundField DataField="SupplierName" HeaderText="廠商" />
             <asp:BoundField DataField="TotalPrice" HeaderText="總金額" />
+            <asp:BoundField DataField="TotalCups" HeaderText="總杯數" />
             <asp:TemplateField HeaderText="訂單細項" ItemStyle-HorizontalAlign="Center">
                                      <ItemTemplate>
                                     <a href="/ServerSide/SystemAdmin/OrderDetailInfo.aspx?OrderNumber=<%# Eval("OrderNumber") %>">明細</a>
@@ -51,7 +52,7 @@
                                     <a href="/ServerSide/SystemAdmin/SendOrder.aspx?OrderNumber=<%# Eval("OrderNumber") %>">結帳</a>
                                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:BoundField DataField="Established" HeaderText="訂單成立狀況" />
+            <asp:BoundField DataField="Established" HeaderText="成立狀況" />
         </Columns>
 
     </asp:GridView>

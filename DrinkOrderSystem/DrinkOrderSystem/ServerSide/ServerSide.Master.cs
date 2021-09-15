@@ -26,11 +26,43 @@ namespace DrinkOrderSystem.ServerSide
                 ltlManger.Visible = true;
 
 
-            var current = AuthManager.GetCurrentUser();
-            var orderNumber = DrinkListManager.GetUserLastOrderNumber(current.Account);
-            string runMsg = $"～歡迎～{current.FirstName}! 您目前使用等級為是{current.JobGrade}，最近下的訂單是【{orderNumber}】";
-            string text = "<MARQUEE>" + runMsg + "</MARQUEE>";
-            lbTopMsg.Text = text;
+            if (currentuser.JobGrade == 0)
+            {
+                var userlevel = "一般使用者";
+                var current = AuthManager.GetCurrentUser();
+                var orderNumber = DrinkListManager.GetUserLastOrderNumber(current.Account);
+                string runMsg = $"～歡迎～{current.FirstName}！ 您目前使用等級為是【{userlevel}】，最近下的訂單是【{orderNumber}】";
+                string text = "<MARQUEE>" + runMsg + "</MARQUEE>";
+                lbTopMsg.Text = text;
+
+
+            }
+            if (currentuser.JobGrade == 1)
+            {
+                var userlevel = "管理者";
+                var current = AuthManager.GetCurrentUser();
+                var orderNumber = DrinkListManager.GetUserLastOrderNumber(current.Account);
+                string runMsg = $"～歡迎～{current.FirstName}！ 您目前使用等級為是【{userlevel}】，最近下的訂單是【{orderNumber}】";
+                string text = "<MARQUEE>" + runMsg + "</MARQUEE>";
+                lbTopMsg.Text = text;
+            }
+
+            if (currentuser.JobGrade == 2)
+            {
+                var userlevel = "高階管理者";
+                var current = AuthManager.GetCurrentUser();
+                var orderNumber = DrinkListManager.GetUserLastOrderNumber(current.Account);
+                string runMsg = $"～歡迎～{current.FirstName}！ 您目前使用等級為是【{userlevel}】，最近下的訂單是【{orderNumber}】";
+                string text = "<MARQUEE>" + runMsg + "</MARQUEE>";
+                lbTopMsg.Text = text;
+            }
+
+
+
+
+
+
+
 
 
         }
@@ -55,17 +87,6 @@ namespace DrinkOrderSystem.ServerSide
 
         }
 
-        //protected void timerTop_Tick(object sender, EventArgs e)
-        //{
-        //    var current = AuthManager.GetCurrentUser();
-        //    var orderNumber = DrinkListManager.GetUserLastOrderNumber(current.Account);
-        //    string runMsg = $"～歡迎～{current.FirstName}! 您目前使用等級為是{current.JobGrade}，最近下的訂單是【{orderNumber}】";
 
-        //    string newst = runMsg.Substring(0, 1); //第一個字
-        //    runMsg = runMsg.Substring(1, runMsg.Length - 1) + newst;
-        //    //新字串每次從第二個字開始抓，然後把之前抓的第一個字補在最後
-
-        //    lbTopMsg.Text = runMsg; //顯示字串
-        //}
     }
 }

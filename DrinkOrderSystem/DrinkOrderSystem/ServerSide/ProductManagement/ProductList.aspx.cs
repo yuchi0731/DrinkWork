@@ -157,8 +157,17 @@ namespace DrinkOrderSystem.ServerSide.ProductManagement
 
         protected void gvProduct_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            //按下刪除鍵
-            var productID = e.CommandArgument as string;
+
+
+            if (string.Compare("btnLarger", e.CommandName, true) == 0)
+            {
+
+            }
+
+
+
+                //按下刪除鍵
+                var productID = e.CommandArgument as string;
 
             int id;
             if(int.TryParse(productID, out id))
@@ -209,6 +218,30 @@ namespace DrinkOrderSystem.ServerSide.ProductManagement
         protected void btnAdd_Click(object sender, EventArgs e)
         {
             Response.Redirect("/ServerSide/ProductManagement/AddProduct.aspx");
+        }
+
+        protected void gvProduct_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            var row = e.Row;
+
+            if (row.RowType == DataControlRowType.DataRow)
+            {
+
+                Image img = row.FindControl("imgPictrue") as Image;
+                var rowData = row.DataItem as Product;
+
+                
+                if (!string.IsNullOrEmpty(rowData.Picture))
+                {
+                    img.Visible = true;
+                    img.ImageUrl = "~/ServerSide/ImagesServer/" + rowData.Picture;
+                }
+
+
+            }
+
+
+
         }
     }
 }

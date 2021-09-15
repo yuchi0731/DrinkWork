@@ -27,9 +27,8 @@
 
         <asp:Button ID="btnLogut" runat="server" Text="登出" OnClick="btnLogut_Click" />
 
-        <asp:Label ID="lbTopMsg" runat="server" Text="歡迎回來~!"></asp:Label>
-<%--        <asp:Timer ID="timerTop" runat="server" Enabled="true" Interval="100" OnTick="timerTop_Tick">          
-        </asp:Timer>--%>
+        <h4><asp:Label ID="lbTopMsg" runat="server" Text="歡迎回來~!"></asp:Label></h4>
+
 
 
         <div id="divbase" class="container">

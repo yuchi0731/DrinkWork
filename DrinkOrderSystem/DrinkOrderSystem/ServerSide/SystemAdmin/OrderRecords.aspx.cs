@@ -23,8 +23,10 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     return;
                 }
 
+                //更新訂單成立狀況
+                DrinkListManager.CheckEstablishedorFail();
 
-                var list = DrinkListManager.GetOrderListRecord();
+                var list = DrinkListManager.GetOrderByRtime();
 
                 if (list.Count > 0) //check is empty data (大於0就做資料繫結)
                 {
@@ -45,6 +47,9 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     this.gvdrinklist.Visible = false;
                     this.plcNoData.Visible = true;
                 }
+
+
+
             }
         }
         private int GetCurrentPage()

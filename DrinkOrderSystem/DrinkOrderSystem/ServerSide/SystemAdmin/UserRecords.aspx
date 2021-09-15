@@ -11,13 +11,13 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
     
-    <asp:DropDownList ID="ddselect" runat="server">
+    <asp:DropDownList ID="ddselect" runat="server" Visible="false">
         <asp:ListItem Value="non">排序方式</asp:ListItem>
         <asp:ListItem Value="RecentTime">時間由新至舊</asp:ListItem>
         <asp:ListItem Value="OldestTime">時間由舊至新</asp:ListItem>
         <asp:ListItem Value="ProductName">商品</asp:ListItem>
      </asp:DropDownList>
-    <asp:Button ID="btnSelect" runat="server" Text="排序"  OnClick="btnSelect_Click" />
+    <asp:Button ID="btnSelect" runat="server" Text="排序"  OnClick="btnSelect_Click"  Visible="false"/>
 
      <asp:GridView ID="gvUserDetail" runat="server" AutoGenerateColumns="False">
          <Columns>
@@ -41,7 +41,7 @@
         </Columns>
     </asp:GridView>
 
-    <uc1:ucPager runat="server" ID="ucPager" PageSize="10" Url="ServerSide/SystemAdmin/UserRecords.aspx" /><br />
+    <uc1:ucPager runat="server" ID="ucPager" PageSize="10" Url="ServerSide/SystemAdmin/UserRecords.aspx" Visible="false" /><br />
 
                 <asp:PlaceHolder ID="plcNoData" runat="server" Visible="false">
                         <p style="color:red">

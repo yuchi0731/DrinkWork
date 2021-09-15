@@ -14,8 +14,8 @@
         </tr>
     </table>
     <asp:Button ID="btnLogin" runat="server" Text="登入" OnClick="btnLogin_Click" />
-    <asp:Button ID="btnforget" runat="server" Text="忘記密碼" OnClick="btnforget_Click" /><br />
-    <asp:Label ID="lbMsg" runat="server"  ForeColor="Red"></asp:Label>
+    <!--<asp:Button ID="btnforget" runat="server" Text="忘記密碼" OnClick="btnforget_Click" />--><br />
+    <asp:Label ID="lbMsg" runat="server"  ForeColor="Red" Visible="false"></asp:Label>
 
 </asp:Content>
 

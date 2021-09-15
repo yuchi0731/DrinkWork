@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Windows.Forms;
 
 namespace DrinkOrderSystem.ServerSide.SystemAdmin
 {
@@ -26,16 +27,12 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     return;
                 }
 
-                string orderNumber = string.Empty;
-                if (this.Request.QueryString["OrderNumber"] != null)
+                string orderNumber = this.Request.QueryString["OrderNumber"];
+                if(this.Session["forDetailNumber"] == null)
                 {
-                    if(this.Session["forDetailNumber"] == null)
-                    {
-                        this.Session["forDetailNumber"] = this.Request.QueryString["OrderNumber"];
-                        orderNumber = this.Session["forDetailNumber"].ToString();
-                    }
-     
+                    this.Session["forDetailNumber"] = orderNumber.ToString();
                 }
+
 
 
 
@@ -49,23 +46,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
                 var list = DrinkListManager.GetOrderDetailListbyorderNumber(orderNumber);
 
-                if (list.Count > 0) //check is empty data (大於0就做資料繫結)
-                {
-
-                    var DetailList = this.GetPageDataTable(list);
-                    this.gvDetail.DataSource = DetailList;
-                    this.gvDetail.DataBind();
-
-                    this.ucPager.Totaluser = list.Count;
-                    this.ucPager.BindUserList();
-
-                }
-                else
-                {
-                    this.ltMsg.Text = "此訂單尚未有資料";
-                    this.gvDetail.Visible = false;
-                    this.plcNoData.Visible = true;
-                }
+                this.BindList(list);
             }
         }
 
@@ -95,80 +76,45 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
         protected void btnSelect_Click(object sender, EventArgs e)
         {
+
+            string orderNumber = this.Request.QueryString["OrderNumber"];
+            if (this.Session["forDetailNumber"] == null)
+            {
+                this.Session["forDetailNumber"] = orderNumber.ToString();
+            }
+
             var select = this.ddSelect.SelectedValue.ToString();
             var selectInfo = this.txtSelect.Text;
             if (select == "account")
             {
-
-                var list = DrinkListManager.GetOrderDetailInfoByAccount(selectInfo);
-
-                if (list.Count > 0) //check is empty data (大於0就做資料繫結)
-                {
-
-                    var orderlist = this.GetPageDataTable(list);
-
-                    this.ucPager.Totaluser = list.Count;
-                    this.ucPager.BindUserList();
-
-
-                    this.gvDetail.DataSource = orderlist;
-                    this.gvDetail.DataBind();
-
-                }
-                else
-                {
-                    this.ltMsg.Text = "找不到此篩選資料，請確認輸入是否正確";
-                    this.gvDetail.Visible = false;
-                    this.plcNoData.Visible = true;
-                }
+                var list = DrinkListManager.GetOrderDetailInfoByAccount(selectInfo, orderNumber);
+                this.BindListforSelect(list);
             }
 
             if (select == "productName")
             {
 
-                var list = DrinkListManager.GetOrderDetailInfoByProductName(selectInfo);
-                
-                if (list.Count > 0) //check is empty data (大於0就做資料繫結)
-                {
+                var list = DrinkListManager.GetOrderDetailInfoByProductName(selectInfo, orderNumber);
 
-                    var orderlist = this.GetPageDataTable(list);
-
-                    this.ucPager.Totaluser = list.Count;
-                    this.ucPager.BindUserList();
-
-
-                    this.gvDetail.DataSource = orderlist;
-                    this.gvDetail.DataBind();
-
-                }
-                else
-                {
-                    this.ltMsg.Text = "找不到此篩選資料，請確認輸入是否正確";
-                    this.gvDetail.Visible = false;
-                    this.plcNoData.Visible = true;
-                }
+                this.BindListforSelect(list);
             }
         }
 
         protected void btnClearSelect_Click(object sender, EventArgs e)
         {
 
-            string orderNumber = string.Empty;
-            if (this.Request.QueryString["OrderNumber"] != null)
-            {
-                if (this.Session["forDetailNumber"] == null)
-                {
-                    this.Session["forDetailNumber"] = this.Request.QueryString["OrderNumber"];
-                    orderNumber = this.Session["forDetailNumber"].ToString();
-                }
+            this.ddSelect.Visible = false;
+            this.txtSelect.Visible = false;
+            this.btnSelect.Visible = false;
+            this.btnClearSelect.Visible = false;
 
+            string orderNumber = this.Request.QueryString["OrderNumber"];
+            if (this.Session["forDetailNumber"] == null)
+            {
+                this.Session["forDetailNumber"] = orderNumber.ToString();
             }
 
 
-            if (this.Session["StartOrderNumber"].ToString() != null)
-            {
-                orderNumber = this.Session["StartOrderNumber"].ToString();
-            }
 
             this.lbNumber.Text = orderNumber;
             //更新OrderList總金額及杯數
@@ -180,13 +126,25 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
             var list = DrinkListManager.GetOrderDetailListbyorderNumber(orderNumber);
 
+            this.BindList(list);
+        }
+
+        private void BindList(List<OrderDetail> list)
+        {
+
             if (list.Count > 0) //check is empty data (大於0就做資料繫結)
             {
+                this.ddSelect.Visible = true;
+                this.txtSelect.Visible = true;
+                this.btnSelect.Visible = true;
+                this.btnClearSelect.Visible = true;
+                this.ucPager.Visible = true;
 
                 var DetailList = this.GetPageDataTable(list);
                 this.gvDetail.DataSource = DetailList;
                 this.gvDetail.DataBind();
 
+                
                 this.ucPager.Totaluser = list.Count;
                 this.ucPager.BindUserList();
 
@@ -194,9 +152,67 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             else
             {
                 this.ltMsg.Text = "此訂單尚未有資料";
+                this.ucPager.Visible = false;
                 this.gvDetail.Visible = false;
                 this.plcNoData.Visible = true;
             }
+        }
+
+        private void BindListforSelect(List<OrderDetail> list)
+        {
+
+            if (list.Count > 0) //check is empty data (大於0就做資料繫結)
+            {
+                this.ddSelect.Visible = true;
+                this.txtSelect.Visible = true;
+                this.btnSelect.Visible = true;
+                this.btnClearSelect.Visible = true;
+                this.ucPager.Visible = true;
+
+
+                var DetailList = this.GetPageDataTable(list);
+                this.gvDetail.DataSource = DetailList;
+                this.gvDetail.DataBind();
+
+
+                this.ucPager.Totaluser = list.Count;
+                this.ucPager.BindUserList();
+
+            }
+            else
+            {
+                
+                this.ltMsg.Text = "篩選錯誤，請確認篩選條件是否正確";
+                this.gvDetail.Visible = false;
+                this.plcNoData.Visible = true;
+                this.ucPager.Visible = false;
+            }
+        }
+
+        protected void gvDetail_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+            string orderNumber = this.Request.QueryString["OrderNumber"];
+            var DetailInfo = DrinkListManager.GetOrderDetailInfo(orderNumber);
+            if (DetailInfo.Established == "Inprogress")
+            {
+                var item = e.CommandSource as System.Web.UI.WebControls.Button;
+
+                if (string.Compare("btnModify", e.CommandName, true) == 0)
+                {
+                    if(this.Session["OrderDetailsIDforModify"] == null)
+                        this.Session["OrderDetailsIDforModify"] = DetailInfo.OrderDetailsID;
+                    Response.Redirect("/ServerSide/SystemAdmin/UpdateDetailInfo.aspx");
+                }
+            }
+
+            else
+            {
+                MessageBox.Show($"此訂單編號已完成結帳或流單", "無法更改",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+
         }
     }
 }

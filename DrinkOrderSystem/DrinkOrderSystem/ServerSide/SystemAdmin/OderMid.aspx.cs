@@ -300,7 +300,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                         ToppingsUnitPrice = Toprice,
                         SupplierName = supplier,
                         OtherRequest = null,
-                        Established = "NO"
+                        Established = "Inprogress"
                     };
 
                     var sessionLList = this.Session["SelectedItems"] as List<OrderDetailModels>; //將Session轉成List，再做總和

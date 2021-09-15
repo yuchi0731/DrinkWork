@@ -8,7 +8,7 @@
 
         <asp:Literal ID="ltMainUser" runat="server">團主：</asp:Literal>
     <asp:Label ID="lbMainUser" runat="server" ForeColor="Blue"></asp:Label>
-        <asp:GridView ID="gvOrderList" runat="server" AutoGenerateColumns="False" HorizontalAlign="Center" BackColor="White" BorderColor="#3399FF" BorderStyle="None" BorderWidth="1px" CssClass="accordion-button collapsed">
+        <asp:GridView ID="gvOrderList" runat="server" AutoGenerateColumns="False" HorizontalAlign="Center" BackColor="White" BorderColor="#3399FF" BorderStyle="None" BorderWidth="1px" CssClass="accordion-button collapsed" style="left: 0px; top: 0px; width: 107%">
         <Columns>
             <asp:BoundField DataField="OrderID" HeaderText="訂單編號" />
             <asp:BoundField DataField="OrderNumber" HeaderText="訂單名稱" />
@@ -18,10 +18,12 @@
             <asp:BoundField DataField="RequiredTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="需求時間" />
             <asp:BoundField DataField="SupplierName" HeaderText="廠商" />
             <asp:BoundField DataField="TotalPrice" HeaderText="總金額" />
-
+            <asp:BoundField DataField="TotalCups" HeaderText="總杯數" />
+            <asp:BoundField DataField="Established" HeaderText="成立狀況" />
         </Columns>
     </asp:GridView>
     <asp:Button ID="btnViewDetail" runat="server" Text="檢視明細"  OnClick="btnViewDetail_Click"/>
+    <asp:Button ID="btnText" runat="server" Text="寫出.txt"  OnClick="btnText_Click"/>
 
 
     <asp:PlaceHolder ID="plDetail" runat="server" Visible="false">
@@ -42,7 +44,6 @@
             <asp:BoundField DataField="SupplierName" HeaderText="廠商" />
              <asp:BoundField DataField="OtherRequest" HeaderText="其他" />
         </Columns>
-
     </asp:GridView>
 </asp:PlaceHolder><br />
 

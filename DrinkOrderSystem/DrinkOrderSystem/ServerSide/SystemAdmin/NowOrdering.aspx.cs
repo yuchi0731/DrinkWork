@@ -25,6 +25,8 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 }
 
 
+                //更新訂單成立狀況
+                DrinkListManager.CheckEstablishedorFail();
 
                 var list = DrinkListManager.GetOrderByRtimeNowOrdering();
 
@@ -49,6 +51,9 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     this.plcNoData.Visible = true;
                     this.lbMsg.Text = "目前沒有可跟團的清單";
                 }
+
+
+
 
             }
 

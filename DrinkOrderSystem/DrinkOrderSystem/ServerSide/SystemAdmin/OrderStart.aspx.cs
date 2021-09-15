@@ -295,7 +295,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     ToppingsUnitPrice = Toprice,
                     SupplierName = supplierName,
                     OtherRequest = null,
-                    Established = "NO"
+                    Established = "Inprogress"
                 };
 
                 var sessionList = this.Session["SelectedItems"] as List<OrderDetailModels>;    //將Session轉成List，再做總和
@@ -318,7 +318,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     SupplierName = supplierName,
                     TotalPrice = totalAmount,
                     TotalCups = Convert.ToInt32(DDLQuantity.SelectedItem.Value),
-                    Established = "NO"
+                    Established = "Inprogress"
                 };
 
                 this.Session["SelectedList"] = orderlist;

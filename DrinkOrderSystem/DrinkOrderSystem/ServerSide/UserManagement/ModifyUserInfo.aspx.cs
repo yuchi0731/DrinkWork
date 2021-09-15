@@ -226,7 +226,25 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
 
             if (string.Compare("btnClear", e.CommandName, true) == 0)
             {
-                Response.Redirect("/ServerSide/UserManagement/UserList.aspx");
+                DialogResult MsgBoxResult;
+                MsgBoxResult = MessageBox.Show("尚有未儲存資料，繼續請按確定", "取消",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Warning);
+
+
+                if (MsgBoxResult == DialogResult.OK)
+                {
+                    Response.Redirect("/ServerSide/UserManagement/UserList.aspx");
+                }
+                else
+                {
+                    this.plcNoData.Visible = true;
+                    this.lbMsg.Text = "修改取消，尚未存取變更";
+                    return;
+                }
+
+
+                
             }
 
         }

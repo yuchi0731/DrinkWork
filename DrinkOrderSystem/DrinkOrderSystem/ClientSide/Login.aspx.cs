@@ -21,7 +21,7 @@ namespace DrinkOrderSystem.ClientSide
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-
+            this.lbMsg.Visible = false;
             string inp_Account = this.txtAccount.Text;
             string inp_PWD = this.txtPWD.Text;
 
@@ -29,6 +29,7 @@ namespace DrinkOrderSystem.ClientSide
 
             if (!AuthManager.TryLogin(inp_Account, inp_PWD, out msg))
             {
+                this.lbMsg.Visible = true;
                 this.lbMsg.Text = msg;
                 return;
             }
@@ -40,9 +41,9 @@ namespace DrinkOrderSystem.ClientSide
 
         }
 
-        protected void btnforget_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("/ClientSide/ForgetPWD.aspx");
-        }
+        //protected void btnforget_Click(object sender, EventArgs e)
+        //{
+        //    Response.Redirect("/ClientSide/ForgetPWD.aspx");
+        //}
     }
 }

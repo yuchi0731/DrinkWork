@@ -158,6 +158,7 @@
     <Content Include="ServerSide\SystemAdmin\OrderStart.aspx" />
     <Content Include="ServerSide\SystemAdmin\ResultCheckJS.aspx" />
     <Content Include="ServerSide\SystemAdmin\SendOrder.aspx" />
+    <Content Include="ServerSide\SystemAdmin\UpdateDetailInfo.aspx" />
     <Content Include="ServerSide\SystemAdmin\UserPage.aspx" />
     <Content Include="ServerSide\SystemAdmin\UserRecords.aspx" />
     <Content Include="ServerSide\UserControl\ucPager.ascx" />
@@ -311,6 +312,13 @@
     </Compile>
     <Compile Include="ServerSide\SystemAdmin\SendOrder.aspx.designer.cs">
       <DependentUpon>SendOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\UpdateDetailInfo.aspx.cs">
+      <DependentUpon>UpdateDetailInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\UpdateDetailInfo.aspx.designer.cs">
+      <DependentUpon>UpdateDetailInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="ServerSide\SystemAdmin\UserPage.aspx.cs">
       <DependentUpon>UserPage.aspx</DependentUpon>

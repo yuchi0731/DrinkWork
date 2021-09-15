@@ -17,36 +17,41 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         {
 
 
-                if (!AuthManager.IsLogined())
-                {
-                    Response.Redirect("/ClientSide/Login.aspx");
-                    return;
-                }
+            if (!AuthManager.IsLogined())
+            {
+                Response.Redirect("/ClientSide/Login.aspx");
+                return;
+            }
 
-                var currentAccount = AuthManager.GetCurrentUser();
-                var account = currentAccount.Account;
+            var currentAccount = AuthManager.GetCurrentUser();
+            var account = currentAccount.Account;
 
-                var userDetailList = DrinkListManager.GetUserDetailList(account);
+            var userDetailList = DrinkListManager.GetUserDetailList(account);
 
-                if (userDetailList.Count > 0) //check is empty data (大於0就做資料繫結)
-                {
+            if (userDetailList.Count > 0) //check is empty data (大於0就做資料繫結)
+            {
 
-                    var DetailList = this.GetPageDataTable(userDetailList);
-                    this.gvUserDetail.DataSource = DetailList;
-                    this.gvUserDetail.DataBind();
-
-                    this.ucPager.Totaluser = userDetailList.Count;
-                    this.ucPager.Bind();
+                this.ddselect.Visible = true;
+                this.btnSelect.Visible = true;
+                this.ucPager.Visible = true;
 
 
-                }
-                else
-                {
+                var DetailList = this.GetPageDataTable(userDetailList);
+                this.gvUserDetail.DataSource = DetailList;
+                this.gvUserDetail.DataBind();
+
+                this.ucPager.Totaluser = userDetailList.Count;
+                this.ucPager.Bind();
+
+
+            }
+            else
+            {
                 this.ltMsg.Text = "您目前無任何訂購資料";
                 this.gvUserDetail.Visible = false;
-                    this.plcNoData.Visible = true;
-                }
-            
+                this.plcNoData.Visible = true;
+            }
+
         }
         private int GetCurrentPage()
         {
@@ -73,10 +78,10 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
         protected void btnSelect_Click(object sender, EventArgs e)
         {
-            
+
             var currentAccount = AuthManager.GetCurrentUser();
             var account = currentAccount.Account;
-            
+
 
             var select = this.ddselect.SelectedValue.ToString();
             if (select == "RecentTime")

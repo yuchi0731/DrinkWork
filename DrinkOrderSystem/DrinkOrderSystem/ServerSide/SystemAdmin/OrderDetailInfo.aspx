@@ -12,21 +12,21 @@
         <tr>
             <th>篩選方式</th>
             <td>
-                <asp:DropDownList ID="ddSelect" runat="server">
+                <asp:DropDownList ID="ddSelect" runat="server" Visible="false">
                     <asp:ListItem Value="non">未選擇</asp:ListItem>
                     <asp:ListItem Value="account">訂購人</asp:ListItem>
                     <asp:ListItem Value="productName">商品名稱</asp:ListItem>
                 </asp:DropDownList>
             </td>
             <td>
-                <asp:TextBox ID="txtSelect" runat="server"></asp:TextBox>
-                <asp:Button ID="btnSelect" runat="server" Text="篩選"  OnClick="btnSelect_Click"/>
-          <asp:Button ID="btnClearSelect" runat="server" Text="取消"  OnClick="btnClearSelect_Click"/>
+                <asp:TextBox ID="txtSelect" runat="server" Visible="false"></asp:TextBox>
+                <asp:Button ID="btnSelect" runat="server" Text="篩選"  OnClick="btnSelect_Click" Visible="false"/>
+          <asp:Button ID="btnClearSelect" runat="server" Text="取消"  OnClick="btnClearSelect_Click" Visible="false"/>
 
             </td>
         </tr>
     </table>
-    <asp:GridView ID="gvDetail" runat="server" AutoGenerateColumns="False">
+    <asp:GridView ID="gvDetail" runat="server" AutoGenerateColumns="False" OnRowCommand="gvDetail_RowCommand">
          <Columns>
 
             <asp:BoundField DataField="OrderNumber" HeaderText="訂單名稱" />
@@ -44,12 +44,17 @@
              <asp:BoundField DataField="SubtotalAmount" HeaderText="小計" />
              <asp:BoundField DataField="SupplierName" HeaderText="廠商" />
              <asp:BoundField DataField="OtherRequest" HeaderText="其他" />
-
+             
+       <asp:TemplateField HeaderText="修改明細" ItemStyle-HorizontalAlign="Center">
+        <ItemTemplate>
+            <asp:Button ID="btnModify" runat="server" Text="修改" CommandName="btnModify"/>
+      </ItemTemplate>
+      </asp:TemplateField>
              <asp:BoundField DataField="Established" HeaderText="訂單成立狀況" />
 
         </Columns>
     </asp:GridView>
-    <uc1:ucpager runat="server" id="ucPager" PageSize="10"  Url="/ServerSide/SystemAdmin/OrderDetailInfo.aspx" />
+    <uc1:ucpager runat="server" id="ucPager" PageSize="10"  Url="/ServerSide/SystemAdmin/OrderDetailInfo.aspx" Visible="false" />
                 <asp:PlaceHolder ID="plcNoData" runat="server" Visible="false">
                         <p style="color:red">
                             <asp:Literal ID="ltMsg" runat="server"></asp:Literal>

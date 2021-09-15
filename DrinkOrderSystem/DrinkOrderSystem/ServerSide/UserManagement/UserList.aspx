@@ -37,9 +37,9 @@
                 
             <asp:BoundField DataField="LastModified" DataFormatString="{0:yyyy-MM-dd}" HeaderText="最後修改日期" ItemStyle-HorizontalAlign="Center" />
 
-                        <asp:TemplateField HeaderText="個人照片" ItemStyle-HorizontalAlign="Center">
-                <ItemTemplate>  
-                    <asp:Image ID="imgUserPhoto" runat="server" Visible="false" Width="80" Height="50" />
+                <asp:TemplateField HeaderText="個人照片">
+                <ItemTemplate>
+                    <asp:ImageButton ID="imgPhoto" runat="server" Visible="false" Width="35" Height="45"  CommandName="btnLarger" />               
                 </ItemTemplate>
             </asp:TemplateField>
                         <asp:TemplateField HeaderText="修改資料" ItemStyle-HorizontalAlign="Center">

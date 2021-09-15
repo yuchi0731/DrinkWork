@@ -511,6 +511,37 @@ namespace DOS_DBSoure
             }
         }
 
+
+        /// <summary>
+        /// 如果此人有開過團
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public static OrderList GetCheckUserhasOrderList(string account)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                         (from list in context.OrderLists
+                          where
+                              list.Account == account
+                          select list);
+
+                    var orderList = query.FirstOrDefault();
+                    return orderList;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+
+
         /// <summary>
         /// 尚有未結帳訂單
         /// </summary>
@@ -636,7 +667,7 @@ namespace DOS_DBSoure
         /// </summary>
         /// <param name="OrderNumber"></param>
         /// <returns></returns>
-        public static List<OrderDetail> GetOrderDetailInfoByAccount(string account)
+        public static List<OrderDetail> GetOrderDetailInfoByAccount(string account, string orderNumber)
         {
             try
             {
@@ -644,7 +675,7 @@ namespace DOS_DBSoure
                 {
                     var query =
                          (from list in context.OrderDetails
-                          where list.Account == account
+                          where list.Account == account & list.OrderNumber == orderNumber
                           select list);
 
                     var orderDetail = query.ToList();
@@ -664,7 +695,7 @@ namespace DOS_DBSoure
         /// </summary>
         /// <param name="OrderNumber"></param>
         /// <returns></returns>
-        public static List<OrderDetail> GetOrderDetailInfoByProductName(string productName)
+        public static List<OrderDetail> GetOrderDetailInfoByProductName(string productName, string orderNumber)
         {
             try
             {
@@ -672,7 +703,7 @@ namespace DOS_DBSoure
                 {
                     var query =
                          (from list in context.OrderDetails
-                          where list.ProductName == productName
+                          where list.ProductName == productName & list.OrderNumber == orderNumber
                           select list);
 
                     var orderDetail = query.ToList();
@@ -714,6 +745,37 @@ namespace DOS_DBSoure
                 return null;
             }
         }
+
+
+
+
+        /// <summary>
+        /// 利用OrderNumber取的OrderList
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public static List<OrderList> GetOrderListbyorderNumber(string orderNumber)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                        (from item in context.OrderLists
+                         where item.OrderNumber == orderNumber
+                         select item);
+
+                    var list = query.ToList();
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// 查詢訂單//強型別清單LINQ
@@ -771,6 +833,63 @@ namespace DOS_DBSoure
 
 
         /// <summary>
+        /// 利用OrderID取得OrderDetail
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public static OrderDetail GetOrderDetailfromorderID(Guid orderID)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                        (from item in context.OrderDetails
+                         where item.OrderDetailsID == orderID
+                         select item);
+
+                    var orderDetail = query.FirstOrDefault();
+                    return orderDetail;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 利用OrderID取得OrderDetailList
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public static List<OrderDetail> GetOrderDetailListfromorderID(Guid orderID)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                        (from item in context.OrderDetails
+                         where item.OrderDetailsID == orderID
+                         select item);
+
+                    var orderDetail = query.ToList();
+                    return orderDetail;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+
+
+
+        /// <summary>
         /// 查詢訂單明細//強型別清單LINQ
         /// </summary>
         /// <param name="userID"></param>
@@ -814,6 +933,34 @@ namespace DOS_DBSoure
                          select item);
 
                     var list = query.ToList();
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 利用廠商名取得所有商品名字
+        /// </summary>
+        /// <param name="supplierName"></param>
+        /// <returns></returns>
+        public static List<string> GetALLProduct(string supplierName)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                        (from item in context.Products
+                         where item.SupplierName == supplierName
+                         select item.ProductName);
+
+                    var list = query.ToList();
+
                     return list;
                 }
             }
@@ -1136,7 +1283,6 @@ namespace DOS_DBSoure
 
             try
             {
-
                 using (DKContextModel context = new DKContextModel())
                 {
 
@@ -1146,7 +1292,7 @@ namespace DOS_DBSoure
 
                     if (updatelist != null)
                     {
-                        updatelist.Established = "YES";
+                        updatelist.Established = "Established";
                     }
 
                     var updateDetaillist =
@@ -1155,7 +1301,7 @@ namespace DOS_DBSoure
 
                     if (updatelist != null)
                     {
-                        updatelist.Established = "YES";
+                        updatelist.Established = "Established";
                     }
 
                     context.SaveChanges();
@@ -1172,6 +1318,97 @@ namespace DOS_DBSoure
         }
 
 
+        /// <summary>
+        /// 判斷訂單時間更改成立欄位; 需求時間小於1小時 未送出，流單
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <param name="totalAmount"></param>
+        /// <param name="cups"></param>
+        /// <returns></returns>
+        public static bool CheckEstablishedorFail()
+        {
+
+            DateTime overTime = DateTime.Now.AddHours(1);
+
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+
+                    var updatelist =
+                        context.OrderLists
+                        .Where(obj => obj.RequiredTime < overTime).FirstOrDefault();
+
+                    if (updatelist != null)
+                    {
+                        updatelist.Established = "Fail";
+                    }
+
+                    var updateDetaillist =
+                        context.OrderDetails
+                        .Where(obj => obj.RequiredTime < overTime).FirstOrDefault();
+
+                    if (updatelist != null)
+                    {
+                        updatelist.Established = "Fail";
+                    }
+
+                    context.SaveChanges();
+
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return false;
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// 修改單筆訂單
+        /// </summary>
+        /// <param name="userInfo"></param>
+        /// <returns></returns>
+        public static bool UpdateDetailInfo(OrderDetail orderDetail)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    //取得資料(Lambda)
+                    var detail =
+                            context.OrderDetails
+                            .Where(obj => obj.OrderDetailsID == orderDetail.OrderDetailsID).FirstOrDefault();
+
+
+                    if (detail != null)//如果DB有資料的話
+                    {
+
+                        detail.ProductName = orderDetail.ProductName;
+                        detail.Quantity = orderDetail.Quantity;
+                        detail.Suger = orderDetail.Suger;
+                        detail.Ice = orderDetail.Ice;
+                        detail.Toppings = orderDetail.Toppings;
+                        detail.SubtotalAmount = orderDetail.SubtotalAmount;
+
+                        context.SaveChanges();
+
+                    }
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return false;
+            }
+        }
 
 
 

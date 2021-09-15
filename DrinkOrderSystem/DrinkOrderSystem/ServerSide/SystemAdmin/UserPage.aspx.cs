@@ -25,32 +25,43 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
 
                 var current = AuthManager.GetCurrentUser();
-
                 var hasCheckoutList = DrinkListManager.GetneedCheckoutOrderList(current.Account);
-                if (hasCheckoutList != null)
-                {
-                    DialogResult MsgBoxResult;
-                    MsgBoxResult = MessageBox.Show("~提醒您尚有未結帳訂單~", "提醒",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                }
-
                 var goingtoendList = DrinkListManager.GetGTEOrderListInfo(current.Account);
-                if (goingtoendList.Established != "YES" && goingtoendList.RequiredTime < DateTime.Now.AddMinutes(90))
+
+
+                if (DrinkListManager.GetCheckUserhasOrderList(current.Account) != null)
                 {
-                    DialogResult MsgBoxResult;
-                    MsgBoxResult = MessageBox.Show($"訂單【{goingtoendList.OrderNumber}】即將過期，請盡速送出訂購單", "提醒",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    
+                    if (hasCheckoutList != null)
+                    {
+                        DialogResult MsgBoxResult;
+                        MsgBoxResult = MessageBox.Show("~提醒您尚有未結帳訂單~", "提醒",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    }
+
+                    
+                    if (goingtoendList.Established != "YES" && goingtoendList.RequiredTime < DateTime.Now.AddMinutes(90))
+                    {
+                        DialogResult MsgBoxResult;
+                        MsgBoxResult = MessageBox.Show($"訂單【{goingtoendList.OrderNumber}】即將過期，請盡速送出訂購單", "提醒",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    }
+                    this.ltOrderNumber.Text = $"{goingtoendList.OrderNumber.ToString()}";
+                    
+
                 }
 
 
+                else
+                {
+                    this.ltOrderNumber.Text = "尚未有訂購單";
+                }
 
-                
                 var userInfo = UserInfoManager.GetUserInfo(current.Account);
-                var orderNumber = DrinkListManager.GetUserLastOrderNumber(current.Account);
                 this.ltAccount.Text = current.Account.ToString();
-                this.ltOrderNumber.Text = $"{goingtoendList.OrderNumber.ToString()}";
+
 
                 if (userInfo.JobGrade == 0)
                 {

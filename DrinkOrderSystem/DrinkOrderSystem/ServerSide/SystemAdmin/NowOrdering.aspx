@@ -23,8 +23,8 @@
             <td>
                 <asp:TextBox ID="txtSelect" runat="server" Visible="false"></asp:TextBox>
                 <asp:Button ID="btnSelect" runat="server" Text="篩選" OnClick="btnSelect_Click" Visible="false" /><asp:Label ID="lbSelect" runat="server" ForeColor="Red"></asp:Label>
-        <asp:Button ID="btnSortingN" runat="server" Text="以修改時間近至遠排序" OnClick="btnSortingN_Click" />
-        <asp:Button ID="btnSortingF" runat="server" Text="以修改時間遠至近排序" OnClick="btnSortingF_Click" />
+        <asp:Button ID="btnSortingN" runat="server" Text="以需求時間近至遠排序" OnClick="btnSortingN_Click" />
+        <asp:Button ID="btnSortingF" runat="server" Text="以需求時間遠至近排序" OnClick="btnSortingF_Click" />
 <asp:Button ID="btnClearSelect" runat="server" Text="還原清單" OnClick="btnClearSelect_Click" />
             </td>
         </tr>

@@ -27,8 +27,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     Response.Redirect("/ClientSide/Login.aspx");
                     return;
                 }
-                
-  
+               
             }
 
         }

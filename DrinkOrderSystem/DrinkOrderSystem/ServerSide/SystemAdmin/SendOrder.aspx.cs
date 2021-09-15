@@ -40,20 +40,24 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     Response.Redirect("/ServerSide/SystemAdmin/OrderRecords.aspx");
 
                 }
-                
-
 
                 var list = DrinkListManager.GetOrderDetailListbyorderNumber(orderNumber);
 
                 if (list.Count > 0) //check is empty data (大於0就做資料繫結)
                 {
-                    this.gvSend.DataSource = list;
-                    this.gvSend.DataBind();
+                    this.gvOrderList.DataSource = list;
+                    this.gvOrderList.DataBind();
                 }
                 else
                 {
-                    this.gvSend.Visible = false;
+                    this.gvOrderList.Visible = false;
+                    this.btnExportToExcel.Visible = false;
+                    this.btnCancel.Visible = false;
+                    this.lbMsg.Visible = true;
+                    this.lbMsg.Text = "找不到訂單資料";
                 }
+
+
 
 
             }
@@ -69,19 +73,31 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         {
             string orderNumber = this.Request.QueryString["OrderNumber"];
             var orderDetail = DrinkListManager.GetOrderDetailInfo(orderNumber);
-            if (orderDetail.RequiredTime < DateTime.Now.AddMinutes(29))
+            if (orderDetail.RequiredTime < DateTime.Now.AddMinutes(30))
             {
                 DialogResult MsgBoxResult;
                 MsgBoxResult = MessageBox.Show("此訂單已超過結帳時間", "取消",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
-
                 Response.Redirect("/ServerSide/SystemAdmin/OrderRecords.aspx");
 
             }
 
 
-            if (gvSend.Rows.Count == 0)
+            var allDetail = DrinkListManager.GetOrderDetailListbyorderNumber(orderNumber);
+
+            //轉JS
+            string jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(allDetail);
+            if(this.Session["JStext"] == null)
+            this.Session["JStext"] = jsonText;
+
+            //更改訂單成立狀況
+            DrinkListManager.UpdateEstablished(orderNumber);
+
+
+
+
+            if (gvOrderList.Rows.Count == 0)
             {
                 return;
             }
@@ -96,10 +112,57 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             Response.End();
         }
 
+
+
+
         //必須過載此方法,以便支援上面的匯出操作
         public override void VerifyRenderingInServerForm(System.Web.UI.Control control)
         {
 
+        }
+
+        protected void btnViewDetail_Click(object sender, EventArgs e)
+        {
+            this.plDetail.Visible = true;
+            string orderNumber = this.Request.QueryString["OrderNumber"];
+
+            var Detaillist = DrinkListManager.GetOrderDetailListbyorderNumber(orderNumber);
+
+            if (Detaillist.Count > 0) //check is empty data (大於0就做資料繫結)
+            {
+                this.btnExportToExcel.Visible = true;
+                this.btnCancel.Visible = true;
+                this.gvSend.DataSource = Detaillist;
+                this.gvSend.DataBind();
+            }
+            else
+            {
+                this.gvSend.Visible = false;
+                this.btnExportToExcel.Visible = false;
+                this.btnCancel.Visible = false;
+                this.lbMsg.Visible = true;
+                this.lbMsg.Text = "找不到訂單資料";
+            }
+
+        }
+
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult MsgBoxResult;
+            MsgBoxResult = MessageBox.Show("即將取消訂單，繼續請按確認", "清除",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Information);
+
+            if (MsgBoxResult == DialogResult.OK)
+            {
+                Response.Redirect("/ServerSide/SystemAdmin/OrderRecords.aspx");
+            }
+            else
+            {
+                this.lbMsg.Visible = true;
+                this.lbMsg.Text = "已取消動作";
+                return;
+            }
         }
     }
 }

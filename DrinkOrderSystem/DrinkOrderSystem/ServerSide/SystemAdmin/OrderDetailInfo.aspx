@@ -45,6 +45,8 @@
              <asp:BoundField DataField="SupplierName" HeaderText="廠商" />
              <asp:BoundField DataField="OtherRequest" HeaderText="其他" />
 
+             <asp:BoundField DataField="Established" HeaderText="訂單成立狀況" />
+
         </Columns>
     </asp:GridView>
     <uc1:ucpager runat="server" id="ucPager" PageSize="10"  Url="/ServerSide/SystemAdmin/OrderDetailInfo.aspx" />

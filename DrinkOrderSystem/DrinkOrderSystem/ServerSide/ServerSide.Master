@@ -31,7 +31,7 @@
              <!-- 漢堡選單 -->
             <nav class="auto-style1">
                 <a class="navbar navbar-brand">
-                    <asp:Image ID="imgDrink" runat="server" ImageUrl="~/ServerSide/ImagesServer/drink_icon.png"  Width="50" Height="50"/>
+                    <asp:Image ID="imgDrink" runat="server" ImageUrl="~/ServerSide/ImagesServer/SystemLogo.png"  Width="150" Height="150"/>
                     <h1>開心喝飲料公司</h1>
                 </a>
 
@@ -90,9 +90,10 @@
                         <a href="../SystemAdmin/NowOrdering.aspx">目前可跟團清單</a><br />
                         <a href="../SystemAdmin/UserRecords.aspx">個人訂購紀錄</a><br />
                         <a href="../SystemAdmin/OrderRecords.aspx">歷史訂購紀錄</a><br />
-                   <asp:Literal ID="ltlManger" runat="server" Visible="false">
+                   <asp:Literal ID="ltlManger" runat="server" Visible="false" >
                        <a href="../UserManagement/UserList.aspx">使用者清單</a><br />
-                   </asp:Literal>
+                       <a href="../ProductManagement/ProductList.aspx">商品清單</a><br />
+                </asp:Literal>
                         </div>
                     </td>
                     

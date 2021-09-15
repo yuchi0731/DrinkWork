@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>送出表單</h1>
+    <h1>確認訂單</h1>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
 
@@ -21,7 +21,7 @@
 
         </Columns>
     </asp:GridView>
-
+    <asp:Button ID="btnViewDetail" runat="server" Text="檢視明細"  OnClick="btnViewDetail_Click"/>
 
 
     <asp:PlaceHolder ID="plDetail" runat="server" Visible="false">
@@ -47,6 +47,10 @@
 </asp:PlaceHolder><br />
 
 
-    <asp:Button runat="server" ID="btnExportToExcel" Text="確定送出" /> <asp:Button runat="server" ID="btnCancel" Text="取消" />
+    <asp:Button runat="server" ID="btnExportToExcel" Text="送出訂購單" OnClick="btnExportToExcel_Click" Visible="false" /> <asp:Button runat="server" ID="btnCancel" Text="取消" OnClick="btnCancel_Click" Visible="false" />
+
+    <asp:PlaceHolder ID="plNoData" runat="server" Visible="false">
+        <asp:Label ID="lbMsg" runat="server" ForeColor="Red"></asp:Label>
+    </asp:PlaceHolder>
 
 </asp:Content>

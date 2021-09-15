@@ -141,6 +141,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ServerSide\ImagesServer\admin.png" />
     <Content Include="ServerSide\ImagesServer\Logo.png" />
+    <Content Include="ServerSide\ImagesServer\SystemLogo.png" />
     <Content Include="ServerSide\ImagesServer\user.png" />
     <Content Include="ServerSide\ImagesServer\WhiteAlley.jpg" />
     <Content Include="ServerSide\ImagesServer\drink_icon.png" />
@@ -155,6 +156,7 @@
     <Content Include="ServerSide\SystemAdmin\OrderModify.aspx" />
     <Content Include="ServerSide\SystemAdmin\OrderRecords.aspx" />
     <Content Include="ServerSide\SystemAdmin\OrderStart.aspx" />
+    <Content Include="ServerSide\SystemAdmin\ResultCheckJS.aspx" />
     <Content Include="ServerSide\SystemAdmin\SendOrder.aspx" />
     <Content Include="ServerSide\SystemAdmin\UserPage.aspx" />
     <Content Include="ServerSide\SystemAdmin\UserRecords.aspx" />
@@ -296,6 +298,13 @@
     <Compile Include="ServerSide\SystemAdmin\OrderStart.aspx.designer.cs">
       <DependentUpon>OrderStart.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ServerSide\SystemAdmin\ResultCheckJS.aspx.cs">
+      <DependentUpon>ResultCheckJS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ServerSide\SystemAdmin\ResultCheckJS.aspx.designer.cs">
+      <DependentUpon>ResultCheckJS.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ServerSide\SystemAdmin\SendOrder.aspx.cs">
       <DependentUpon>SendOrder.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -411,6 +420,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="ServerSide\Text\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DOS_Auth\DOS_Auth.csproj">

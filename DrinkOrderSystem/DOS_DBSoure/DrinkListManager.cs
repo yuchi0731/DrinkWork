@@ -484,6 +484,71 @@ namespace DOS_DBSoure
         #endregion
 
 
+
+        /// <summary>
+        /// 取得該帳號快結束未結帳訂單
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public static OrderList GetGTEOrderListInfo(string account)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                         (from list in context.OrderLists
+                          where list.Account == account
+                          orderby list.RequiredTime < DateTime.Now.AddMinutes(90)
+                          select list);
+
+                    var orderList = query.FirstOrDefault();
+                    return orderList;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 尚有未結帳訂單
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public static OrderList GetneedCheckoutOrderList(string account)
+        {
+            try
+            {
+                using (DKContextModel context = new DKContextModel())
+                {
+                    var query =
+                         (from list in context.OrderLists
+                          where 
+                              list.Account == account 
+                              & list.Established == "NO" 
+                              & list.RequiredTime > DateTime.Now.AddMinutes(61)                         
+                          select list);
+
+                    var orderList = query.FirstOrDefault();
+                    return orderList;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+
+
+
+
+
+
         /// <summary>
         /// 取出自己最近一筆OrderNumber;;OrderBy
         /// </summary>
@@ -1063,11 +1128,60 @@ namespace DOS_DBSoure
         }
 
 
+        /// <summary>
+        /// 送出表單後更改成立欄位
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <param name="totalAmount"></param>
+        /// <param name="cups"></param>
+        /// <returns></returns>
+        public static bool UpdateEstablished(string orderNumber)
+        {
+
+            try
+            {
+
+                using (DKContextModel context = new DKContextModel())
+                {
+
+                    var updatelist =
+                        context.OrderLists
+                        .Where(obj => obj.OrderNumber == orderNumber).FirstOrDefault();
+
+                    if (updatelist != null)
+                    {
+                        updatelist.Established = "YES";
+                    }
+
+                    var updateDetaillist =
+                        context.OrderDetails
+                        .Where(obj => obj.OrderNumber == orderNumber).FirstOrDefault();
+
+                    if (updatelist != null)
+                    {
+                        updatelist.Established = "YES";
+                    }
+
+                    context.SaveChanges();
+
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return false;
+            }
+        }
 
 
 
 
 
+
+
+        #region memo
 
         /// <summary>
         /// 建立新飲料
@@ -1156,8 +1270,6 @@ namespace DOS_DBSoure
         }
 
 
-
-
         /// <summary>
         /// 刪除飲料資料
         /// </summary>
@@ -1188,6 +1300,8 @@ namespace DOS_DBSoure
             }
 
         }
+
+        #endregion
 
 
 

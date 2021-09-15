@@ -14,15 +14,15 @@
         <tr>
             <th>篩選方式</th>
             <td>
-                <asp:DropDownList ID="ddSelect" runat="server">
+                <asp:DropDownList ID="ddSelect" runat="server" OnSelectedIndexChanged="ddSelect_SelectedIndexChanged" AutoPostBack="true">
                     <asp:ListItem Value="non">未選擇</asp:ListItem>
-                    <asp:ListItem Value="account">訂購人</asp:ListItem>
+                    <asp:ListItem Value="account">團主</asp:ListItem>
                     <asp:ListItem Value="orderNumber">訂單編號</asp:ListItem>
                 </asp:DropDownList>
             </td>
             <td>
-                <asp:TextBox ID="txtSelect" runat="server"></asp:TextBox>
-                <asp:Button ID="btnSelect" runat="server" Text="篩選" OnClick="btnSelect_Click" /><asp:Label ID="lbSelect" runat="server" ForeColor="Red"></asp:Label>
+                <asp:TextBox ID="txtSelect" runat="server" Visible="false"></asp:TextBox>
+                <asp:Button ID="btnSelect" runat="server" Text="篩選" OnClick="btnSelect_Click" Visible="false" /><asp:Label ID="lbSelect" runat="server" ForeColor="Red"></asp:Label>
         <asp:Button ID="btnSortingN" runat="server" Text="以修改時間近至遠排序" OnClick="btnSortingN_Click" />
         <asp:Button ID="btnSortingF" runat="server" Text="以修改時間遠至近排序" OnClick="btnSortingF_Click" />
 <asp:Button ID="btnClearSelect" runat="server" Text="還原清單" OnClick="btnClearSelect_Click" />
@@ -47,6 +47,7 @@
                     <a href="/ServerSide/SystemAdmin/OderMid.aspx?OrderNumber=<%# Eval("OrderNumber") %>">跟團</a>
                 </ItemTemplate>
             </asp:TemplateField>
+            <asp:BoundField DataField="Established" HeaderText="訂單成立狀況" />
         </Columns>
     </asp:GridView>
 

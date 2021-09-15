@@ -176,6 +176,10 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
         protected void btnClearSelect_Click(object sender, EventArgs e)
         {
+            this.txtSelect.Visible = false;
+            this.btnSelect.Visible = false;
+            Response.Redirect("/ServerSide/SystemAdmin/OrderRecords.aspx");
+
             var list = DrinkListManager.GetOrderListRecord();
 
             if (list.Count > 0) //check is empty data (大於0就做資料繫結)
@@ -197,6 +201,12 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 this.gvdrinklist.Visible = false;
                 this.plcNoData.Visible = true;
             }
+        }
+
+        protected void ddSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.txtSelect.Visible = true;
+            this.btnSelect.Visible = true;
         }
     }
     

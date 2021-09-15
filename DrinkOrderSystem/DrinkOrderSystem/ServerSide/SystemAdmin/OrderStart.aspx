@@ -137,9 +137,9 @@
 
 
     <div>
-
-        <asp:Button ID="btnDelete" runat="server" Text="清除選單" OnClick="btnDelete_Click" Visible="False" />
         <asp:Button ID="btnSent" runat="server" Text="確認送出" OnClick="btnSent_Click" Visible="False" />
+        <asp:Button ID="btnDelete" runat="server" Text="清除選單" OnClick="btnDelete_Click" Visible="False" />
+        
 
     </div>
     <asp:Literal ID="ltMsg" runat="server" Visible="false"></asp:Literal>

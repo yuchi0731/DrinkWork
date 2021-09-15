@@ -348,21 +348,6 @@ namespace DOS_DBSoure
         /// <summary>
         /// 新增使用者資料LINQ
         /// </summary>
-        /// <param name="account"></param>
-        /// <param name="employeeID"></param>
-        /// <param name="departmentID"></param>
-        /// <param name="department"></param>
-        /// <param name="firstName"></param>
-        /// <param name="lastName"></param>
-        /// <param name="contact"></param>
-        /// <param name="email"></param>
-        /// <param name="ext"></param>
-        /// <param name="phone"></param>
-        /// <param name="jobGrade"></param>
-        /// <param name="description"></param>
-        /// <param name="responseSuppliers"></param>
-        /// <param name="photo"></param>
-        /// <param name="EditDate"></param>
         public static void CreateNewUserInfo(UserInfo userInfo)
         {
             try
@@ -496,9 +481,13 @@ namespace DOS_DBSoure
 
 
 
+
+
         /// <summary>
         /// 修改使用者資料LINQ
         /// </summary>
+        /// <param name="userInfo"></param>
+        /// <returns></returns>
         public static bool UpdateUserInfo(UserInfo userInfo)
         {
             try
@@ -547,10 +536,10 @@ namespace DOS_DBSoure
 
 
 
-
         /// <summary>
         /// 刪除使用者LINQ
         /// </summary>
+        /// <param name="account"></param>
         public static void DeleteUserlinq(string account)
         {
             try

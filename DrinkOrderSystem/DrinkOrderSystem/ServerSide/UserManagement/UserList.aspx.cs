@@ -29,6 +29,16 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                     return;
                 }
 
+                var current = AuthManager.GetCurrentUser();
+                if(current.JobGrade < 1)
+                {
+                    Response.Redirect("/ServerSide/SystemAdmin/UserPage.aspx");
+                    return;
+                }
+
+
+
+
                 var list = UserInfoManager.GetAllUserListLINQ();
 
 

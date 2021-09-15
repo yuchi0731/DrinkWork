@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Windows.Forms;
 
 namespace DrinkOrderSystem.ServerSide.SystemAdmin
 {
@@ -22,11 +23,34 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     return;
                 }
 
+
                 var current = AuthManager.GetCurrentUser();
+
+                var hasCheckoutList = DrinkListManager.GetneedCheckoutOrderList(current.Account);
+                if (hasCheckoutList != null)
+                {
+                    DialogResult MsgBoxResult;
+                    MsgBoxResult = MessageBox.Show("尚有未結帳訂單", "提醒",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+
+                var goingtoendList = DrinkListManager.GetGTEOrderListInfo(current.Account);
+                if (goingtoendList.Established != "YES")
+                {
+                    DialogResult MsgBoxResult;
+                    MsgBoxResult = MessageBox.Show($"訂單【{goingtoendList.OrderNumber}】即將過期，請盡速送出訂購單", "提醒",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+
+
+
+                
                 var userInfo = UserInfoManager.GetUserInfo(current.Account);
                 var orderNumber = DrinkListManager.GetUserLastOrderNumber(current.Account);
                 this.ltAccount.Text = current.Account.ToString();
-                this.ltOrderNumber.Text = $"編號為：{orderNumber.ToString()}";
+                this.ltOrderNumber.Text = $"{goingtoendList.OrderNumber.ToString()}";
 
                 if (userInfo.JobGrade == 0)
                 {
@@ -46,6 +70,8 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     this.lbuserlevel.Text = "高階管理者";
                     this.lbuserlevel.ForeColor = Color.Red;
                 }
+
+
 
 
             }

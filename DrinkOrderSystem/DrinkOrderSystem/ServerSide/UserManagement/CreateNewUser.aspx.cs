@@ -43,7 +43,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
             string txtext = this.txtCreatext.Text;
             string txtphone = this.txtCreatePhone.Text;
             int jobgrade = this.dpCreateJobGrade.SelectedIndex;
-
+            string photo = "";
 
 
             string txtReS = this.txtCreateRepS.Text;
@@ -63,7 +63,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                 desc = null;
 
 
-            string photo = "";
+            
 
 
 

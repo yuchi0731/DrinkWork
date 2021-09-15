@@ -34,7 +34,7 @@
              <asp:BoundField DataField="toppings" HeaderText="加料" />
              <asp:BoundField DataField="SubtotalAmount" HeaderText="小計" />
              <asp:BoundField DataField="SupplierName" HeaderText="廠商" />
-             <asp:BoundField DataField="OtherRequest" HeaderText="其他" />
+             <asp:BoundField DataField="Established" HeaderText="訂單成立狀況" />
 
         </Columns>
     </asp:GridView>

@@ -205,7 +205,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 var currentUser = AuthManager.GetCurrentUser();
                 string argu = (e.CommandArgument) as string;
                 var supplierName = this.Session["DrinkShop"].ToString();
-                var orderNumber = $"Order{currentUser.DepartmentID}" + DateTime.Now.ToString("MMddHHmmyyyy");
+                var orderNumber = $"Odr{currentUser.DepartmentID}" + DateTime.Now.ToString("MMddHHmmyyyy");
 
 
                 decimal Toprice = 0;
@@ -293,6 +293,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     ToppingsUnitPrice = Toprice,
                     SupplierName = supplierName,
                     OtherRequest = null,
+                    Established = "NO"
                 };
 
                 var sessionList = this.Session["SelectedItems"] as List<OrderDetailModels>;    //將Session轉成List，再做總和
@@ -304,7 +305,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     totalAmount += item2.SubtotalAmount;
                 }
 
-                this.lbTotalAmount.Text = $"總金額共：{totalAmount.ToString()} 元";
+                this.lbTotalAmount.Text = $"總金額共：【{totalAmount.ToString()}】 元";
 
 
 
@@ -314,7 +315,8 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     Account = AuthManager.GetCurrentUser().Account,
                     SupplierName = supplierName,
                     TotalPrice = totalAmount,
-                    TotalCups = Convert.ToInt32(DDLQuantity.SelectedItem.Value)
+                    TotalCups = Convert.ToInt32(DDLQuantity.SelectedItem.Value),
+                    Established = "NO"
                 };
 
                 this.Session["SelectedList"] = orderlist;
@@ -435,12 +437,12 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 var orderListsession = this.Session["SelectedList"] as OrderListModels;
                 DrinkListManager.StartGroup(orderListsession);
 
-                MessageBox.Show("訂購完成，之後可由訂單明細查詢訂購項目", "完成!",
+                MessageBox.Show($"訂購完成，訂單編號為【{orderList.OrderNumber}】，之後可由訂單明細查詢訂購項目", "完成!",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
 
-                this.Session["StartOrderNumber"] = orderList.OrderNumber;
+                //this.Session["StartOrderNumber"] = orderList.OrderNumber;
                 Response.Redirect("/ServerSide/SystemAdmin/NowOrdering.aspx");
 
             }

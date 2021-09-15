@@ -8,7 +8,7 @@
     </h1>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
-    <table>
+    <table border="1">
         <tr>
             <th>帳號
             </th>
@@ -24,7 +24,7 @@
             </td>
         </tr>
         <tr>
-            <th>最近使用之訂單編號
+            <th>即將到期訂單
             </th>
             <td>
                 <asp:Literal ID="ltOrderNumber" runat="server"></asp:Literal>

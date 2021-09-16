@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
-        div {
+/*        div {
             border: 2px solid Blue;
         }
     .auto-style1 {
@@ -10,7 +10,7 @@
     }
     .auto-style2 {
         width: 670px;
-    }
+    }*/
     </style>
 </asp:Content>
 

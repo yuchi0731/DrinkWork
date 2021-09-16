@@ -290,7 +290,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     Quantity = Convert.ToInt32(DDLQuantity.SelectedItem.Value),
                     UnitPrice = DrinkListManager.GetUnitPrice(e.CommandArgument as string),
                     Suger = DDLSugar.SelectedItem.ToString(),
-                    Ice = DDLSugar.SelectedItem.ToString(),
+                    Ice = DDLIce.SelectedItem.ToString(),
                     Toppings = DDLToppings.SelectedItem.ToString(),
                     ToppingsUnitPrice = Toprice,
                     SupplierName = supplierName,

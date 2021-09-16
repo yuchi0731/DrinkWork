@@ -29,25 +29,25 @@
             </td>
         </tr>
     </table>
-    <asp:GridView runat="server" ID="gvNoworderinglist"  AutoGenerateColumns="False">
+    <asp:GridView runat="server" ID="gvNoworderinglist"  AutoGenerateColumns="False" Width="1168px">
         <Columns>
-            <asp:BoundField HeaderText="訂單編號" DataField="OrderNumber" />
+            <asp:BoundField HeaderText="訂單編號" DataField="OrderNumber" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField HeaderText="團主" DataField="Account" />
-            <asp:BoundField HeaderText="訂購開始時間" DataField="OrderTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" />
-            <asp:BoundField HeaderText="跟團截止時間" DataField="OrderEndTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" />
-            <asp:BoundField HeaderText="指定送達時間" DataField="RequiredTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" />
-            <asp:TemplateField HeaderText="目前訂單明細">
+            <asp:BoundField HeaderText="訂購開始時間" DataField="OrderTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField HeaderText="跟團截止時間" DataField="OrderEndTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField HeaderText="指定送達時間" DataField="RequiredTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" ItemStyle-HorizontalAlign="Center" />
+            <asp:TemplateField HeaderText="訂單明細" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
     <a href="/ServerSide/SystemAdmin/OrderDetailInfo.aspx?OrderNumber=<%# Eval("OrderNumber") %>">確認</a>
                 </ItemTemplate>
             </asp:TemplateField>
             
-            <asp:TemplateField HeaderText="跟團">
+            <asp:TemplateField HeaderText="跟團" ItemStyle-HorizontalAlign="Center" >
                 <ItemTemplate>
                     <a href="/ServerSide/SystemAdmin/OderMid.aspx?OrderNumber=<%# Eval("OrderNumber") %>">跟團</a>
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:BoundField DataField="Established" HeaderText="訂單成立狀況" />
+            <asp:BoundField DataField="Established" HeaderText="訂單成立狀況" ItemStyle-HorizontalAlign="Center" />
         </Columns>
     </asp:GridView>
 

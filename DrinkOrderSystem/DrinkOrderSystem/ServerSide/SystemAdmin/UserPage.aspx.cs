@@ -26,6 +26,22 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
 
                 var current = AuthManager.GetCurrentUser();
+                var userinfo = UserInfoManager.GetUserInfo(current.Account);
+
+                if (userinfo.Photo != "")
+                {
+                    this.imPhoto.Visible = true;
+                    this.imPhoto.ImageUrl = "~/ServerSide/ImagesServer/" + userinfo.Photo;
+
+                }
+                else
+                {
+                    this.imPhoto.Visible = false;
+                    this.imPhoto.ImageUrl = "~/ServerSide/ImagesServer/DefaultPhoto_user.png";
+                }
+
+                
+
                 var hasCheckoutList = DrinkListManager.GetneedCheckoutOrderList(current.Account);
                 var goingtoendList = DrinkListManager.GetGTEOrderListInfo(current.Account);
 
@@ -110,7 +126,6 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             var currentUser = AuthManager.GetCurrentUser();
             var userData = UserInfoManager.GetUserInfo(currentUser.Account);
 
-
             var orderGTEList = DrinkListManager.GetGTEOrderListInfo(currentUser.Account);
             var endtime = orderGTEList.OrderEndTime;
             var reqtime = orderGTEList.RequiredTime;
@@ -172,20 +187,30 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             
             var currentUser = AuthManager.GetCurrentUser();
             var userData = UserInfoManager.GetUserInfo(currentUser.Account);
-
             var orderGTEList = DrinkListManager.GetGTEOrderListInfo(currentUser.Account);
-            var endtime = orderGTEList.OrderEndTime;
-            var reqtime = orderGTEList.RequiredTime;
-            var sendmailtime = DateTime.Now.AddHours(1.5);
-            var sendlastTime = DateTime.Now.AddMinutes(80);
-            var lastTime = DateTime.Now.AddMinutes(61);
-            var established = orderGTEList.Established.ToString();
 
-            if(established == "Inprogress")
+            if (orderGTEList != null)
             {
-                if(reqtime <= sendmailtime && reqtime > sendlastTime)
-                {               
+
+               
+                var endtime = orderGTEList.OrderEndTime;
+                var reqtime = orderGTEList.RequiredTime;
+                var sendmailtime = DateTime.Now.AddHours(1.5);
+                var sendlastTime = DateTime.Now.AddMinutes(80);
+                var lastTime = DateTime.Now.AddMinutes(61);
+                var established = orderGTEList.Established.ToString();
+
+                if (established == "Inprogress")
+                {
+                    if (reqtime <= sendmailtime && reqtime > sendlastTime)
+                    {
                         return true;
+                    }
+
+                    else
+                    {
+                        return false;
+                    }
                 }
 
                 else
@@ -198,6 +223,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             {
                 return false;
             }
+
         }
 
 

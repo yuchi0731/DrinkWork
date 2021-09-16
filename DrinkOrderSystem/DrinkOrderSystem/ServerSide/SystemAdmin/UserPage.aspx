@@ -13,6 +13,8 @@
     </h1>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
+
+    <asp:Image ID="imPhoto" runat="server" Width="200" Visible="false" />
     <table border="1" style="-moz-animation-play-state"  class="table table-striped">
         <tr scope="col">
             <th>帳號

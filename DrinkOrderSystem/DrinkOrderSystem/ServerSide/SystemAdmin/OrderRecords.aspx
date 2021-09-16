@@ -30,18 +30,18 @@
     </table>
 
 
-    <asp:GridView ID="gvdrinklist" runat="server" AutoGenerateColumns="False" HorizontalAlign="Center" BackColor="White" BorderColor="#3399FF" BorderStyle="None" BorderWidth="1px" CssClass="accordion-button collapsed">
+    <asp:GridView ID="gvdrinklist" runat="server" AutoGenerateColumns="False" HorizontalAlign="Center" BackColor="White" BorderColor="#3399FF" BorderStyle="None" BorderWidth="1px" CssClass="accordion-button collapsed" style="left: -24px; top: 0px; width: 110%">
         <Columns>
-            <asp:BoundField DataField="OrderID" HeaderText="訂單編號" />
-            <asp:BoundField DataField="OrderNumber" HeaderText="訂單名稱" />
-            <asp:BoundField DataField="Account" HeaderText="訂購人" />
-            <asp:BoundField DataField="OrderTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="訂購時間" />
-            <asp:BoundField DataField="OrderEndTime" DataFormatString="{0:yyyy-MM-dd-hh:mm:ss}" HeaderText="截止時間" />
-            <asp:BoundField DataField="RequiredTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="需求時間" />
-            <asp:BoundField DataField="SupplierName" HeaderText="廠商" />
-            <asp:BoundField DataField="TotalPrice" HeaderText="總金額" />
-            <asp:BoundField DataField="TotalCups" HeaderText="總杯數" />
-            <asp:TemplateField HeaderText="訂單細項" ItemStyle-HorizontalAlign="Center">
+            <asp:BoundField DataField="OrderID" HeaderText="訂單編號" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="OrderNumber" HeaderText="訂單名稱"  ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="Account" HeaderText="訂購人" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="OrderTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="訂購時間" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="OrderEndTime" DataFormatString="{0:yyyy-MM-dd-hh:mm:ss}" HeaderText="截止時間" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="RequiredTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="需求時間" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="SupplierName" HeaderText="廠商" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="TotalPrice" HeaderText="總金額" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="TotalCups" HeaderText="總杯數" ItemStyle-HorizontalAlign="Center" />
+            <asp:TemplateField HeaderText="訂單細項" ItemStyle-HorizontalAlign="Center" >
                                      <ItemTemplate>
                                     <a href="/ServerSide/SystemAdmin/OrderDetailInfo.aspx?OrderNumber=<%# Eval("OrderNumber") %>">明細</a>
                                 </ItemTemplate>
@@ -52,7 +52,7 @@
                                     <a href="/ServerSide/SystemAdmin/SendOrder.aspx?OrderNumber=<%# Eval("OrderNumber") %>">結帳</a>
                                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:BoundField DataField="Established" HeaderText="成立狀況" />
+            <asp:BoundField DataField="Established" HeaderText="成立狀況" ItemStyle-HorizontalAlign="Center" />
         </Columns>
 
     </asp:GridView>

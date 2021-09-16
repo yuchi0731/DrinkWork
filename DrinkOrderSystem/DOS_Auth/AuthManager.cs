@@ -168,7 +168,7 @@ namespace DOS_Auth
             }
 
 
-            if(contact != "ext" && contact != "phone" && contact != "email")
+            if(contact != "分機" && contact != "電話" && contact != "Email")
             {
                 errorMsg = "聯絡方式格式錯誤!請重新選取";
                 errorMsg2 = string.Empty;

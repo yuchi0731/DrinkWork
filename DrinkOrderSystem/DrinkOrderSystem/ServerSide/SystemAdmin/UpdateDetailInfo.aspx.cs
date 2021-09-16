@@ -28,11 +28,27 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
                 string orderID = this.Session["OrderDetailsIDforModify"].ToString();
 
+
                 Guid orderDetailID;
                 Guid.TryParse(orderID, out orderDetailID);
 
-                var orderDetailUnfo = DrinkListManager.GetOrderDetailfromorderID(orderDetailID);
-                var supplierName = orderDetailUnfo.SupplierName;
+                var orderDetailInfo = DrinkListManager.GetOrderDetailfromorderID(orderDetailID);
+                var supplierName = orderDetailInfo.SupplierName;
+
+                var current = AuthManager.GetCurrentUser();
+                var cAccount = current.Account.ToString();
+                var orderAccount = orderDetailInfo.Account.ToString();
+                if(cAccount != orderAccount)
+                {
+                    MessageBox.Show("您並不是此訂單擁有者，將導至明細頁", "帳號錯誤",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+                    Response.Redirect("/ServerSide/SystemAdmin/NowOrdering.aspx");
+                }
+
+
+
 
                 string supName = "";
                 if (supplierName == "Fiftylan")

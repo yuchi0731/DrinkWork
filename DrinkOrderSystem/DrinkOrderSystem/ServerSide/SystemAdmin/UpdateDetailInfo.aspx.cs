@@ -176,7 +176,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     Suger = Sugar,
                     Ice = Ice,
                     Toppings = Toppings,
-                    SubtotalAmount = unitPrice * Toprice
+                    SubtotalAmount = quantity * (unitPrice + Toprice)
                 };
 
 

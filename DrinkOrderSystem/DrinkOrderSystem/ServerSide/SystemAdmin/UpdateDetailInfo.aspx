@@ -87,7 +87,8 @@
                     </tr>
                       <tr>
                           <td>
-                              <asp:Label ID="lbAmount" runat="server" Text='<%# Eval("SubtotalAmount") %>' ></asp:Label><br />
+                              <asp:Label ID="lbamounttitle" runat="server" Text="小計"></asp:Label>
+                              【<asp:Label ID="lbAmount" runat="server" Text='<%# Eval("SubtotalAmount") %>' ></asp:Label>】元 <br />
                           </td>
                           <td>
 

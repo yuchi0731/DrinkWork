@@ -196,23 +196,23 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             {
                 DetailInfo +=
                     "【訂購人】" + item.Account.ToString()
-                    + "\r\n"
+                    + "\n"
                     + "【飲料】" + item.ProductName.ToString()
-                    + "\r\n"
+                    + "\n"
                     + "【單價】" + item.UnitPrice.ToString()
-                    + "\r\n"
+                    + "\n"
                     + "【杯數】" + item.Quantity.ToString()
-                    + "\r\n"
+                    + "\n"
                     + "【甜度】" + item.Suger.ToString()
-                    + "\r\n"
+                    + "\n"
                     + "【冰量】" + item.Ice.ToString()
-                    + "\r\n"
+                    + "\n"
                     + "【加料】" + item.Toppings.ToString()
-                    + "\r\n"
+                    + "\n"
                     + "【加料單價】" + item.ToppingsUnitPrice.ToString()
-                    + "\r\n"
+                    + "\n"
                     + "-----------------------------------"
-                    + "\r\n";
+                    + "\n";
             }
 
 

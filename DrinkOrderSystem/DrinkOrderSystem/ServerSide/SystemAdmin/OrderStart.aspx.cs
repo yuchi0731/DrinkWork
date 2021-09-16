@@ -27,7 +27,9 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     Response.Redirect("/ClientSide/Login.aspx");
                     return;
                 }
-               
+
+
+                
             }
 
         }
@@ -391,11 +393,24 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 this.lbMsg.Text = "尚未選取截止/送達時間";
             }
 
+            try
+            {
+                DateTime Etime1 = Convert.ToDateTime(endTime);
+                DateTime Rtime1 = Convert.ToDateTime(reqTime);
+                DateTime tenmin1 = DateTime.Now.AddMinutes(10);
+                DateTime onehour1 = tenmin1.AddHours(3);
+            }
+            catch
+            {
+                this.lbMsg.Visible = true;
+                this.lbMsg.Text = "尚未選取時間";
+                return;
+            }
+
             DateTime Etime = Convert.ToDateTime(endTime);
             DateTime Rtime = Convert.ToDateTime(reqTime);
             DateTime tenmin = DateTime.Now.AddMinutes(10);
             DateTime onehour = tenmin.AddHours(3);
-
 
 
             if (Etime.AddHours(3) > Rtime)
@@ -451,7 +466,9 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
-
+                Session.Remove("DrinkShop");
+                Session.Remove("SelectedItems");
+                Session.Remove("SelectedList");
 
                 Response.Redirect("/ServerSide/SystemAdmin/NowOrdering.aspx");
 

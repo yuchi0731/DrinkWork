@@ -194,6 +194,15 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
             string orderNumber = this.Request.QueryString["OrderNumber"];
             var DetailInfo = DrinkListManager.GetOrderDetailInfo(orderNumber);
+
+            if(DetailInfo.OrderEndTime < DateTime.Now)
+            {
+                MessageBox.Show($"此訂單編號截止時間已到，無法變更", "無法更改",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning);
+                return;
+            }
+
             if (DetailInfo.Established == "Inprogress")
             {
                 var item = e.CommandSource as System.Web.UI.WebControls.Button;
@@ -211,6 +220,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 MessageBox.Show($"此訂單編號已完成結帳或流單", "無法更改",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
+                return;
             }
 
         }

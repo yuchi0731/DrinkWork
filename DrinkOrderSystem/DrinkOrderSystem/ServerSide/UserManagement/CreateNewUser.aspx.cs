@@ -18,10 +18,13 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!AuthManager.IsLogined())
+            if (!this.IsPostBack)
             {
-                Response.Redirect("/ClientSide/Login.aspx");
-                return;
+                if (!AuthManager.IsLogined())
+                {
+                    Response.Redirect("/ClientSide/Login.aspx");
+                    return;
+                }
             }
 
         }

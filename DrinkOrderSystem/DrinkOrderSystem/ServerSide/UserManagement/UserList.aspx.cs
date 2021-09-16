@@ -98,7 +98,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
             {
 
                 Label lbl = row.FindControl("lbluserlevel") as Label;
-                Image img = row.FindControl("imgCover") as Image;
+
 
                 var rowData = row.DataItem as UserInfo;
                 int jobGrade = rowData.JobGrade;
@@ -122,6 +122,17 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                     lbl.Text = "高階管理者";
                     lbl.ForeColor = Color.Red;
                 }
+
+
+                Image img = row.FindControl("imgPhoto") as Image;
+
+
+                if (!string.IsNullOrEmpty(rowData.Photo))
+                {
+                    img.Visible = true;
+                    img.ImageUrl = "~/ServerSide/ImagesServer/" + rowData.Photo;
+                }
+
 
             }
         }

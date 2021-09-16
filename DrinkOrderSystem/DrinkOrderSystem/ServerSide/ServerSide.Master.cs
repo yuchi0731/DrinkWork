@@ -36,15 +36,34 @@ namespace DrinkOrderSystem.ServerSide
                 lbTopMsg.Text = text;
 
 
+                if (orderNumber == null)
+                {
+                    string runMsg2 = $"～歡迎～{current.FirstName}！ 您目前使用等級為是【{userlevel}】，最近下的訂單是【尚未有訂單】";
+                    string text2 = "<MARQUEE>" + runMsg2 + "</MARQUEE>";
+                    lbTopMsg.Text = text2;
+                }
+
             }
             if (currentuser.JobGrade == 1)
             {
                 var userlevel = "管理者";
                 var current = AuthManager.GetCurrentUser();
                 var orderNumber = DrinkListManager.GetUserLastOrderNumber(current.Account);
+
+                
                 string runMsg = $"～歡迎～{current.FirstName}！ 您目前使用等級為是【{userlevel}】，最近下的訂單是【{orderNumber}】";
                 string text = "<MARQUEE>" + runMsg + "</MARQUEE>";
                 lbTopMsg.Text = text;
+
+
+                if (orderNumber == null)
+                {
+                    string runMsg2 = $"～歡迎～{current.FirstName}！ 您目前使用等級為是【{userlevel}】，最近下的訂單是【尚未有訂單】";
+                    string text2 = "<MARQUEE>" + runMsg2 + "</MARQUEE>";
+                    lbTopMsg.Text = text2;
+                }
+
+
             }
 
             if (currentuser.JobGrade == 2)
@@ -55,6 +74,14 @@ namespace DrinkOrderSystem.ServerSide
                 string runMsg = $"～歡迎～{current.FirstName}！ 您目前使用等級為是【{userlevel}】，最近下的訂單是【{orderNumber}】";
                 string text = "<MARQUEE>" + runMsg + "</MARQUEE>";
                 lbTopMsg.Text = text;
+
+
+                if (orderNumber == null)
+                {
+                    string runMsg2 = $"～歡迎～{current.FirstName}！ 您目前使用等級為是【{userlevel}】，最近下的訂單是【尚未有訂單】";
+                    string text2 = "<MARQUEE>" + runMsg2 + "</MARQUEE>";
+                    lbTopMsg.Text = text2;
+                }
             }
 
 

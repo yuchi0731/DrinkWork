@@ -54,7 +54,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 else
                 {
                     this.gvOrderList.Visible = false;
-                    this.btnExportToExcel.Visible = false;
+                    this.btnExport.Visible = false;
                     this.btnCancel.Visible = false;
                     this.lbMsg.Visible = true;
                     this.lbMsg.Text = "找不到訂單資料";
@@ -69,9 +69,9 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void btnExportToExcel_Click(object sender, EventArgs e)
+        protected void btnExport_Click(object sender, EventArgs e)
         {
-            
+
             string orderNumber = this.Request.QueryString["OrderNumber"];
             var orderDetail = DrinkListManager.GetOrderDetailInfo(orderNumber);
             if (orderDetail.RequiredTime < DateTime.Now.AddMinutes(30))
@@ -86,63 +86,37 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
             else
             {
-                sendGmail();
-                //更改訂單成立狀況
-                DrinkListManager.UpdateEstablished(orderNumber);
-                DialogResult MsgBoxResult;
-                MsgBoxResult = MessageBox.Show("訂購成功，已有寄系統確認信至您的信箱", "訂購成功",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
-                Response.Redirect("/ServerSide/SystemAdmin/OrderRecords.aspx");                
+                bool sendmail = sendGmail();
+                if (sendmail == true)
+                {
+                    //更改訂單成立狀況
+                    DrinkListManager.UpdateEstablished(orderNumber);
+                    DialogResult MsgBoxResult;
+                    MsgBoxResult = MessageBox.Show("訂購成功，已有寄系統確認信至您的信箱，請確認", "訂購成功",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                    this.Session.Remove("OrderNumber");
+                    Response.Redirect("/ServerSide/SystemAdmin/OrderRecords.aspx");
+                }
+
+                else
+                {
+                    MessageBox.Show("失敗，請檢查信箱連線是否成功", "訂購失敗");
+                    return;
+                }
+
             }
-            
-
-  
-
-
-            //if (gvOrderList.Rows.Count == 0)
-            //{
-            //    return;
-            //}
-            //Response.ClearContent();
-            //Response.ContentEncoding = Encoding.Default;
-            //Response.AddHeader("content-disposition", "attatchment;filename=" + HttpUtility.UrlEncode("OrderExcel.xls", Encoding.UTF8));
-            //Response.ContentType = "application/ms-excel";
-            //StringWriter sw = new StringWriter();
-            //HtmlTextWriter htw = new HtmlTextWriter(sw);
-            //gvSend.RenderControl(htw);
-            //Response.Write(sw.ToString());
-            //Response.End();
-
 
         }
 
-
-        //必須過載此方法,以便支援上面的匯出操作
-        public override void VerifyRenderingInServerForm(System.Web.UI.Control control)
-        {
-
-        }
 
 
         internal static void WriteText(string orderNumber,string txt)
-        {           
-            string msg =
-                $@"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}
-                   訂單編號{orderNumber}
-                   {txt.ToString()}
-                    ";
+        {
 
-            string logPath = "D:\\Text\\text.txt";
-            string folderPath = System.IO.Path.GetDirectoryName(logPath);
+            string text = $"訂單編號：{orderNumber}" + "\r\n" + txt;
+            System.IO.File.WriteAllText($@"D:\Text\{orderNumber}List.txt", text);
 
-            if (!System.IO.Directory.Exists(folderPath))
-                System.IO.Directory.CreateDirectory(folderPath);
-
-            if (!System.IO.File.Exists(logPath))
-                System.IO.File.Create(logPath);
-
-            System.IO.File.AppendAllText(logPath, msg);
 
         }
 
@@ -154,10 +128,14 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
         protected void btnViewDetail_Click(object sender, EventArgs e)
         {
+            this.txtCheck.Visible = true;
+            this.btnText.Visible = true;
+            this.btnCancel.Visible = true;
+            this.btnExport.Visible = true;
             string orderNumber = this.Request.QueryString["OrderNumber"];
             var allDetail = DrinkListManager.GetOrderDetailListbyorderNumber(orderNumber);
 
-            var DetailInfo = "";
+            string DetailInfo = "";
             foreach (var item in allDetail)
             {
                 DetailInfo +=
@@ -176,41 +154,21 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     + "【加料】" + item.Toppings.ToString()
                     + Environment.NewLine
                     + "【加料單價】" + item.ToppingsUnitPrice.ToString()
+                    + Environment.NewLine
                     + "-----------------------------------"
-                    + "\r\n";
+                    + Environment.NewLine;
             }
 
 
-            ShowMessage(DetailInfo);
+            this.txtCheck.Text = DetailInfo;
 
 
-            #region 不用
-            this.plDetail.Visible = false;
-
-            var Detaillist = DrinkListManager.GetOrderDetailListbyorderNumber(orderNumber);
-
-            if (Detaillist.Count > 0) //check is empty data (大於0就做資料繫結)
-            {
-                this.btnExportToExcel.Visible = true;
-                this.btnCancel.Visible = true;
-                this.gvSend.DataSource = Detaillist;
-                this.gvSend.DataBind();
-            }
-            else
-            {
-                this.gvSend.Visible = false;
-                this.btnExportToExcel.Visible = false;
-                this.btnCancel.Visible = false;
-                this.lbMsg.Visible = true;
-                this.lbMsg.Text = "找不到訂單資料";
-            }
-            #endregion
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult MsgBoxResult;
-            MsgBoxResult = MessageBox.Show("即將取消訂單，繼續請按確認", "清除",
+            MsgBoxResult = MessageBox.Show("即將取消訂單，繼續請按確認", "取消",
                 MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Information);
 
@@ -228,7 +186,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
 
 
-        public void sendGmail()
+        public bool sendGmail()
         {
             string orderNumber = this.Request.QueryString["OrderNumber"];
             var allDetail = DrinkListManager.GetOrderDetailListbyorderNumber(orderNumber);
@@ -238,74 +196,123 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             {
                 DetailInfo +=
                     "【訂購人】" + item.Account.ToString()
-                    + Environment.NewLine
+                    + "\r\n"
                     + "【飲料】" + item.ProductName.ToString()
-                    + Environment.NewLine
+                    + "\r\n"
                     + "【單價】" + item.UnitPrice.ToString()
-                    + Environment.NewLine
+                    + "\r\n"
                     + "【杯數】" + item.Quantity.ToString()
-                    + Environment.NewLine
+                    + "\r\n"
                     + "【甜度】" + item.Suger.ToString()
-                    + Environment.NewLine
+                    + "\r\n"
                     + "【冰量】" + item.Ice.ToString()
-                    + Environment.NewLine
+                    + "\r\n"
                     + "【加料】" + item.Toppings.ToString()
-                    + Environment.NewLine
+                    + "\r\n"
                     + "【加料單價】" + item.ToppingsUnitPrice.ToString()
+                    + "\r\n"
                     + "-----------------------------------"
                     + "\r\n";
             }
 
 
 
-
+            var reqtime = DrinkListManager.GetOrderDetailListfromorderNumber(orderNumber).RequiredTime.ToString("MM-dd HH:mm");
             var currentUser = AuthManager.GetCurrentUser();
             var userData = UserInfoManager.GetUserInfo(currentUser.Account);
             var userEmail = userData.Email.ToString();
-            var mine = "kireha2180@gmail.com";
+            var mine = "fuchiharayuchi@gmail.com";
+            
 
-            var adminEmail = "admin@gmail.com";
+            var adminEmail = "DrinkOrderServer@gmail.com";
             var ademin = "管理者";
 
-            MailMessage mail = new MailMessage();
-            //前面是發信email後面是顯示的名稱
-            mail.From = new MailAddress(adminEmail, ademin);
+            var title = $"{currentUser.FirstName}您好，訂購編號：{orderNumber}已訂購完成！";
+            var message = $"您好，您所開團的團購已訂購完成\r\n並送出訂單給予廠商，待廠商送達，請依照送達時間{reqtime}\r\n至公司門口領取，謝謝\r\n訂單明細為：</ br > {DetailInfo}";
 
-            //收信者email
-            mail.To.Add($"{mine}");
+            try
+            {
 
-            //設定優先權
-            mail.Priority = MailPriority.Normal;
+                System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
+                msg.To.Add("fuchiharayuchi@gmail.com");
+                //msg.To.Add("b@b.com");可以發送給多人
+                //msg.CC.Add("c@c.com");
+                //msg.CC.Add("c@c.com");可以抄送副本給多人 
+                //這裡可以隨便填，不是很重要
+                msg.From = new MailAddress(adminEmail, ademin, System.Text.Encoding.UTF8);
+                /* 上面3個參數分別是發件人地址（可以隨便寫），發件人姓名，編碼*/
+                msg.Subject = title;//郵件標題
+                msg.SubjectEncoding = System.Text.Encoding.UTF8;//郵件標題編碼
+                msg.Body = message; //郵件內容
+                msg.BodyEncoding = System.Text.Encoding.UTF8;//郵件內容編碼 
+                //msg.Attachments.Add(new Attachment(@"D:\Text.docx"));  //附件
+                msg.IsBodyHtml = true;//是否是HTML郵件 
+                                      //msg.Priority = MailPriority.High;//郵件優先級 
 
-            //標題
-            mail.Subject = $"您好，訂購編號：{orderNumber}已訂購完成！";
+                SmtpClient client = new SmtpClient();
+                client.Credentials = new System.Net.NetworkCredential("fuchiharayuchi", "kogdvbltanvzdmgy"); //這裡要填正確的帳號跟密碼
+                client.Host = "smtp.gmail.com"; //設定smtp Server
+                client.Port = 25; //設定Port
+                client.EnableSsl = true; //gmail預設開啟驗證
+                client.Send(msg); //寄出信件
+                client.Dispose();
+                msg.Dispose();
 
-            //內容
-            mail.Body = 
-                "<h1>您好，您所開團的團購已訂購完成</h1><br/>" +
-                "並送出訂單給予廠商，待廠商送達，請依照需求時間至公司門口領取，謝謝<br/>" +
-                $"訂單明細為：\r\n {DetailInfo}";
+                return true;
 
-            //內容使用html
-            mail.IsBodyHtml = true;
 
-            //設定gmail的smtp (這是google的)
-            SmtpClient MySmtp = new SmtpClient("smtp.gmail.com", 587);
+            }
 
-            //您在gmail的帳號密碼
-            MySmtp.Credentials = new System.Net.NetworkCredential("kireha2180@gmail.com", "youriko0417");
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.Message);
+                return false;
+            }
 
-            //開啟ssl
-            MySmtp.EnableSsl = true;
 
-            //發送郵件
-            MySmtp.Send(mail);
 
-            //放掉宣告出來的MySmtp
-            MySmtp = null;
 
-            //放掉宣告出來的mail
-            mail.Dispose();
+
+
+            //MailMessage mail = new MailMessage();
+            ////前面是發信email後面是顯示的名稱
+            //mail.From = new MailAddress(adminEmail, ademin);
+
+            ////收信者email
+            //mail.To.Add($"{mine}");
+
+            ////設定優先權
+            //mail.Priority = MailPriority.Normal;
+
+            ////標題
+            //mail.Subject = $"您好，訂購編號：{orderNumber}已訂購完成！";
+
+            ////內容
+            //mail.Body = 
+            //    "<h1>您好，您所開團的團購已訂購完成</h1><br/>" +
+            //    "並送出訂單給予廠商，待廠商送達，請依照需求時間至公司門口領取，謝謝<br/>" +
+            //    $"訂單明細為：\r\n {DetailInfo}";
+
+            ////內容使用html
+            //mail.IsBodyHtml = true;
+
+            ////設定gmail的smtp (這是google的)
+            //SmtpClient MySmtp = new SmtpClient("smtp.gmail.com", 587);
+
+            ////您在gmail的帳號密碼
+            //MySmtp.Credentials = new System.Net.NetworkCredential("kireha2180@gmail.com", "youriko0417");
+
+            ////開啟ssl
+            //MySmtp.EnableSsl = true;
+
+            ////發送郵件
+            //MySmtp.Send(mail);
+
+            ////放掉宣告出來的MySmtp
+            //MySmtp = null;
+
+            ////放掉宣告出來的mail
+            //mail.Dispose();
         }
 
 
@@ -333,8 +340,9 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     + "【加料】" + item.Toppings.ToString()
                     + Environment.NewLine
                     + "【加料單價】" + item.ToppingsUnitPrice.ToString()
+                    + Environment.NewLine
                     + "-----------------------------------"
-                    + "\r\n";
+                    + Environment.NewLine;
             }
 
             WriteText(orderNumber, DetailInfo);

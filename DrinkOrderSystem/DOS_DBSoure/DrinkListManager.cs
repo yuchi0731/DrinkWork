@@ -483,6 +483,7 @@ namespace DOS_DBSoure
 
 
 
+
         /// <summary>
         /// 取得該帳號快結束未結帳訂單
         /// </summary>
@@ -490,6 +491,7 @@ namespace DOS_DBSoure
         /// <returns></returns>
         public static OrderList GetGTEOrderListInfo(string account)
         {
+            var time = DateTime.Now.AddHours(1.5);
             try
             {
                 using (DKContextModel context = new DKContextModel())
@@ -497,7 +499,7 @@ namespace DOS_DBSoure
                     var query =
                          (from list in context.OrderLists
                           where list.Account == account
-                          orderby list.RequiredTime < DateTime.Now
+                          orderby list.RequiredTime < time
                           select list);
 
                     var orderList = query.FirstOrDefault();
@@ -1299,9 +1301,9 @@ namespace DOS_DBSoure
                         context.OrderDetails
                         .Where(obj => obj.OrderNumber == orderNumber).FirstOrDefault();
 
-                    if (updatelist != null)
+                    if (updateDetaillist != null)
                     {
-                        updatelist.Established = "Established";
+                        updateDetaillist.Established = "Established";
                     }
 
                     context.SaveChanges();

@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:PlaceHolder ID="plcLogin" runat="server" Visible="false"></asp:PlaceHolder>
+   
     <table>
         <tr>
             <th>帳號</th>
@@ -14,7 +14,7 @@
         </tr>
     </table>
     <asp:Button ID="btnLogin" runat="server" Text="登入" OnClick="btnLogin_Click" />
-    <!--<asp:Button ID="btnforget" runat="server" Text="忘記密碼" OnClick="btnforget_Click" />--><br />
+    <%--<asp:Button ID="btnforget" runat="server" Text="忘記密碼" /><br />--%>
     <asp:Label ID="lbMsg" runat="server"  ForeColor="Red" Visible="false"></asp:Label>
 
 </asp:Content>

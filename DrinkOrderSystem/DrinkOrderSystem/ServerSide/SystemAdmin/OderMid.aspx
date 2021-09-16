@@ -91,8 +91,8 @@
         <asp:TextBox ID="txtChooseDrinkList" runat="server" MaxLength="100" ReadOnly="True" Rows="10" Width="703px" Height="143px" TextMode="MultiLine"></asp:TextBox><br />
 
     <asp:Label ID="lbTotalAmount" runat="server" ></asp:Label><br />
-    <asp:Button ID="btnSent" runat="server" Text="確認送出" OnClick="btnSent_Click" Visible="False" />
-    <asp:Button ID="btnDelete" runat="server" Text="清除選單" OnClick="btnDelete_Click" Visible="False" /><br />
+    <asp:Button ID="btnSent" runat="server" Text="確認送出" OnClick="btnSent_Click" Visible="False"  class="btn btn-primary"/>
+    <asp:Button ID="btnDelete" runat="server" Text="清除選單" OnClick="btnDelete_Click" Visible="False" class="btn btn-warning" /><br />
 
 
 

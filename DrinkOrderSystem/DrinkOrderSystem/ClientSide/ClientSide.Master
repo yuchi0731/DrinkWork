@@ -9,11 +9,22 @@
     <link href="css/bootstrap.css" rel="stylesheet" />
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.js"></script>
+
+    <style>
+body {
+  background-image: url('ImagesClient/BG.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+</style>
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>   
     <form id="form1" runat="server">
+
         <div class="container">
         <div class="row">
             <div class="col-md-4 col-sm-6">
@@ -37,12 +48,16 @@
                  <tr>
                     <td>
                         
+                        
                         <a href="Default.aspx">系統首頁</a><br />
                         <a href="Login.aspx">登入系統</a><br />
+                        
+                        <asp:Literal ID="Literal1" runat="server" Visible="false">
                         <a href="Introduction.aspx">系統介紹</a><br />
                         <a href="StaffIntroduction.aspx">系統管理員介紹</a><br />
                         <a href="DrinkDetail.aspx">目前合作飲品</a><br />
                         <a href="Contact.aspx">意見回饋</a>
+                            </asp:Literal>
                     </td>
                      <td>
                          <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
@@ -52,7 +67,6 @@
             </table>
             </div>
         </div>
-        
     </form>
 </body>
 </html>

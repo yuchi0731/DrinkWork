@@ -18,52 +18,54 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (!AuthManager.IsLogined())
-            {
-                Response.Redirect("/ClientSide/Login.aspx");
-                return;
-            }
-
-            //取得現在使用者是誰
-            var currentUser = AuthManager.GetCurrentUser();
-
-            if (currentUser == null) //如果帳號不存在，導向登入頁
-            {
-                Response.Redirect("/ClientSide/Login.aspx");
-                return;
-            }
-
-            if (currentUser.JobGrade < 1)
-            {
-                Response.Redirect("/ServerSide/SystemAdmin/UserPage.aspx");
-                return;
-            }
-
-            //取得從UserList選到的帳號
-            string idText = this.Request.QueryString["EmployeeID"];
-            var userInfo = UserInfoManager.GetUserInfofromID(Convert.ToInt32(idText));
-            this.ltUser.Text = userInfo.Account;
-
-            var list = UserInfoManager.GetuserInfoLINQ(userInfo.Account);
-
-
-            if (list.Count > 0) //check is empty data (大於0就做資料繫結)
+            if (!this.IsPostBack)
             {
 
-                var pageUserList = this.GetPageDataTable(list);
-                this.gvModifyList.DataSource = pageUserList;
-                this.gvModifyList.DataBind();
-                this.plcNoData.Visible = false;
-                this.lbMsg.Text = null;
+                if (!AuthManager.IsLogined())
+                {
+                    Response.Redirect("/ClientSide/Login.aspx");
+                    return;
+                }
 
-            }
-            else
-            {
-                this.gvModifyList.Visible = false;
-                this.plcNoData.Visible = true;
-            }
+                //取得現在使用者是誰
+                var currentUser = AuthManager.GetCurrentUser();
 
+                if (currentUser == null) //如果帳號不存在，導向登入頁
+                {
+                    Response.Redirect("/ClientSide/Login.aspx");
+                    return;
+                }
+
+                if (currentUser.JobGrade < 1)
+                {
+                    Response.Redirect("/ServerSide/SystemAdmin/UserPage.aspx");
+                    return;
+                }
+
+                //取得從UserList選到的帳號
+                string idText = this.Request.QueryString["EmployeeID"];
+                var userInfo = UserInfoManager.GetUserInfofromID(Convert.ToInt32(idText));
+                this.ltUser.Text = userInfo.Account;
+
+                var list = UserInfoManager.GetuserInfoLINQ(userInfo.Account);
+
+
+                if (list.Count > 0) //check is empty data (大於0就做資料繫結)
+                {
+
+                    var pageUserList = this.GetPageDataTable(list);
+                    this.gvModifyList.DataSource = pageUserList;
+                    this.gvModifyList.DataBind();
+                    this.plcNoData.Visible = false;
+                    this.lbMsg.Text = null;
+
+                }
+                else
+                {
+                    this.gvModifyList.Visible = false;
+                    this.plcNoData.Visible = true;
+                }
+            }
 
         }
 
@@ -178,7 +180,7 @@ namespace DrinkOrderSystem.ServerSide.UserManagement
                     JobGrade = dpJobGrade,
                     Description = txtdesc,
                     ResponseSuppliers = txtRepS,
-                    Photo = photo,
+                    Photo = userdata.Photo,
                     CreateDate = userdata.CreateDate
 
                 };

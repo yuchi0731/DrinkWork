@@ -17,16 +17,16 @@
         <asp:ListItem Value="OldestTime">時間由舊至新</asp:ListItem>
         <asp:ListItem Value="ProductName">商品</asp:ListItem>
      </asp:DropDownList>
-    <asp:Button ID="btnSelect" runat="server" Text="排序"  OnClick="btnSelect_Click"  Visible="false"/>
+    <asp:Button ID="btnSelect" runat="server" Text="排序" class="btn btn-primary" OnClick="btnSelect_Click"  Visible="false"/>
 
-     <asp:GridView ID="gvUserDetail" runat="server" AutoGenerateColumns="False">
+     <asp:GridView ID="gvUserDetail" runat="server" AutoGenerateColumns="False" BackColor="#CCFFFF" BorderColor="White" BorderStyle="Dotted" CssClass="accordion-header">
          <Columns>
 
             <asp:BoundField DataField="OrderNumber" HeaderText="訂單編號" />
             <asp:BoundField DataField="Account" HeaderText="訂購人" />
             <asp:BoundField DataField="OrderTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="訂購時間" />
             <asp:BoundField DataField="OrderEndTime" DataFormatString="{0:yyyy-MM-dd-hh:mm:ss}" HeaderText="截止時間" />
-            <asp:BoundField DataField="RequiredTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="需求時間" />
+            <asp:BoundField DataField="RequiredTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="送達時間" />
             <asp:BoundField DataField="ProductName" HeaderText="商品名稱" />
 
              <asp:BoundField DataField="Quantity" HeaderText="數量" />

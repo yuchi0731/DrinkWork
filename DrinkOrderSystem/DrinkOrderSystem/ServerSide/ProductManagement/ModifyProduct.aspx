@@ -4,6 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
+    <h3>請輸入要變更的值</h3>
           <table>
         <tr>
             <th>飲料名稱</th>

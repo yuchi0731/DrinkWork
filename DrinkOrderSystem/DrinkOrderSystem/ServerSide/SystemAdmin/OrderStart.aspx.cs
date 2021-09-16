@@ -394,13 +394,21 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             DateTime Etime = Convert.ToDateTime(endTime);
             DateTime Rtime = Convert.ToDateTime(reqTime);
             DateTime tenmin = DateTime.Now.AddMinutes(10);
-            DateTime onehour = tenmin.AddHours(2);
+            DateTime onehour = tenmin.AddHours(3);
 
 
-            if(Etime < tenmin || Rtime < onehour)
+
+            if (Etime.AddHours(3) > Rtime)
             {
                 this.lbMsg.Visible = true;
-                this.lbMsg.Text = "截止/送達時間，必須是現在時間十分鐘後，送達需為截止時間兩小時後，";
+                this.lbMsg.Text = "截止時間必須在送達時間三小時之前";
+                return;
+            }
+
+            if (Etime < tenmin || Rtime < onehour)
+            {
+                this.lbMsg.Visible = true;
+                this.lbMsg.Text = "截止/送達時間，必須是現在時間十分鐘後，送達時間需為截止時間三小時後";
                 return;
             }
 

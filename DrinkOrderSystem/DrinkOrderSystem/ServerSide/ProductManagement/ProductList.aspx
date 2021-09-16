@@ -24,8 +24,8 @@
     </asp:DropDownList>
 
     <asp:TextBox ID="txtSelect" runat="server" Visible="false"></asp:TextBox>
-    <asp:Button ID="btnSelect" runat="server" Text="篩選" OnClick="btnSelect_Click" Visible="false" />
-    <asp:Button ID="btnClear" runat="server" Text="清除篩選" OnClick="btnClear_Click" />
+    <asp:Button ID="btnSelect" runat="server" Text="篩選" OnClick="btnSelect_Click" Visible="false" class="btn btn-primary" />
+    <asp:Button ID="btnClear" runat="server" Text="清除篩選" OnClick="btnClear_Click" class="btn btn-warning" />
 
     <asp:GridView ID="gvProduct" runat="server" AutoGenerateColumns="False" OnRowCommand="gvProduct_RowCommand" OnRowDataBound="gvProduct_RowDataBound">
         <Columns>
@@ -52,7 +52,7 @@
 
             <asp:TemplateField HeaderText="刪除">
                 <ItemTemplate>
-                    <asp:Button ID="btnDelete" runat="server" Text="刪除" CommandName="btndelete" CommandArgument='<%#Eval("ProductID") %>' />
+                    <asp:Button ID="btnDelete" runat="server" Text="刪除" class="btn btn-info" CommandName="btndelete" CommandArgument='<%#Eval("ProductID") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
 

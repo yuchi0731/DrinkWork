@@ -41,9 +41,6 @@ namespace DrinkOrderSystem.ClientSide
 
         }
 
-        //protected void btnforget_Click(object sender, EventArgs e)
-        //{
-        //    Response.Redirect("/ClientSide/ForgetPWD.aspx");
-        //}
+ 
     }
 }

@@ -20,13 +20,13 @@
             </td>
             <td>
                 <asp:TextBox ID="txtSelect" runat="server" Visible="false"></asp:TextBox>
-                <asp:Button ID="btnSelect" runat="server" Text="篩選"  OnClick="btnSelect_Click" Visible="false"/>
-          <asp:Button ID="btnClearSelect" runat="server" Text="取消"  OnClick="btnClearSelect_Click" Visible="false"/>
+                <asp:Button ID="btnSelect" runat="server" Text="篩選"  OnClick="btnSelect_Click" Visible="false" class="btn btn-primary"/>
+          <asp:Button ID="btnClearSelect" runat="server" Text="取消"  OnClick="btnClearSelect_Click" Visible="false" class="btn btn-warning"/>
 
             </td>
         </tr>
     </table>
-    <asp:GridView ID="gvDetail" runat="server" AutoGenerateColumns="False" OnRowCommand="gvDetail_RowCommand">
+    <asp:GridView ID="gvDetail" runat="server" AutoGenerateColumns="False" OnRowCommand="gvDetail_RowCommand" BackColor="White" BorderColor="LightPink" BorderStyle="Groove" BorderWidth="1px" CellPadding="3" CssClass="bg-opacity-25">
          <Columns>
 
             <asp:BoundField DataField="OrderNumber" HeaderText="訂單名稱" />

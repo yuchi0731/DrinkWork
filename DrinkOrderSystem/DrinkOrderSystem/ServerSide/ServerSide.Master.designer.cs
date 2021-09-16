@@ -33,6 +33,15 @@ namespace DrinkOrderSystem.ServerSide
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// Button1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button1;
+
+        /// <summary>
         /// btnLogut 控制項。
         /// </summary>
         /// <remarks>
@@ -40,33 +49,6 @@ namespace DrinkOrderSystem.ServerSide
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnLogut;
-
-        /// <summary>
-        /// lbTopMsg 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbTopMsg;
-
-        /// <summary>
-        /// imgDrink 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgDrink;
-
-        /// <summary>
-        /// imgLogo 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgLogo;
 
         /// <summary>
         /// ContentPlaceHolder1 控制項。
@@ -78,6 +60,15 @@ namespace DrinkOrderSystem.ServerSide
         protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
 
         /// <summary>
+        /// lbTopMsg 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbTopMsg;
+
+        /// <summary>
         /// ltlManger 控制項。
         /// </summary>
         /// <remarks>
@@ -85,6 +76,15 @@ namespace DrinkOrderSystem.ServerSide
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlManger;
+
+        /// <summary>
+        /// ltSManager 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltSManager;
 
         /// <summary>
         /// ContentPlaceHolder2 控制項。

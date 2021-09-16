@@ -43,6 +43,11 @@ namespace DrinkOrderSystem.ServerSide.ProductManagement
             var txtunitPrice = this.txtUnitPrice.Text;
             var category = this.ddCategory.SelectedValue.ToString();
 
+            if(category == "non")
+            {
+                this.lbMsg.Text = "種類尚未選取";
+                return;
+            }
 
             Product product = new Product()
             {

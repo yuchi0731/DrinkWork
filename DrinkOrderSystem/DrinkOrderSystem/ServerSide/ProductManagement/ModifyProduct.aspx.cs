@@ -1,4 +1,5 @@
-﻿using DOS_DBSoure;
+﻿using DOS_Auth;
+using DOS_DBSoure;
 using DOS_ORM.DOSmodel;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,21 @@ namespace DrinkOrderSystem.ServerSide.ProductManagement
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!this.IsPostBack)
+            {
+                if (!AuthManager.IsLogined())
+                {
+                    Response.Redirect("/ClientSide/Login.aspx");
+                    return;
+                }
 
+                string productID = this.Request.QueryString["ProductID"];
+                var prodData = ProductManager.GetProductInfoByID(Convert.ToInt32(productID));
+
+
+                this.txtProduct.Text = prodData.ProductName.ToString();
+                this.txtUnitPrice.Text = prodData.UnitPrice.ToString();
+            }
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -23,13 +38,20 @@ namespace DrinkOrderSystem.ServerSide.ProductManagement
 
             string productID = this.Request.QueryString["ProductID"];
             var prodData = ProductManager.GetProductInfoByID(Convert.ToInt32(productID));
+            
+
 
             var pdName = this.txtProduct.Text;
             var txtunitPrice = this.txtUnitPrice.Text;
 
+            int pID = 0;
+            int.TryParse(productID, out pID);
+
             Product product = new Product()
             {
+                ProductID = pID,
                 ProductName = pdName,
+                Picture = prodData.Picture
             };
 
             decimal unitPrice;
@@ -55,10 +77,10 @@ namespace DrinkOrderSystem.ServerSide.ProductManagement
 
         }
 
-            private string GetSaveFolderPath()
-            {
-                return Server.MapPath("~/ServerSide/ImagesServer");
-            }
+        private string GetSaveFolderPath()
+        {
+            return Server.MapPath("~/ServerSide/ImagesServer");
+        }
         protected void btnClear_Click(object sender, EventArgs e)
         {
 

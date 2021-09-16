@@ -11,7 +11,21 @@
     <%--..為上層目錄--%>
     <script src="~/bootstrap/js/bootstrap.js"></script>
     <%--<script src="../../bootstrap/js/bootstrap.js"></script>--%>
+        <link href="css/bootstrap.css" rel="stylesheet" />
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     <style>
+
+        .b1 {
+            width: 100%;
+            height: 100%;
+            float:left;
+        }
+
+
+      
 
 
     </style>
@@ -22,95 +36,70 @@
 
 
 </head>
+
 <body style="background-color:antiquewhite">
     <form id="form1" runat="server">
-
-        <asp:Button ID="btnLogut" runat="server" Text="登出" OnClick="btnLogut_Click" />
-
-        <h4><asp:Label ID="lbTopMsg" runat="server" Text="歡迎回來~!"></asp:Label></h4>
-
-
-
-        <div id="divbase" class="container">
-             <!-- 漢堡選單 -->
-            <nav class="auto-style1">
-                <a class="navbar navbar-brand">
-                    <asp:Image ID="imgDrink" runat="server" ImageUrl="~/ServerSide/ImagesServer/SystemLogo.png"  Width="150" Height="150"/>
-                    <h1>開心喝飲料公司</h1>
-                </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="SystemAdmin/UserPage.aspx">使用者介面</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="UserRecords.aspx">個人訂購歷史清單</a>
-                        </li>
-                          <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="NowOrdering.aspx">目前可跟團清單</a>
-                        </li>
-                          <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="OrderStart.aspx">開團</a>
-                        </li>
-                        <li class="nav-item dropdown" style="left: 0px; top: 0px">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                歷史訂購紀錄
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="OrderRecords.aspx">一個月內訂單</a></li>
-                                <li><a class="dropdown-item" href="OrderRecords.aspx">兩個月內訂單</a></li>
-                                <li><a class="dropdown-item" href="OrderRecords.aspx">不限時間</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <!-- 漢堡選單 -->
-
-
+                <div class="container">
+        <div class="row">
+        <asp:Button ID="Button1" class="btn btn-primary" runat="server" />
+<div class="row"><img src="../ImagesServer/HappyDrink.png"  height="200"  /></div>
+  
+        
         <div>
-            <table>
+            <table width="1500" >
                 <tr>
                     <td>
-         <asp:Image ID="imgLogo" runat="server" ImageUrl="~/ServerSide/ImagesServer/Logo.png"  Width="150" Height="50" BorderWidth="1"  BorderColor="Black"/>
-                    </td>
+                        <asp:Button ID="btnLogut" class="btn btn-secondary" runat="server" Text="登出" OnClick="btnLogut_Click" /><br />
+                        <img class="auto-style1" src="../ImagesServer/SystemLogo.png" /></td>
                     <td>
                           <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
+                            
+            </asp:ContentPlaceHolder> 
+                        
+                        <h4><asp:Label ID="lbTopMsg" runat="server" Text="歡迎回來~!"></asp:Label></h4>
+
                     </td>
                 </tr>
                 <tr>
                     <td>
                <div id="d4">
-                        <a href="../SystemAdmin/UserPage.aspx">使用者介面</a><br />
-                        <a href="../SystemAdmin/OrderStart.aspx">開團</a><br />              
-                        <a href="../SystemAdmin/NowOrdering.aspx">目前可跟團清單</a><br />
-                        <a href="../SystemAdmin/UserRecords.aspx">個人訂購紀錄</a><br />
-                        <a href="../SystemAdmin/OrderRecords.aspx">歷史訂購紀錄</a><br />
+                   
+                        <a href="../SystemAdmin/OrderStart.aspx"><img src="../ImagesServer/StartOrderList.png" width="250"/></a><br />   
+                        <a href="../SystemAdmin/UserPage.aspx"><img src="../ImagesServer/UserPage.png" width="250"/> </a><br />
+                                   
+                        <a href="../SystemAdmin/NowOrdering.aspx"><img src="../ImagesServer/NowOrderList.png" width="250" /></a><br />
+                        <a href="../SystemAdmin/UserRecords.aspx"><img src="../ImagesServer/UserOrderList.png"width="250"  /></a><br />
+                        <a href="../SystemAdmin/OrderRecords.aspx"><img src="../ImagesServer/OrderList.png" width="250" /></a><br />
                    <asp:Literal ID="ltlManger" runat="server" Visible="false" >
-                       <a href="../UserManagement/UserList.aspx">使用者清單</a><br />
-                       <a href="../ProductManagement/ProductList.aspx">商品清單</a><br />
+                       <a href="../UserManagement/UserList.aspx"><img src="../ImagesServer/UserInfoList.png" width="250"/></a><br />
+                       <a href="../ProductManagement/ProductList.aspx"><img src="../ImagesServer/ProductsList.png" width="250"/> </a><br />
                 </asp:Literal>
+                    <asp:Literal ID="ltSManager" runat="server" Visible="false" ><img src="../ImagesServer/SuppliersList.png"width="250"/></asp:Literal>
                         </div>
                     </td>
-                    
-                    <td>
-                        <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+
+                    <td width="1200">
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server" >
             </asp:ContentPlaceHolder>
                     </td>
                 </tr>
             </table>
             
         </div>
+                                
+        <table>
+            <tr>
+                <td>
 
-            </div>
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+        </table>
+        <br /> <br /> <br />
+            </div></div>
     </form>
+
 </body>
 </html>

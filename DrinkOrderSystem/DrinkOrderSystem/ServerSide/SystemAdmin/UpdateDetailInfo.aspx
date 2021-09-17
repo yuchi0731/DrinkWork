@@ -2,12 +2,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>修改單筆訂單資料</h1>
+    <h1>修改訂單【<asp:Label ID="lbOrder" runat="server" ForeColor="Blue"></asp:Label>】單筆資料</h1>
 </asp:Content>
+
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
 
      <asp:Label ID="lbSearch" runat="server" Text="查詢此店家商品"></asp:Label>
-    <asp:Button ID="btnSearch" runat="server" Text="查詢" OnClick="btnSearch_Click" /><br />
+    <asp:Button ID="btnSearch" runat="server" Text="查詢" class="btn btn-outline-info" OnClick="btnSearch_Click" /><br />
     <asp:TextBox ID="txtSearch" runat="server" Visible="false" TextMode="MultiLine" Height="46px" Width="254px"></asp:TextBox><br />
 
     <asp:GridView ID="gvDetailInfo" runat="server" AutoGenerateColumns="false" OnRowCommand="gvDetailInfo_RowCommand" Width="507px">
@@ -96,10 +97,10 @@
                       </tr>
                          <tr>
                              <td>
-                        <asp:Button ID="btnSave" runat="server" Text="儲存資料" CommandName="btnSave" />
+                        <asp:Button ID="btnSave" runat="server" class="btn btn-outline-primary" Text="儲存資料" CommandName="btnSave" />
                              </td>
                           <td>
-                               <asp:Button ID="btnCancel" runat="server" Text="取消變更" CommandName="btnCancel" />
+                               <asp:Button ID="btnCancel" runat="server" class="btn btn-outline-secondary" Text="取消變更" CommandName="btnCancel" />
                           </td>
                       </tr>
                 </table>

@@ -22,8 +22,8 @@
             <td>
                 <asp:TextBox ID="txtSelect" runat="server" Visible="false" Width="147px"></asp:TextBox>
                 <asp:Button ID="btnSelect" runat="server" Text="篩選" OnClick="btnSelect_Click"  Visible="false" class="btn btn-primary"/><asp:Label ID="lbSelect" runat="server" ForeColor="Red"></asp:Label>
-        <asp:Button ID="btnSortingN" runat="server" Text="以需求時間近至遠排序" OnClick="btnSortingN_Click" class="btn btn-info"/>
-        <asp:Button ID="btnSortingF" runat="server" Text="以需求時間遠至近排序" OnClick="btnSortingF_Click" class="btn btn-info" />
+        <asp:Button ID="btnSortingN" runat="server" Text="以需求時間近至遠排序" OnClick="btnSortingN_Click" class="btn btn-outline-info"/>
+        <asp:Button ID="btnSortingF" runat="server" Text="以需求時間遠至近排序" OnClick="btnSortingF_Click" class="btn btn-outline-info" />
                 <asp:Button ID="btnClearSelect" runat="server" Text="還原清單" OnClick="btnClearSelect_Click" class="btn btn-warning" />
             </td>
         </tr>

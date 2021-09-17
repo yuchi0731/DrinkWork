@@ -30,7 +30,7 @@
             <asp:BoundField DataField="OrderNumber" HeaderText="訂單編號" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="Account" HeaderText="訂購人" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="OrderTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="訂購時間" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="OrderEndTime" DataFormatString="{0:yyyy-MM-dd-hh:mm:ss}" HeaderText="截止時間" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="OrderEndTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="截止時間" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="RequiredTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="送達時間" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="ProductName" HeaderText="商品名稱" ItemStyle-HorizontalAlign="Center"  />
 

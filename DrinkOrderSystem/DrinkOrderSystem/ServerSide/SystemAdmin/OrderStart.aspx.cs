@@ -27,9 +27,11 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     Response.Redirect("/ClientSide/Login.aspx");
                     return;
                 }
+                Session.Remove("DrinkShop");
+                Session.Remove("SelectedItems");
+                Session.Remove("SelectedList");
 
 
-                
             }
 
         }
@@ -206,7 +208,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 var currentUser = AuthManager.GetCurrentUser();
                 string argu = (e.CommandArgument) as string;
                 var supplierName = this.Session["DrinkShop"].ToString();
-                var orderNumber = $"Odr{currentUser.DepartmentID}" + DateTime.Now.ToString("MMddHHmmyyyy");
+                var orderNumber = $"Odr{currentUser.ext}_" + DateTime.Now.ToString("ddmm");
 
 
                 decimal Toprice = 0;
@@ -228,10 +230,11 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     Toprice = 10;
                 }
 
+                var pdName = e.CommandArgument as string;
 
                 this.txtChooseDrinkList.Text +=
                     "【飲料】" + e.CommandArgument as string
-                    + "【單價】"+ DrinkListManager.GetUnitPrice(e.CommandArgument as string) + "元/杯"
+                    + "【單價】"+ DrinkListManager.GetUnitPrice(pdName) + "元/杯"
                     + Environment.NewLine
                     + "【杯數】" + DDLQuantity.SelectedItem + "杯"
                     + Environment.NewLine

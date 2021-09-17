@@ -6,13 +6,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>開團介面</h1>
-</asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
-    <style>
+        <style>
         #d1, #d2, #d3 {
             float: left;
             margin: 10px;
@@ -22,21 +16,22 @@
             clear: left;
         }
     </style>
-    <h2 class="gd" id="gd1"><asp:Literal ID="ltChoosedShop" runat="server">請選擇店家</asp:Literal></h2><br />
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <h1>開團介面</h1>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
+
+    <h4 class="gd" id="gd1"><asp:Literal ID="ltChoosedShop" runat="server">請點圖片來選擇店家</asp:Literal></h4>
     <div id="d1">
-
   <asp:ImageButton ID="ImgbtnFiftylan" runat="server"  ImageUrl="../ImagesServer/Fiftylan.png" OnClick="ImgbtnFiftylan_Click" Width="100" />
-
-    </div>
-    <div id="d2">
         <asp:ImageButton ID="ImgbtnWhiteAlley" runat="server"  ImageUrl="../ImagesServer/WhiteAlley.jpg" OnClick="ImgbtnWhiteAlley_Click" Width="100" />
-    </div>
-    <div id="d3">
         <asp:ImageButton ID="ImgbtnMilkshop" runat="server"  ImageUrl="../ImagesServer/Milkshop.png" OnClick="ImgbtnMilkshop_Click" Width="100" />
     </div>
 
     <div id="gdlist">
-        <h2 class="gd" id="gd2"><asp:Literal ID="ltDrinkTitle" runat="server" Visible="false" >請選擇飲料品項</asp:Literal></h2>
+        <h4 class="gd" id="gd2"><asp:Literal ID="ltDrinkTitle" runat="server" Visible="false" >請選擇飲料品項</asp:Literal></h4>
         <asp:GridView ID="gvChooseDrink" runat="server" AutoGenerateColumns="False" Height="89px" Width="864px" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4" CssClass="auto-style1" OnRowCommand="gvChooseDrink_RowCommand" ForeColor="Black" GridLines="Vertical">
             <AlternatingRowStyle BackColor="White" />
             <Columns>

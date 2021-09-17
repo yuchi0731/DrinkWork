@@ -25,6 +25,14 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 }
 
 
+                Session.Remove("OrderNumber");
+                Session.Remove("OrderMidNumber");
+                Session.Remove("forDetailNumber");
+                Session.Remove("OrderNumber");
+                Session.Remove("OrderDetailsIDforModify");
+                Session.Remove("NumberID");
+
+
                 //更新訂單成立狀況
                 DrinkListManager.CheckEstablishedorFail();
 

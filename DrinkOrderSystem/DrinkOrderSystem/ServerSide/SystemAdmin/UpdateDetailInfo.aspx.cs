@@ -26,26 +26,41 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 }
 
 
-                string orderID = this.Session["OrderDetailsIDforModify"].ToString();
 
+                var orderID = this.Session["NumberID"];
 
                 Guid orderDetailID;
-                Guid.TryParse(orderID, out orderDetailID);
+                Guid.TryParse(orderID.ToString(), out orderDetailID);
 
                 var orderDetailInfo = DrinkListManager.GetOrderDetailfromorderID(orderDetailID);
+
+                this.lbOrder.Text = orderDetailInfo.OrderNumber;
+
                 var supplierName = orderDetailInfo.SupplierName;
+
 
                 var current = AuthManager.GetCurrentUser();
                 var cAccount = current.Account.ToString();
                 var orderAccount = orderDetailInfo.Account.ToString();
-                if(cAccount != orderAccount)
+                if (cAccount != orderAccount)
                 {
-                    MessageBox.Show("您並不是此訂單擁有者，將導至明細頁", "帳號錯誤",
+                    MessageBox.Show("您並不是此訂單擁有者，將導至清單頁", "帳號錯誤",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
+                    Session.Remove("NumberID");
+
+                    this.Session["OrderNumber"] = orderDetailInfo.OrderNumber;
                     Response.Redirect("/ServerSide/SystemAdmin/NowOrdering.aspx");
                 }
+
+
+
+
+                
+
+
+
 
 
 
@@ -115,7 +130,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
             if (string.Compare("btnSave", e.CommandName, true) == 0)
             {
                 this.lbErroMsg.Visible = false;
-                string orderID = this.Session["OrderDetailsIDforModify"].ToString();
+                string orderID = this.Session["NumberID"].ToString();
 
                 Guid orderDetailID;
                 Guid.TryParse(orderID, out orderDetailID);
@@ -199,7 +214,8 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
 
 
-
+                    Session.Remove("OrderNumber");
+                    Session.Remove("NumberID");
 
 
                     Response.Redirect("/ServerSide/SystemAdmin/NowOrdering.aspx");
@@ -230,7 +246,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 else
                 {
                     this.lbErroMsg.Visible = true;
-                    this.lbErroMsg.Text = "修改取消，尚未存取變更";
+                    this.lbErroMsg.Text = "動作取消，尚未存取變更";
                     return;
                 }
 
@@ -243,11 +259,10 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             this.txtSearch.Visible = true;
-
-            string orderID = this.Session["OrderDetailsIDforModify"].ToString();
+            var orderID = this.Session["NumberID"];
 
             Guid orderDetailID;
-            Guid.TryParse(orderID, out orderDetailID);
+            Guid.TryParse(orderID.ToString(), out orderDetailID);
 
             var orderDetailUnfo = DrinkListManager.GetOrderDetailfromorderID(orderDetailID);
             var produt = DrinkListManager.GetALLProduct(orderDetailUnfo.SupplierName);

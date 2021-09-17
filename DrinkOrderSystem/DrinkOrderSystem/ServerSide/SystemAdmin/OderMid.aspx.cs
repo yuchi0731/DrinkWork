@@ -27,6 +27,12 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 }
 
 
+
+                Session.Remove("DrinkShop");
+                Session.Remove("SelectedItems");
+                Session.Remove("SelectedList");
+
+
                 string orderNumber = this.Request.QueryString["OrderNumber"];
                 if (this.Session["OrderMidNumber"] == null)
                 {
@@ -96,6 +102,25 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         protected void btnSent_Click(object sender, EventArgs e)
         {
 
+            string orderNumber = this.Session["OrderMidNumber"].ToString();
+            var order = DrinkListManager.GetOrderDetailListfromorderNumber(orderNumber); 
+
+            if(order.OrderEndTime < DateTime.Now)
+            {
+                MessageBox.Show("此訂單已超過可訂購時間，請另找可跟團清單", "已達截止時間",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Information);
+                Response.Redirect("/ServerSide/SystemAdmin/NowOrdering.aspx");
+            }
+
+
+
+
+
+
+
+
+
             DialogResult MsgBoxResult;
                 MsgBoxResult = MessageBox.Show("確定送出訂單後，可在個人歷史訂購頁查看訂購資料", "送出",
                     MessageBoxButtons.OKCancel,
@@ -113,7 +138,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
 
                 //更新OrderList總金額及杯數
-                string orderNumber = this.Session["OrderMidNumber"].ToString();
+
                 decimal amount = DrinkListManager.GetAllAmount(orderNumber);
                 int cups = DrinkListManager.GetAllCup(orderNumber);
 
@@ -122,6 +147,12 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 MessageBox.Show($"訂購完成，訂單編號為【{orderNumber}】\r\n之後可由訂單明細查詢訂購項目", "完成!",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
+                
+                Session.Remove("OrderNumber");
+                Session.Remove("OrderMidNumber");
+                Session.Remove("DrinkShop");
+                Session.Remove("SelectedItems");
+                Session.Remove("SelectedList");
 
                 Response.Redirect("/ServerSide/SystemAdmin/NowOrdering.aspx");
             }
@@ -142,7 +173,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
 
             DialogResult MsgBoxResult;
-            MsgBoxResult = MessageBox.Show("取消將不會儲存資料，請按確認繼續", "取消",
+            MsgBoxResult = MessageBox.Show("清除將不會儲存資料，請按確認繼續", "取消",
                 MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Warning);
 
@@ -156,6 +187,8 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 this.lbErrorMsg.Visible = false;
                 this.lbMsg.Text = null;
                 this.lbMsg.Visible = false;
+
+                Session.Remove("SelectedItems");
 
                 MsgBoxResult = MessageBox.Show("取消成功", "修改成功",
                 MessageBoxButtons.OK,

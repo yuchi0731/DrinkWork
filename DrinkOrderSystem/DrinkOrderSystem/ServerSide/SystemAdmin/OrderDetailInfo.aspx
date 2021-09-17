@@ -21,15 +21,15 @@
             <td>
                 <asp:TextBox ID="txtSelect" runat="server" Visible="false"></asp:TextBox>
                 <asp:Button ID="btnSelect" runat="server" Text="篩選"  OnClick="btnSelect_Click" Visible="false" class="btn btn-primary"/>
-          <asp:Button ID="btnClearSelect" runat="server" Text="取消"  OnClick="btnClearSelect_Click" Visible="false" class="btn btn-warning"/>
+          <asp:Button ID="btnClearSelect" runat="server" Text="還原清單"  OnClick="btnClearSelect_Click" Visible="false" class="btn btn-warning"/>
 
             </td>
         </tr>
     </table>
     <asp:GridView ID="gvDetail" runat="server" AutoGenerateColumns="False" OnRowCommand="gvDetail_RowCommand" BackColor="White" BorderColor="LightPink" BorderStyle="Groove" BorderWidth="1px" CellPadding="3" CssClass="bg-opacity-25">
          <Columns>
-
-            <asp:BoundField DataField="OrderNumber" HeaderText="訂單名稱" />
+             <asp:BoundField DataField="OrderDetailsID" HeaderText="訂單號碼" Visible="false" />
+            <asp:BoundField DataField="OrderNumber" HeaderText="訂單編號" />
             <asp:BoundField DataField="Account" HeaderText="訂購人" />
             <asp:BoundField DataField="OrderTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" HeaderText="訂購時間" />
             <asp:BoundField DataField="OrderEndTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" HeaderText="截止時間" />
@@ -47,7 +47,7 @@
              
        <asp:TemplateField HeaderText="修改明細" ItemStyle-HorizontalAlign="Center">
         <ItemTemplate>
-            <asp:Button ID="btnModify" runat="server" Text="修改" CommandName="btnModify"/>
+            <asp:Button ID="btnModify" runat="server" class="btn btn-outline-primary" Text="修改" CommandName="btnModify" CommandArgument='<%#Eval("OrderDetailsID") %>'/>
       </ItemTemplate>
       </asp:TemplateField>
              <asp:BoundField DataField="Established" HeaderText="訂單成立狀況" />
@@ -55,6 +55,8 @@
         </Columns>
     </asp:GridView>
     <uc1:ucpager runat="server" id="ucPager" PageSize="10"  Url="/ServerSide/SystemAdmin/OrderDetailInfo.aspx" Visible="false" />
+        <asp:Button ID="btnText" runat="server" Text="寫出.txt檔"  class="btn btn-info" OnClick="btnText_Click" Visible="false"/><br />
+
                 <asp:PlaceHolder ID="plcNoData" runat="server" Visible="false">
                         <p style="color:red">
                             <asp:Literal ID="ltMsg" runat="server"></asp:Literal>

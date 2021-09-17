@@ -1016,6 +1016,7 @@ namespace DOS_DBSoure
                 using (DKContextModel context = new DKContextModel())
                 {
                     var price = context.Products
+                        .Where(obj => obj.ProductName == ProductName)
                         .Select(obj => obj.UnitPrice);
                     var UnitPrice = price.FirstOrDefault();
                     return UnitPrice;

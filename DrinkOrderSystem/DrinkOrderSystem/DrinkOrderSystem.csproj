@@ -166,7 +166,6 @@
     <Content Include="ServerSide\SystemAdmin\NowOrdering.aspx" />
     <Content Include="ServerSide\SystemAdmin\OderMid.aspx" />
     <Content Include="ServerSide\SystemAdmin\OrderDetailInfo.aspx" />
-    <Content Include="ServerSide\SystemAdmin\OrderModify.aspx" />
     <Content Include="ServerSide\SystemAdmin\OrderRecords.aspx" />
     <Content Include="ServerSide\SystemAdmin\OrderStart.aspx" />
     <Content Include="ServerSide\SystemAdmin\ResultCheckJS.aspx" />
@@ -290,13 +289,6 @@
     </Compile>
     <Compile Include="ServerSide\SystemAdmin\OrderDetailInfo.aspx.designer.cs">
       <DependentUpon>OrderDetailInfo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ServerSide\SystemAdmin\OrderModify.aspx.cs">
-      <DependentUpon>OrderModify.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ServerSide\SystemAdmin\OrderModify.aspx.designer.cs">
-      <DependentUpon>OrderModify.aspx</DependentUpon>
     </Compile>
     <Compile Include="ServerSide\SystemAdmin\OrderRecords.aspx.cs">
       <DependentUpon>OrderRecords.aspx</DependentUpon>

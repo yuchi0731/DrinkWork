@@ -13,7 +13,7 @@
             <td><asp:TextBox runat="server" ID="txtPWD" TextMode="Password"></asp:TextBox></td>
         </tr>
     </table>
-    <asp:Button ID="btnLogin" runat="server" Text="登入" OnClick="btnLogin_Click" />
+    <asp:Button ID="btnLogin" class="btn btn-outline-primary" runat="server" Text="登入" OnClick="btnLogin_Click" />
     <%--<asp:Button ID="btnforget" runat="server" Text="忘記密碼" /><br />--%>
     <asp:Label ID="lbMsg" runat="server"  ForeColor="Red" Visible="false"></asp:Label>
 

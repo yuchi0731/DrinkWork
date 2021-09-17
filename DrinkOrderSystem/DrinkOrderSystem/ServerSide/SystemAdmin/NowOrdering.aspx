@@ -22,20 +22,20 @@
             </td>
             <td>
                 <asp:TextBox ID="txtSelect" runat="server" Visible="false"></asp:TextBox>
-                <asp:Button ID="btnSelect" runat="server" Text="篩選" OnClick="btnSelect_Click" Visible="false" /><asp:Label ID="lbSelect" runat="server" ForeColor="Red"></asp:Label>
-        <asp:Button ID="btnSortingN" runat="server" Text="以需求時間近至遠排序" OnClick="btnSortingN_Click" />
-        <asp:Button ID="btnSortingF" runat="server" Text="以需求時間遠至近排序" OnClick="btnSortingF_Click" />
-<asp:Button ID="btnClearSelect" runat="server" Text="還原清單" OnClick="btnClearSelect_Click" />
+                <asp:Button ID="btnSelect" runat="server" class="btn btn-primary" Text="篩選" OnClick="btnSelect_Click" Visible="false" /><asp:Label ID="lbSelect" runat="server" ForeColor="Red"></asp:Label>
+        <asp:Button ID="btnSortingN" runat="server" class="btn btn-outline-info" Text="以需求時間近至遠排序" OnClick="btnSortingN_Click" />
+        <asp:Button ID="btnSortingF" runat="server" class="btn btn-outline-info" Text="以需求時間遠至近排序" OnClick="btnSortingF_Click" />
+<asp:Button ID="btnClearSelect" runat="server" class="btn btn-outline-warning" Text="還原清單" OnClick="btnClearSelect_Click" />
             </td>
         </tr>
     </table>
-    <asp:GridView runat="server" ID="gvNoworderinglist"  AutoGenerateColumns="False" Width="1168px">
+    <asp:GridView runat="server" ID="gvNoworderinglist"  AutoGenerateColumns="False" Width="1168px" AlternatingRowStyle-HorizontalAlign="Center">
         <Columns>
             <asp:BoundField HeaderText="訂單編號" DataField="OrderNumber" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField HeaderText="團主" DataField="Account" />
-            <asp:BoundField HeaderText="訂購開始時間" DataField="OrderTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField HeaderText="團主" DataField="Account" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField HeaderText="跟團截止時間" DataField="OrderEndTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField HeaderText="指定送達時間" DataField="RequiredTime" DataFormatString="{0:yyyy-MM-dd-hh:mm}" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="SupplierName" HeaderText="廠商" ItemStyle-HorizontalAlign="Center" />
             <asp:TemplateField HeaderText="訂單明細" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
     <a href="/ServerSide/SystemAdmin/OrderDetailInfo.aspx?OrderNumber=<%# Eval("OrderNumber") %>">確認</a>

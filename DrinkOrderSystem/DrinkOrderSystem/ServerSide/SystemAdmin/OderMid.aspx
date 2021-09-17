@@ -11,12 +11,11 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <h1>跟團介面</h1>
-     <h2>訂單編號：<asp:Literal ID="ltOrderNumber" runat="server"></asp:Literal></h2>
+     <h2>訂單編號：【<asp:Literal ID="ltOrderNumber" runat="server"></asp:Literal>】  店家：<asp:Label ID="lbSup" runat="server" ForeColor="Blue"></asp:Label></h2>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
 
         <h2 class="gd">請選擇飲料品項</h2>
-    <h2><asp:Label ID="lbSup" runat="server" ForeColor="Blue"></asp:Label></h2>
 
        <asp:GridView ID="gvChooseDrink" runat="server" AutoGenerateColumns="False" Height="89px" Width="694px" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" CssClass="auto-style1"  OnRowCommand="gvChooseDrink_RowCommand">
             <Columns>

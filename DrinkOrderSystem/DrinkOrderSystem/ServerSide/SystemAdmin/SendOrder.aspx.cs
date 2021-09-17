@@ -120,11 +120,7 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
         }
 
-        public void ShowMessage(string messageText)
-        {
-            messageText = "alert('" + messageText + "');";
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), string.Empty, messageText, true);
-        }
+
 
         protected void btnViewDetail_Click(object sender, EventArgs e)
         {

@@ -27,14 +27,18 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                     return;
                 }
 
-                string orderNumber = this.Request.QueryString["OrderNumber"];
-                if(this.Session["forDetailNumber"] == null)
+                Session.Remove("forDetailNumber");
+                Session.Remove("NumberID");
+
+
+                if(this.Request.QueryString["OrderNumber"] != null)
                 {
-                    this.Session["forDetailNumber"] = orderNumber.ToString();
-                }
-
-
-
+                    string orderNumber = this.Request.QueryString["OrderNumber"];
+                    if (this.Session["forDetailNumber"] == null)
+                    {
+                        this.Session["forDetailNumber"] = orderNumber.ToString();
+                    }
+                
 
                 this.lbNumber.Text = orderNumber;
                 //更新OrderList總金額及杯數
@@ -47,6 +51,36 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 var list = DrinkListManager.GetOrderDetailListbyorderNumber(orderNumber);
 
                 this.BindList(list);
+                }
+
+
+                if(this.Session["OrderNumber"] != null)
+                {
+                    string orderNumber = this.Session["OrderNumber"].ToString();
+
+
+                    this.lbNumber.Text = orderNumber;
+                    //更新OrderList總金額及杯數
+                    decimal amount = DrinkListManager.GetAllAmount(orderNumber);
+                    int cups = DrinkListManager.GetAllCup(orderNumber);
+                    DrinkListManager.UpdateGroup(orderNumber, amount, cups);
+
+
+
+                    var list = DrinkListManager.GetOrderDetailListbyorderNumber(orderNumber);
+
+                    this.BindList(list);
+                }
+
+
+
+
+
+
+
+
+
+
             }
         }
 
@@ -192,10 +226,30 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
         protected void gvDetail_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
-            string orderNumber = this.Request.QueryString["OrderNumber"];
+            this.Session["TempOrderNumber"] = null;
+            if (this.Request.QueryString["OrderNumber"] != null) 
+            {
+                this.Session["TempOrderNumber"] = this.Request.QueryString["OrderNumber"];
+            }
+
+            if(this.Session["OrderNumber"] != null)
+            {
+                this.Session["TempOrderNumber"] = this.Session["OrderNumber"];
+            }
+
+
+            string orderNumber = this.Session["TempOrderNumber"].ToString();
+
+
+
+
+
             var DetailInfo = DrinkListManager.GetOrderDetailInfo(orderNumber);
 
-            if(DetailInfo.OrderEndTime < DateTime.Now)
+            var pdID = e.CommandArgument;
+
+
+            if (DetailInfo.OrderEndTime < DateTime.Now)
             {
                 MessageBox.Show($"此訂單編號截止時間已到，無法變更", "無法更改",
                 MessageBoxButtons.OK,
@@ -209,8 +263,13 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
 
                 if (string.Compare("btnModify", e.CommandName, true) == 0)
                 {
-                    if(this.Session["OrderDetailsIDforModify"] == null)
-                        this.Session["OrderDetailsIDforModify"] = DetailInfo.OrderDetailsID;
+
+                    if (this.Session["NumberID"] == null)
+                    {
+                        this.Session["NumberID"] = pdID;
+                    }
+
+
                     Response.Redirect("/ServerSide/SystemAdmin/UpdateDetailInfo.aspx");
                 }
             }
@@ -223,6 +282,48 @@ namespace DrinkOrderSystem.ServerSide.SystemAdmin
                 return;
             }
 
+        }
+
+
+        internal static void WriteText(string orderNumber, string txt)
+        {
+
+            string text = $"訂單編號：{orderNumber}" + "\r\n" + txt;
+            System.IO.File.WriteAllText($@"D:\Text\{orderNumber}List.txt", text);
+
+
+        }
+
+        protected void btnText_Click(object sender, EventArgs e)
+        {
+            string orderNumber = this.Request.QueryString["OrderNumber"];
+            var allDetail = DrinkListManager.GetOrderDetailListbyorderNumber(orderNumber);
+
+            var DetailInfo = "";
+            foreach (var item in allDetail)
+            {
+                DetailInfo +=
+                    "【訂購人】" + item.Account.ToString()
+                    + Environment.NewLine
+                    + "【飲料】" + item.ProductName.ToString()
+                    + Environment.NewLine
+                    + "【單價】" + item.UnitPrice.ToString()
+                    + Environment.NewLine
+                    + "【杯數】" + item.Quantity.ToString()
+                    + Environment.NewLine
+                    + "【甜度】" + item.Suger.ToString()
+                    + Environment.NewLine
+                    + "【冰量】" + item.Ice.ToString()
+                    + Environment.NewLine
+                    + "【加料】" + item.Toppings.ToString()
+                    + Environment.NewLine
+                    + "【加料單價】" + item.ToppingsUnitPrice.ToString()
+                    + Environment.NewLine
+                    + "-----------------------------------"
+                    + Environment.NewLine;
+            }
+
+            WriteText(orderNumber, DetailInfo);
         }
     }
 }
